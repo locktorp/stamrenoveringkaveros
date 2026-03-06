@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Stamrenovering Kaverös</title>
 
 <style>
@@ -97,28 +98,15 @@ color:white;
 
 .activity{border-bottom:1px solid #eee;padding:8px 0;}
 
-.row{
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
+.row{display:flex;justify-content:space-between;align-items:center;}
 
-button{
-border:none;
-padding:6px 10px;
-border-radius:6px;
-cursor:pointer;
-margin-left:4px;
-}
+button{border:none;padding:6px 10px;border-radius:6px;cursor:pointer;margin-left:4px;}
 
 .btn-klar{background:#27AE60;color:white;}
 .btn-pagar{background:#F2A900;color:white;}
 .btn-delay{background:#e53935;color:white;}
 
-.active{
-outline:3px solid black;
-transform:scale(1.05);
-}
+.active{outline:3px solid black;transform:scale(1.05);}
 
 .comment{
 width:100%;
@@ -177,53 +165,63 @@ const addresses={
 "Stam 2":["485","489","494","499"],
 "Stam 3":["486","490","495","500"],
 "Stam 4":["487","491","496","501"],
-"Stam 5":["492","497","502"]
+"Stam 5":["492","497","502"],
+"Stam 6":["511","517","523"],
+"Stam 7":["503","512","518","524"],
+"Stam 8":["504","507","513","519"],
+"Stam 9":["505","508","514","520"],
+"Stam 10":["506","509","515","521"],
+"Stam 11":["510","516","522"]
 },
+
 "Dirigentgatan 1":{
 "Stam 1":["525","529","534","539"],
 "Stam 2":["526","530","535","540"],
-"Stam 3":["527","531","536","541"]
+"Stam 3":["527","531","536","541"],
+"Stam 4":["532","537","542"],
+"Stam 5":["533","538","543"],
+"Stam 6":["552","558","564"],
+"Stam 7":["544","553","559","565"],
+"Stam 8":["545","548","554","560"],
+"Stam 9":["546","549","555","561"],
+"Stam 10":["547","550","556","562"],
+"Stam 11":["551","557","563"]
 }
 }
 
 const activities={
 "RIVNING":["Asbestsanering","Rivning","Håltagning","Städning"],
-"VVS":["Kassettmontage","Rör i badrum","Rör till kök/WC","Avloppstam kök"],
-"BYGG":["Formning Genomföringar","Fönstermontage","LP 50 i tak"]
+"VVS":["Kassettmontage","Rör i badrum","Rör till kök/WC","Avloppstam kök","Blandare och avlopp diskbänk","Gummi kassettbotten","Kassettfront monterad","Komplettering","Städning"],
+"BYGG":["Formning Genomföringar","Fönstermontage","LP 50 i tak","Gjutning Genomföringar och övriga hål","Stomme/isolering/gipsning väggar","Gipsning Slitsar i kök/hall","Stomme/Isolering/gipsning tak","Gipsning och isolering köksschakt","Ny dörromfattning","Tillbaka med Kylskåp","Städning"],
+"KÖKSFÖRNYELSE":["Demontering","Målning stommar","Målning väggar tak","Montering stommar/luckor/bänkskiva","Golvläggning","Kakel våtdel","Montering köksfläkt","Vitvaror","Belysning"],
+"EL":["Kanalisation i vägg och tak"],
+"MÅLNING":["Spackling/Målning tak","Spackling/målning Slitsar"],
+"KAKEL":["Tätskikt","Plattsättning","Fogning","Städning"],
+"KOMPLETTERING":["Montering dörr","Montering sakvaror och skåp","Installation belysning och apparater","Mjukfogning","Montering Porslin och blandare","Vatten påslaget"]
 }
 
 let storage=JSON.parse(localStorage.getItem("kaveros_data")||"{}")
 
 function calcProgress(apt){
-
 let total=0
 let done=0
-
 Object.keys(activities).forEach(cat=>{
 activities[cat].forEach(act=>{
 total++
 if(storage[apt+"|"+cat+"|"+act]==="klar") done++
 })
 })
-
 return total?Math.round(done/total*100):0
 }
 
 function getApartmentColor(num){
-
 let progress=calcProgress(num)
 let color="#9E9E9E"
-
 if(progress==100) color="#4CAF50"
 else if(progress>0) color="#F2A900"
-
-Object.keys(activities).forEach(cat=>{
-activities[cat].forEach(act=>{
-let key=num+"|"+cat+"|"+act
-if(storage[key]==="delay"){color="#e53935"}
+Object.keys(storage).forEach(key=>{
+if(key.startsWith(num+"|") && storage[key]==="delay") color="#e53935"
 })
-})
-
 return color
 }
 
@@ -234,20 +232,28 @@ let done=0
 let ongoing=0
 let notstart=0
 
+let delayMap={}
+
 Object.values(addresses).forEach(stams=>{
 Object.values(stams).forEach(apts=>{
 apts.forEach(a=>{
-
 total++
-
 let p=calcProgress(a)
-
 if(p===100) done++
 else if(p>0) ongoing++
 else notstart++
+})
+})
+})
 
-})
-})
+Object.keys(storage).forEach(key=>{
+if(storage[key]==="delay"){
+let parts=key.split("|")
+let lgh=parts[0]
+let act=parts[2]
+if(!delayMap[lgh]) delayMap[lgh]=[]
+delayMap[lgh].push(act)
+}
 })
 
 document.getElementById("stats").innerHTML=
@@ -259,32 +265,31 @@ document.getElementById("stats").innerHTML=
 let percent=Math.round(done/total*100)
 document.getElementById("projectbar").style.width=percent+"%"
 
+let delayHTML=""
+Object.keys(delayMap).forEach(lgh=>{
+delayHTML+=`<div>LGH ${lgh}: ${delayMap[lgh].join(", ")}</div>`
+})
+document.getElementById("delaySummary").innerHTML=delayHTML
+
 updateStamProgress()
 }
 
 function updateStamProgress(){
-
 let html=""
-
 Object.keys(addresses).forEach(addr=>{
 Object.keys(addresses[addr]).forEach(stam=>{
-
 let apts=addresses[addr][stam]
-
 let p=0
 apts.forEach(a=>{p+=calcProgress(a)})
 p=Math.round(p/apts.length)
-
 html+=`
 <div class="card">
 <b>${addr} – ${stam}</b>
 <div>${p}%</div>
 <div class="progress"><div class="bar" style="width:${p}%"></div></div>
-</div>
-`
+</div>`
 })
 })
-
 document.getElementById("stamstats").innerHTML=html
 }
 
@@ -298,26 +303,18 @@ house.classList.remove("hidden")
 let html=`<button class="back-btn" onclick="location.reload()">⬅ Dashboard</button><h2>Huskarta</h2>`
 
 Object.keys(addresses).forEach(addr=>{
-
 html+=`<h3>${addr}</h3>`
-
 Object.keys(addresses[addr]).forEach(stam=>{
-
 html+=`<div class="card"><b>${stam}</b><div class="grid">`
-
 addresses[addr][stam].forEach(num=>{
-
 let color=getApartmentColor(num)
 let progress=calcProgress(num)
-
 html+=`
 <div class="apt" style="background:${color}" onclick="openApartment('${num}')">
 LGH ${num}
 <div>${progress}%</div>
-</div>
-`
+</div>`
 })
-
 html+="</div></div>"
 })
 })
@@ -332,34 +329,25 @@ document.getElementById("house").classList.add("hidden")
 let div=document.getElementById("apartment")
 div.classList.remove("hidden")
 
-let html=`<button class="back-btn" onclick="showHouse()">⬅ Husvy</button>
-<h2>LGH ${num}</h2>`
+let html=`<button class="back-btn" onclick="showHouse()">⬅ Husvy</button><h2>LGH ${num}</h2>`
 
 Object.keys(activities).forEach(cat=>{
-
 html+=`<div class="card"><b>${cat}</b>`
-
 activities[cat].forEach(act=>{
-
 let key=num+"|"+cat+"|"+act
 let val=storage[key]||""
-
 html+=`
 <div class="activity">
 <div class="row">
 <span>${act}</span>
 <span>
-
 <button class="btn-klar ${val==='klar'?'active':''}" onclick="setStatus('${key}','klar')">Klar</button>
 <button class="btn-pagar ${val==='pagar'?'active':''}" onclick="setStatus('${key}','pagar')">Pågår</button>
 <button class="btn-delay ${val==='delay'?'active':''}" onclick="setStatus('${key}','delay')">Försenad</button>
-
 </span>
 </div>
-</div>
-`
+</div>`
 })
-
 html+="</div>"
 })
 
@@ -377,7 +365,6 @@ storage[key]=val
 }
 
 localStorage.setItem("kaveros_data",JSON.stringify(storage))
-
 updateDashboard()
 
 }
