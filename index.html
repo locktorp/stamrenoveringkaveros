@@ -365,6 +365,15 @@ storage[key]=val
 }
 
 localStorage.setItem("kaveros_data",JSON.stringify(storage))
+
+let apt = key.split("|")[0]
+
+updateDashboard()
+openApartment(apt)
+
+}
+
+localStorage.setItem("kaveros_data",JSON.stringify(storage))
 updateDashboard()
 
 }
