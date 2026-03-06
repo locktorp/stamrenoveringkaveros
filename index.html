@@ -8,7 +8,11 @@
 
 <style>
 
-body{font-family:system-ui;margin:0;background:#f4f6f8;}
+body{
+font-family:system-ui;
+margin:0;
+background:#f4f6f8;
+}
 
 header{
 background:#1E3A5F;
@@ -28,6 +32,7 @@ padding:20px;
 .hero{
 width:100%;
 border-radius:12px;
+margin-bottom:10px;
 }
 
 .main-btn{
@@ -39,8 +44,20 @@ background:#1E88E5;
 color:white;
 border:none;
 border-radius:10px;
-margin:20px 0;
+margin:15px 0;
 cursor:pointer;
+}
+
+.back-btn{
+background:#1E88E5;
+color:white;
+font-size:18px;
+padding:14px;
+border:none;
+border-radius:10px;
+margin:15px 0;
+cursor:pointer;
+width:100%;
 }
 
 .card{
@@ -124,7 +141,9 @@ border:1px solid #ddd;
 border-radius:6px;
 }
 
-.hidden{display:none;}
+.hidden{
+display:none;
+}
 
 </style>
 </head>
@@ -164,6 +183,7 @@ border-radius:6px;
 </div>
 
 <div id="house" class="container hidden"></div>
+
 <div id="apartment" class="container hidden"></div>
 
 <script>
@@ -194,21 +214,42 @@ const addresses={
 "Stam 7":["544","553","559","565"],
 "Stam 8":["545","548","554","560"],
 "Stam 9":["546","549","555","561"],
-"Stam 10":["527","531","536","541"],
+"Stam 10":["547","550","556","562"],
 "Stam 11":["551","557","563"]
 }
 
 }
 
 const activities={
+
 "RIVNING":["Asbestsanering","Rivning","Håltagning","Städning"],
-"VVS":["Kassettmontage","Rör i badrum","Rör till kök/WC","Avloppstam kök","Blandare och avlopp diskbänk","Gummi kassettbotten","Kassettfront monterad","Komplettering","Städning"],
-"BYGG":["Formning Genomföringar","Fönstermontage","LP 50 i tak","Gjutning Genomföringar och övriga hål","Stomme/isolering/gipsning väggar","Gipsning Slitsar i kök/hall","Stomme/Isolering/gipsning tak","Gipsning och isolering köksschakt","Ny dörromfattning","Tillbaka med Kylskåp","Städning"],
-"KÖKSFÖRNYELSE":["Demontering","Målning stommar","Målning väggar tak","Montering stommar/luckor/bänkskiva","Golvläggning","Kakel våtdel","Montering köksfläkt","Vitvaror","Belysning"],
-"EL":["Kanalisation i vägg och tak"],
-"MÅLNING":["Spackling/Målning tak","Spackling/målning Slitsar"],
-"KAKEL":["Tätskikt","Plattsättning","Fogning","Städning"],
-"KOMPLETTERING":["Montering dörr","Montering sakvaror och skåp","Installation belysning och apparater","Mjukfogning","Montering Porslin och blandare","Vatten påslaget"]
+
+"VVS":[
+"Kassettmontage",
+"Rör i badrum",
+"Rör till kök/WC",
+"Avloppstam kök",
+"Blandare och avlopp diskbänk",
+"Gummi kassettbotten",
+"Kassettfront monterad",
+"Komplettering",
+"Städning"
+],
+
+"BYGG":[
+"Formning Genomföringar",
+"Fönstermontage",
+"LP 50 i tak",
+"Gjutning Genomföringar och övriga hål",
+"Stomme/isolering/gipsning väggar",
+"Gipsning Slitsar i kök/hall",
+"Stomme/Isolering/gipsning tak",
+"Gipsning och isolering köksschakt",
+"Ny dörromfattning",
+"Tillbaka med Kylskåp",
+"Städning"
+]
+
 }
 
 let storage=JSON.parse(localStorage.getItem("kaveros_data")||"{}")
@@ -253,6 +294,7 @@ delayMap[a].push(act)
 }
 })
 })
+
 })
 })
 })
@@ -266,6 +308,7 @@ let percent=Math.round(done/total*100)
 document.getElementById("projectbar").style.width=percent+"%"
 
 let delayHTML=""
+
 Object.keys(delayMap).forEach(lgh=>{
 delayHTML+=`<div><b>LGH ${lgh}</b>: ${delayMap[lgh].join(", ")}</div>`
 })
@@ -302,10 +345,63 @@ html+=`
 </div>
 </div>
 `
+
 })
 })
 
 document.getElementById("stamstats").innerHTML=html
+
+}
+
+function showHouse(){
+
+document.getElementById("dashboard").classList.add("hidden")
+
+let house=document.getElementById("house")
+
+house.classList.remove("hidden")
+
+house.innerHTML="<h2>Huskarta</h2>"
+
+Object.keys(addresses).forEach(addr=>{
+
+house.innerHTML+=`<h3>${addr}</h3>`
+
+Object.keys(addresses[addr]).forEach(stam=>{
+
+let block=`<div class="card"><b>${stam}</b><div class="grid">`
+
+addresses[addr][stam].forEach(num=>{
+
+let prog=calcProgress(num)
+
+block+=`
+
+<div class="apt" onclick="openApartment('${num}')">
+
+LGH ${num}
+
+<div>${prog}%</div>
+
+<div class="progress">
+<div class="bar" style="width:${prog}%"></div>
+</div>
+
+</div>
+
+`
+
+})
+
+block+="</div></div>"
+
+house.innerHTML+=block
+
+})
+
+})
+
+house.innerHTML+=`<button class="back-btn" onclick="location.reload()">⬅ Dashboard</button>`
 
 }
 
