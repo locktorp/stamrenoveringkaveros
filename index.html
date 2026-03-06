@@ -8,7 +8,11 @@
 
 <style>
 
-body{font-family:system-ui;margin:0;background:#f4f6f8;}
+body{
+font-family:system-ui;
+margin:0;
+background:#f4f6f8;
+}
 
 header{
 background:#1E3A5F;
@@ -16,13 +20,35 @@ color:white;
 padding:18px;
 text-align:center;
 font-size:22px;
+font-weight:600;
 }
 
-.container{max-width:1200px;margin:auto;padding:20px;}
+.container{
+max-width:1200px;
+margin:auto;
+padding:20px;
+}
 
-.hero{width:100%;border-radius:12px;margin-bottom:20px;}
+.hero{
+width:100%;
+border-radius:12px;
+margin-bottom:10px;
+}
 
 .main-btn{
+width:100%;
+padding:18px;
+font-size:18px;
+font-weight:600;
+background:#1E88E5;
+color:white;
+border:none;
+border-radius:10px;
+margin:15px 0;
+cursor:pointer;
+}
+
+.back-btn{
 width:100%;
 padding:16px;
 font-size:18px;
@@ -30,25 +56,15 @@ background:#1E88E5;
 color:white;
 border:none;
 border-radius:10px;
-margin-bottom:20px;
-cursor:pointer;
-}
-
-.back-btn{
-width:100%;
-padding:12px;
-background:#1E88E5;
-color:white;
-border:none;
-border-radius:10px;
-margin-bottom:15px;
+margin:20px 0;
 cursor:pointer;
 }
 
 .card{
 background:white;
-padding:15px;
+padding:16px;
 border-radius:12px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
 margin-bottom:20px;
 }
 
@@ -56,7 +72,6 @@ margin-bottom:20px;
 display:grid;
 grid-template-columns:repeat(4,1fr);
 gap:10px;
-margin-bottom:15px;
 }
 
 .stat{
@@ -72,44 +87,71 @@ height:8px;
 background:#e5e9ef;
 border-radius:4px;
 overflow:hidden;
-margin-top:6px;
+margin-top:4px;
 }
 
-.bar{height:100%;background:#27AE60;}
+.bar{
+height:100%;
+background:#27AE60;
+}
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fill,minmax(100px,1fr));
+grid-template-columns:repeat(auto-fill,minmax(110px,1fr));
 gap:10px;
 }
 
 .apt{
+background:#e4e9ef;
 padding:10px;
 border-radius:8px;
 text-align:center;
 font-weight:600;
 cursor:pointer;
-color:white;
+}
+
+.activity{
+border-bottom:1px solid #eee;
+padding:8px 0;
+}
+
+.row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+button{
+border:none;
+padding:6px 10px;
+border-radius:6px;
+cursor:pointer;
+margin-left:4px;
 }
 
 .btn-klar{background:#27AE60;color:white;}
 .btn-pagar{background:#F2A900;color:white;}
 .btn-delay{background:#e53935;color:white;}
 
-.active{outline:3px solid black;}
+.comment{
+width:100%;
+margin-top:6px;
+padding:6px;
+border:1px solid #ddd;
+border-radius:6px;
+}
 
-.delay{color:#d32f2f;font-weight:600;}
+.delay{
+color:#d32f2f;
+font-weight:600;
+}
 
-.hidden{display:none;}
-
-.activity{
-border-bottom:1px solid #eee;
-padding:8px 0;
-display:flex;
-justify-content:space-between;
+.hidden{
+display:none;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -123,64 +165,97 @@ justify-content:space-between;
 <button class="main-btn" onclick="showHouse()">Öppna huskarta</button>
 
 <div class="card">
-<h2>Projektstatus</h2>
+
+<h3>Projektstatus</h3>
 
 <div id="stats" class="statgrid"></div>
 
 <div class="progress">
 <div id="projectbar" class="bar"></div>
 </div>
+
 </div>
 
 <div class="card">
-<h2>⚠ Försenade aktiviteter</h2>
+<h3>Framdrift per stam</h3>
+<div id="stamstats"></div>
+</div>
+
+<div class="card">
+<h3>Försenade aktiviteter</h3>
 <div id="delaySummary" class="delay"></div>
 </div>
 
 </div>
 
 <div id="house" class="container hidden"></div>
+
 <div id="apartment" class="container hidden"></div>
 
 <script>
 
 const addresses={
+
 "Dirigentgatan 3":{
+
 "Stam 1":["484","488","493","498"],
-"Stam 2":["485","489","494","499"]
+"Stam 2":["485","489","494","499"],
+"Stam 3":["486","490","495","500"],
+"Stam 4":["487","491","496","501"],
+"Stam 5":["492","497","502"],
+"Stam 6":["511","517","523"],
+"Stam 7":["503","512","518","524"],
+"Stam 8":["504","507","513","519"],
+"Stam 9":["505","508","514","520"],
+"Stam 10":["506","509","515","521"],
+"Stam 11":["510","516","522"]
+
 },
+
 "Dirigentgatan 1":{
-"Stam 1":["525","529","534","539"]
-}
+
+"Stam 1":["525","529","534","539"],
+"Stam 2":["526","530","535","540"],
+"Stam 3":["527","531","536","541"],
+"Stam 4":["532","537","542"],
+"Stam 5":["533","538","543"],
+"Stam 6":["552","558","564"],
+"Stam 7":["544","553","559","565"],
+"Stam 8":["545","548","554","560"],
+"Stam 9":["546","549","555","561"],
+"Stam 10":["547","550","556","562"],
+"Stam 11":["551","557","563"]
+
 }
 
-const activities=[
-"Asbestsanering",
-"Rivning",
-"Håltagning",
-"Städning",
-"Kassettmontage",
-"Rör i badrum",
-"Rör till kök/WC",
-"Avloppstam kök",
-"Blandare diskbänk",
-"Formning genomföringar",
-"Fönstermontage",
-"LP 50 i tak"
-]
+}
+
+const activities={
+"RIVNING":["Asbestsanering","Rivning","Håltagning","Städning"],
+"VVS":["Kassettmontage","Rör i badrum","Rör till kök/WC","Avloppstam kök","Blandare och avlopp diskbänk","Gummi kassettbotten","Kassettfront monterad","Komplettering","Städning"],
+"BYGG":["Formning Genomföringar","Fönstermontage","LP 50 i tak","Gjutning Genomföringar och övriga hål","Stomme/isolering/gipsning väggar","Gipsning Slitsar i kök/hall","Stomme/Isolering/gipsning tak","Gipsning och isolering köksschakt","Ny dörromfattning","Tillbaka med Kylskåp","Städning"],
+"KÖKSFÖRNYELSE":["Demontering","Målning stommar","Målning väggar tak","Montering stommar/luckor/bänkskiva","Golvläggning","Kakel våtdel","Montering köksfläkt","Vitvaror","Belysning"],
+"EL":["Kanalisation i vägg och tak"],
+"MÅLNING":["Spackling/Målning tak","Spackling/målning Slitsar"],
+"KAKEL":["Tätskikt","Plattsättning","Fogning","Städning"],
+"KOMPLETTERING":["Montering dörr","Montering sakvaror och skåp","Installation belysning och apparater","Mjukfogning","Montering Porslin och blandare","Vatten påslaget"]
+}
 
 let storage=JSON.parse(localStorage.getItem("kaveros_data")||"{}")
 
 function calcProgress(apt){
 
-let total=activities.length
+let total=0
 let done=0
 
-activities.forEach(act=>{
-if(storage[apt+"|"+act]=="klar") done++
+Object.keys(activities).forEach(cat=>{
+activities[cat].forEach(act=>{
+total++
+if(storage[apt+"|"+cat+"|"+act]==="klar") done++
+})
 })
 
-return Math.round(done/total*100)
+return total?Math.round(done/total*100):0
 
 }
 
@@ -190,63 +265,100 @@ let total=0
 let done=0
 let ongoing=0
 let notstart=0
+
 let delayMap={}
 
 Object.values(addresses).forEach(stams=>{
 Object.values(stams).forEach(apts=>{
 apts.forEach(a=>{
+
 total++
 
 let p=calcProgress(a)
 
-if(p==100) done++
+if(p===100) done++
 else if(p>0) ongoing++
 else notstart++
 
-})
-})
-})
-
-Object.keys(storage).forEach(key=>{
-if(storage[key]=="delay"){
-let parts=key.split("|")
-let apt=parts[0]
-let act=parts[1]
-
-if(!delayMap[apt]) delayMap[apt]=[]
-delayMap[apt].push(act)
+Object.keys(activities).forEach(cat=>{
+activities[cat].forEach(act=>{
+let key=a+"|"+cat+"|"+act
+if(storage[key]==="delay"){
+if(!delayMap[a]) delayMap[a]=[]
+delayMap[a].push(act)
 }
 })
+})
 
-document.getElementById("stats").innerHTML=`
-<div class="stat">Totalt<br>${total}</div>
+})
+})
+})
+
+document.getElementById("stats").innerHTML=
+`<div class="stat">Totalt<br>${total}</div>
 <div class="stat">Klara<br>${done}</div>
 <div class="stat">Pågår<br>${ongoing}</div>
-<div class="stat">Ej startade<br>${notstart}</div>
-`
+<div class="stat">Ej startade<br>${notstart}</div>`
 
 let percent=Math.round(done/total*100)
 
 document.getElementById("projectbar").style.width=percent+"%"
 
-let html=""
-Object.keys(delayMap).forEach(apt=>{
-html+=`<div>LGH ${apt}: ${delayMap[apt].join(", ")}</div>`
+let delayHTML=""
+
+Object.keys(delayMap).forEach(lgh=>{
+delayHTML+=`<div>LGH ${lgh}: ${delayMap[lgh].join(", ")}</div>`
 })
 
-document.getElementById("delaySummary").innerHTML=html
+document.getElementById("delaySummary").innerHTML=delayHTML
+
+updateStamProgress()
+
+}
+
+function updateStamProgress(){
+
+let html=""
+
+Object.keys(addresses).forEach(addr=>{
+Object.keys(addresses[addr]).forEach(stam=>{
+
+let apts=addresses[addr][stam]
+
+let p=0
+
+apts.forEach(a=>{
+p+=calcProgress(a)
+})
+
+p=Math.round(p/apts.length)
+
+html+=`
+<div class="card">
+<b>${addr} – ${stam}</b>
+<div>${p}%</div>
+<div class="progress">
+<div class="bar" style="width:${p}%"></div>
+</div>
+</div>
+`
+
+})
+})
+
+document.getElementById("stamstats").innerHTML=html
 
 }
 
 function showHouse(){
 
 document.getElementById("dashboard").classList.add("hidden")
-document.getElementById("apartment").classList.add("hidden")
 
 let house=document.getElementById("house")
+
 house.classList.remove("hidden")
 
-let html=`<button class="back-btn" onclick="showDashboard()">⬅ Dashboard</button>`
+let html=`<button class="back-btn" onclick="location.reload()">⬅ Dashboard</button><h2>Huskarta</h2>`
 
 Object.keys(addresses).forEach(addr=>{
 
@@ -258,92 +370,25 @@ html+=`<div class="card"><b>${stam}</b><div class="grid">`
 
 addresses[addr][stam].forEach(num=>{
 
-let progress=calcProgress(num)
-
-let color="#9E9E9E"
-if(progress==100) color="#4CAF50"
-else if(progress>0) color="#F2A900"
-
-Object.keys(storage).forEach(key=>{
-if(key.startsWith(num+"|") && storage[key]=="delay"){
-color="#e53935"
-}
-})
+let p=calcProgress(num)
 
 html+=`
-<div class="apt" style="background:${color}" onclick="openApartment('${num}')">
-LGH ${num}<br>${progress}%
+<div class="apt" onclick="openApartment('${num}')">
+LGH ${num}
+<div>${p}%</div>
+<div class="progress"><div class="bar" style="width:${p}%"></div></div>
 </div>
 `
+
 })
 
 html+="</div></div>"
+
 })
+
 })
 
 house.innerHTML=html
-
-}
-
-function openApartment(num){
-
-document.getElementById("house").classList.add("hidden")
-
-let div=document.getElementById("apartment")
-div.classList.remove("hidden")
-
-let html=`<button class="back-btn" onclick="showHouse()">⬅ Tillbaka</button>
-<h2>LGH ${num}</h2>`
-
-activities.forEach(act=>{
-
-let key=num+"|"+act
-let val=storage[key]||""
-
-html+=`
-<div class="activity">
-<span>${act}</span>
-
-<span>
-
-<button class="btn-klar ${val=='klar'?'active':''}" onclick="setStatus('${key}','klar')">Klar</button>
-<button class="btn-pagar ${val=='pagar'?'active':''}" onclick="setStatus('${key}','pagar')">Pågår</button>
-<button class="btn-delay ${val=='delay'?'active':''}" onclick="setStatus('${key}','delay')">Försenad</button>
-
-</span>
-</div>
-`
-})
-
-html+=`<button class="back-btn" onclick="showHouse()">⬅ Tillbaka</button>`
-
-div.innerHTML=html
-
-}
-
-function showDashboard(){
-
-document.getElementById("house").classList.add("hidden")
-document.getElementById("apartment").classList.add("hidden")
-
-document.getElementById("dashboard").classList.remove("hidden")
-
-}
-
-function setStatus(key,val){
-
-if(storage[key]==val){
-delete storage[key]
-}else{
-storage[key]=val
-}
-
-localStorage.setItem("kaveros_data",JSON.stringify(storage))
-
-let apt=key.split("|")[0]
-
-updateDashboard()
-openApartment(apt)
 
 }
 
