@@ -165,8 +165,44 @@ align-items:center;
 <div id="projectbar" class="bar"></div>
 </div>
 
-</div>
+<div id="stamProgress"></div>
 
+function updateStamProgress(){
+
+let html=""
+
+Object.keys(addresses).forEach(addr=>{
+
+Object.keys(addresses[addr]).forEach(stam=>{
+
+let apts=addresses[addr][stam]
+
+let progressTotal=0
+
+apts.forEach(a=>{
+progressTotal+=calcProgress(a)
+})
+
+let stamPercent=Math.round(progressTotal/apts.length)
+
+html+=`
+<div class="card">
+<b>${addr} – ${stam}</b>
+<div class="progress">
+<div class="bar" style="width:${stamPercent}%"></div>
+</div>
+${stamPercent}%
+</div>
+`
+
+})
+
+})
+
+document.getElementById("stamProgress").innerHTML=html
+
+}
+  
 <div class="card">
 
 <h2>Försenade aktiviteter</h2>
