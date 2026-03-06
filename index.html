@@ -102,12 +102,12 @@ gap:10px;
 }
 
 .apt{
-background:#e4e9ef;
 padding:10px;
 border-radius:8px;
 text-align:center;
 font-weight:600;
 cursor:pointer;
+color:white;
 }
 
 .activity{
@@ -259,6 +259,28 @@ return total?Math.round(done/total*100):0
 
 }
 
+function getApartmentColor(num){
+
+let progress=calcProgress(num)
+
+let color="#9E9E9E"
+
+if(progress==100) color="#4CAF50"
+else if(progress>0) color="#F2A900"
+
+Object.keys(activities).forEach(cat=>{
+activities[cat].forEach(act=>{
+let key=num+"|"+cat+"|"+act
+if(storage[key]==="delay"){
+color="#e53935"
+}
+})
+})
+
+return color
+
+}
+
 function updateDashboard(){
 
 let total=0
@@ -301,7 +323,6 @@ document.getElementById("stats").innerHTML=
 <div class="stat">Ej startade<br>${notstart}</div>`
 
 let percent=Math.round(done/total*100)
-
 document.getElementById("projectbar").style.width=percent+"%"
 
 let delayHTML=""
@@ -326,23 +347,16 @@ Object.keys(addresses[addr]).forEach(stam=>{
 let apts=addresses[addr][stam]
 
 let p=0
-
-apts.forEach(a=>{
-p+=calcProgress(a)
-})
-
+apts.forEach(a=>{p+=calcProgress(a)})
 p=Math.round(p/apts.length)
 
 html+=`
 <div class="card">
 <b>${addr} – ${stam}</b>
 <div>${p}%</div>
-<div class="progress">
-<div class="bar" style="width:${p}%"></div>
-</div>
+<div class="progress"><div class="bar" style="width:${p}%"></div></div>
 </div>
 `
-
 })
 })
 
@@ -355,7 +369,6 @@ function showHouse(){
 document.getElementById("dashboard").classList.add("hidden")
 
 let house=document.getElementById("house")
-
 house.classList.remove("hidden")
 
 let html=`<button class="back-btn" onclick="location.reload()">⬅ Dashboard</button><h2>Huskarta</h2>`
@@ -370,13 +383,13 @@ html+=`<div class="card"><b>${stam}</b><div class="grid">`
 
 addresses[addr][stam].forEach(num=>{
 
-let p=calcProgress(num)
+let color=getApartmentColor(num)
+let progress=calcProgress(num)
 
 html+=`
-<div class="apt" onclick="openApartment('${num}')">
+<div class="apt" style="background:${color}" onclick="openApartment('${num}')">
 LGH ${num}
-<div>${p}%</div>
-<div class="progress"><div class="bar" style="width:${p}%"></div></div>
+<div>${progress}%</div>
 </div>
 `
 
@@ -389,6 +402,59 @@ html+="</div></div>"
 })
 
 house.innerHTML=html
+
+}
+
+function openApartment(num){
+
+document.getElementById("house").classList.add("hidden")
+
+let div=document.getElementById("apartment")
+div.classList.remove("hidden")
+
+let html=`<button class="back-btn" onclick="showHouse()">⬅ Husvy</button>
+<h2>LGH ${num}</h2>`
+
+Object.keys(activities).forEach(cat=>{
+
+html+=`<div class="card"><b>${cat}</b>`
+
+activities[cat].forEach(act=>{
+
+let key=num+"|"+cat+"|"+act
+let val=storage[key]||""
+
+html+=`
+<div class="activity">
+<div class="row">
+<span>${act}</span>
+<span>
+<button class="btn-klar" onclick="setStatus('${key}','klar')">Klar</button>
+<button class="btn-pagar" onclick="setStatus('${key}','pagar')">Pågår</button>
+<button class="btn-delay" onclick="setStatus('${key}','delay')">Försenad</button>
+</span>
+</div>
+<input class="comment" placeholder="Kommentar">
+</div>
+`
+
+})
+
+html+="</div>"
+
+})
+
+html+=`<button class="back-btn" onclick="showHouse()">⬅ Husvy</button>`
+
+div.innerHTML=html
+
+}
+
+function setStatus(key,val){
+
+storage[key]=val
+localStorage.setItem("kaveros_data",JSON.stringify(storage))
+updateDashboard()
 
 }
 
