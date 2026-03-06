@@ -375,7 +375,22 @@ let p=calcProgress(num)
 html+=`
 <div class="apt" onclick="openApartment('${num}')">
 LGH ${num}
-<div>${p}%</div>
+</div>
+
+function openApartment(num){
+
+document.getElementById("house").classList.add("hidden")
+
+let div=document.getElementById("apartment")
+div.classList.remove("hidden")
+
+div.innerHTML=`
+<button onclick="showHouse()">⬅ Tillbaka</button>
+<h2>LGH ${num}</h2>
+`
+
+}
+
 <div class="progress"><div class="bar" style="width:${p}%"></div></div>
 </div>
 `
