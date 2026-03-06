@@ -4,7 +4,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Stamrenovering Kaverös</title>
 
 <style>
@@ -232,27 +231,14 @@ const addresses={
 }
 
 const activities={
-
 "RIVNING":["Asbestsanering","Rivning","Håltagning","Städning"],
-
-"VVS":[
-"Kassettmontage","Rör i badrum","Rör till kök/WC","Avloppstam kök",
-"Blandare och avlopp diskbänk","Gummi kassettbotten",
-"Kassettfront monterad","Komplettering","Städning"
-],
-
-"BYGG":[
-"Formning Genomföringar","Fönstermontage","LP 50 i tak",
-"Gjutning Genomföringar och övriga hål",
-"Stomme/isolering/gipsning väggar",
-"Gipsning Slitsar i kök/hall",
-"Stomme/Isolering/gipsning tak",
-"Gipsning och isolering köksschakt",
-"Ny dörromfattning",
-"Tillbaka med Kylskåp",
-"Städning"
-]
-
+"VVS":["Kassettmontage","Rör i badrum","Rör till kök/WC","Avloppstam kök","Blandare och avlopp diskbänk","Gummi kassettbotten","Kassettfront monterad","Komplettering","Städning"],
+"BYGG":["Formning Genomföringar","Fönstermontage","LP 50 i tak","Gjutning Genomföringar och övriga hål","Stomme/isolering/gipsning väggar","Gipsning Slitsar i kök/hall","Stomme/Isolering/gipsning tak","Gipsning och isolering köksschakt","Ny dörromfattning","Tillbaka med Kylskåp","Städning"],
+"KÖKSFÖRNYELSE":["Demontering","Målning stommar","Målning väggar tak","Montering stommar/luckor/bänkskiva","Golvläggning","Kakel våtdel","Montering köksfläkt","Vitvaror","Belysning"],
+"EL":["Kanalisation i vägg och tak"],
+"MÅLNING":["Spackling/Målning tak","Spackling/målning Slitsar"],
+"KAKEL":["Tätskikt","Plattsättning","Fogning","Städning"],
+"KOMPLETTERING":["Montering dörr","Montering sakvaror och skåp","Installation belysning och apparater","Mjukfogning","Montering Porslin och blandare","Vatten påslaget"]
 }
 
 let storage=JSON.parse(localStorage.getItem("kaveros_data")||"{}")
@@ -296,17 +282,11 @@ else notstart++
 
 Object.keys(activities).forEach(cat=>{
 activities[cat].forEach(act=>{
-
 let key=a+"|"+cat+"|"+act
-
 if(storage[key]==="delay"){
-
 if(!delayMap[a]) delayMap[a]=[]
-
 delayMap[a].push(act)
-
 }
-
 })
 })
 
@@ -378,7 +358,7 @@ let house=document.getElementById("house")
 
 house.classList.remove("hidden")
 
-let html="<h2>Huskarta</h2>"
+let html=`<button class="back-btn" onclick="location.reload()">⬅ Dashboard</button><h2>Huskarta</h2>`
 
 Object.keys(addresses).forEach(addr=>{
 
@@ -407,8 +387,6 @@ html+="</div></div>"
 })
 
 })
-
-html+=`<button class="back-btn" onclick="location.reload()">⬅ Dashboard</button>`
 
 house.innerHTML=html
 
