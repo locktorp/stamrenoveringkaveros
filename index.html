@@ -188,26 +188,89 @@ const activities=[
 "Rivning",
 "Håltagning",
 "Städning",
+
 "Kassettmontage",
 "Rör i badrum",
 "Rör till kök/WC",
 "Avloppstam kök",
-"Blandare diskbänk",
-"Formning genomföringar",
+"Blandare och avlopp diskbänk",
+"Gummi kassettbotten",
+"Kassettfront monterad",
+"Komplettering",
+"Städning VVS",
+
+"Formning Genomföringar",
 "Fönstermontage",
-"LP 50 i tak"
+"LP 50 i tak",
+"Gjutning Genomföringar",
+"Stomme isolering gips väggar",
+"Gipsning Slitsar",
+"Stomme isolering gips tak",
+"Gipsning köksschakt",
+"Ny dörromfattning",
+"Tillbaka med kylskåp",
+"Städning bygg",
+
+"Demontering kök",
+"Målning stommar",
+"Målning väggar tak",
+"Montering stommar",
+"Golvläggning",
+"Kakel våtdel",
+"Montering köksfläkt",
+"Vitvaror",
+"Belysning",
+
+"Kanalisation vägg tak",
+
+"Spackling målning tak",
+"Spackling målning slitsar",
+
+"Tätskikt",
+"Plattsättning",
+"Fogning",
+"Städning kakel",
+
+"Montering dörr",
+"Montering sakvaror",
+"Installation belysning",
+"Mjukfogning",
+"Montering porslin",
+"Vatten påslaget"
 
 ]
-
 const addresses={
 
 "Dirigentgatan 3":{
+
 "Stam 1":["484","488","493","498"],
-"Stam 2":["485","489","494","499"]
+"Stam 2":["485","489","494","499"],
+"Stam 3":["486","490","495","500"],
+"Stam 4":["487","491","496","501"],
+"Stam 5":["492","497","502"],
+"Stam 6":["511","517","523"],
+"Stam 7":["503","512","518","524"],
+"Stam 8":["504","507","513","519"],
+"Stam 9":["505","508","514","520"],
+"Stam 10":["506","509","515","521"],
+"Stam 11":["510","516","522"]
+
 },
 
 "Dirigentgatan 1":{
-"Stam 1":["525","529","534","539"]
+
+"Stam 1":["525","529","534","539"],
+"Stam 2":["526","530","535","540"],
+"Stam 3":["527","531","536","541"],
+"Stam 4":["532","537","542"],
+"Stam 5":["533","538","543"],
+"Stam 6":["552","558","564"],
+"Stam 7":["544","553","559","565"],
+"Stam 8":["545","548","554","560"],
+"Stam 9":["546","549","555","561"],
+"Stam 10":["547","550","556","562"],
+"Stam 11":["551","557","563"]
+
 }
 
 }
@@ -216,13 +279,16 @@ let storage=JSON.parse(localStorage.getItem("kaveros_data")||"{}")
 
 function calcProgress(apt){
 
+let total=activities.length
 let done=0
 
 activities.forEach(act=>{
 if(storage[apt+"|"+act]=="klar") done++
 })
 
-return Math.round(done/activities.length*100)
+if(total===0) return 0
+
+return Math.round(done/total*100)
 
 }
 
