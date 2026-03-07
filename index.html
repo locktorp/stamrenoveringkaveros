@@ -143,25 +143,11 @@ if(file){ window.open(file,"_blank"); }
 const activities={
 "RIVNING":["Asbestsanering","Rivning","Håltagning","Städning"],
 "VVS":["Kassettmontage","Rör i badrum","Rör till kök/WC","Avloppstam kök","Blandare diskbänk","Gummi kassettbotten","Kassettfront monterad","Komplettering","Städning"],
-"BYGG":[
-"Formning Genomföringar",
-"Fönstermontage",
-"Torkutrustning utställd",
-"LP50 tak",
-"Gjutning Genomföringar",
-"Stomme väggar",
-"Gipsning slitsar",
-"Stomme tak",
-"Gipsning köksschakt",
-"Ny dörr",
-"Tillbaka kylskåp",
-"Städning",
-"Torkutrustning bortplockad"
-]
+"BYGG":["Formning Genomföringar","Fönstermontage","LP50 tak","Gjutning Genomföringar","Stomme väggar","Gipsning slitsar","Stomme tak","Gipsning köksschakt","Ny dörr","Tillbaka kylskåp","Städning"],
 "KÖKSFÖRNYELSE":["Demontering","Målning stommar","Målning väggar","Montering stommar","Golvläggning","Kakel våtdel","Köksfläkt","Vitvaror","Belysning"],
 "EL":["Kanalisation vägg och tak"],
 "MÅLNING":["Spackling tak","Spackling slitsar"],
-"KAKEL":["Golvavjämning","Tätskikt","Plattsättning","Fogning","Städning"],
+"KAKEL":["Tätskikt","Plattsättning","Fogning","Städning"],
 "KOMPLETTERING":["Montering dörr","Montering skåp","Installation belysning","Mjukfogning","Montering porslin","Vatten på"]
 }
 
@@ -276,32 +262,15 @@ localStorage.setItem("kaveros_data",JSON.stringify(storage))
 
 
 function markAllClear(apt){
-
-let allClear=true
-
 Object.keys(activities).forEach(cat=>{
 activities[cat].forEach(act=>{
 let key=apt+"|"+cat+"|"+act
-if(storage[key]!="klar") allClear=false
-})
-})
-
-Object.keys(activities).forEach(cat=>{
-activities[cat].forEach(act=>{
-let key=apt+"|"+cat+"|"+act
-if(allClear){
-delete storage[key]
-}else{
 storage[key]="klar"
-}
 })
 })
-
 localStorage.setItem("kaveros_data",JSON.stringify(storage))
-
 renderHouse()
 openApartment(apt)
-
 }
 
 
@@ -489,7 +458,6 @@ delayHTML+=`LGH ${a}: ${delayMap[a].join(", ")}<br>`
 })
 if(delayHTML=="") delayHTML="Inga förseningar registrerade"
 
-html+=`<br><button onclick="closeModal()">Stäng</button>`
 document.getElementById("delays").innerHTML=delayHTML
 }
 
