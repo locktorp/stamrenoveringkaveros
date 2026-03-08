@@ -843,5 +843,38 @@ firebaseSave(JSON.parse(value))
 }
 
 </script>
+  <script>
+
+/* STOP MODAL FROM CLOSING */
+
+let currentApartment = null
+
+const originalOpenApartment = openApartment
+
+openApartment = function(num){
+
+currentApartment = num
+
+originalOpenApartment(num)
+
+}
+
+const originalRenderHouse = renderHouse
+
+renderHouse = function(){
+
+originalRenderHouse()
+
+if(currentApartment){
+
+setTimeout(()=>{
+openApartment(currentApartment)
+},10)
+
+}
+
+}
+
+</script>
 </body>
 </html>
