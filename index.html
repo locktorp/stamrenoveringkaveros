@@ -112,83 +112,53 @@ box-shadow:0 2px 6px rgba(0,0,0,0.08);
 font-size:22px;
 margin-top:6px;
 }
-/* MOBILE VERSION */
+</style>
 
-@media (max-width: 700px){
 
-body{
-padding:8px;
-font-size:14px;
-}
-
-/* Header */
+<style>
 .header-logo{
-flex-direction:column;
+display:flex;
 align-items:center;
-text-align:center;
-gap:6px;
+gap:12px;
+margin-bottom:10px;
 }
-
 .header-logo img{
-height:34px;
+height:40px;
 }
+.header-logo-title{
+font-size:20px;
+font-weight:600;
+}
+</style>
 
-/* Stamplan */
-.house{
-gap:6px;
-}
 
-.stem{
-min-width:70px;
-padding:6px;
-}
+<style>
+.desktop-only{display:block;}
 
-/* Lägenheter */
-.apt{
-padding:10px 4px;
-font-size:13px;
-}
-
-/* Dashboard */
-.dashboard{
-flex-wrap:wrap;
-gap:8px;
-}
-
-/* Tillval */
-.tillval-box{
-flex-wrap:wrap;
-gap:8px;
-}
-
-.tillval-card{
-flex:1 1 120px;
-}
-
-/* Knappar */
-button{
-width:100%;
-padding:12px;
-margin-top:6px;
-font-size:14px;
-}
-
-/* Popup */
-.modal-content{
-width:95%;
-max-height:90vh;
-overflow:auto;
-padding:16px;
-}
-
-}
 </style>
 
 </head>
 
 <body>
 
-<header><img src="skanska-logo.png" style="height:40px;margin-right:10px;vertical-align:middle;">Stamrenovering Kaverös</header>
+
+</div>
+
+
+<header style="display:flex;align-items:center;justify-content:space-between;">
+<div>
+<img src="skanska-logo.png" style="height:40px;margin-right:10px;vertical-align:middle;">
+Stamrenovering Kaverös
+</div>
+
+<div class="desktop-only" style="font-size:14px;">
+Användare:
+<input id="usernameInput" placeholder="namn" style="padding:4px;">
+<button onclick="saveUser()">Spara</button>
+<span id="currentUser" style="margin-left:8px;font-weight:bold;"></span>
+</div>
+
+</header>
 
 <div class="container">
 
@@ -370,14 +340,32 @@ openApartment(apt)
 }
 
 
+
 function setStatus(key,val){
 if(storage[key]==val) delete storage[key]
 else storage[key]=val
+
 localStorage.setItem("kaveros_data",JSON.stringify(storage))
+
+// ---- history logging ----
+try{
+let user = localStorage.getItem("kaveros_user") || "okänd"
+if(val=="klar"){
+let hist = JSON.parse(localStorage.getItem("kaveros_history")||"{}")
+if(!hist[key]) hist[key]=[]
+hist[key].push({
+user:user,
+time:new Date().toLocaleString()
+})
+localStorage.setItem("kaveros_history",JSON.stringify(hist))
+}
+}catch(e){}
+
 renderHouse()
 let apt=key.split("|")[0]
 openApartment(apt)
 }
+
 
 function openApartment(num){
 
@@ -434,6 +422,17 @@ html+=`
 </div>
 `
 })
+})
+
+
+let hist = JSON.parse(localStorage.getItem("kaveros_history")||"{}")
+html+=`<h3>Historik</h3>`
+Object.keys(hist).forEach(k=>{
+if(k.startsWith(num+"|")){
+hist[k].forEach(h=>{
+html+=`<div style="font-size:12px;color:#555;">👷 ${h.user} – ${h.time}</div>`
+})
+}
 })
 
 document.getElementById("apartmentContent").innerHTML=html
@@ -631,6 +630,51 @@ btn.onclick=closeModal;
 modal.appendChild(btn);
 }
 },10);
+}
+</script>
+
+
+<script>
+let currentUser = localStorage.getItem("kaveros_user") || "";
+
+function saveUser(){
+  const name = document.getElementById("usernameInput").value;
+  if(!name) return;
+  localStorage.setItem("kaveros_user",name);
+  currentUser = name;
+  document.getElementById("currentUser").innerText="Inloggad: "+name;
+}
+
+window.addEventListener("load",()=>{
+  if(currentUser){
+    const el=document.getElementById("currentUser");
+    if(el) el.innerText="Inloggad: "+currentUser;
+  }
+});
+</script>
+
+
+<script>
+function saveApartmentPhoto(event,apt){
+  const file = event.target.files[0];
+  if(!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e){
+    localStorage.setItem("photo_"+apt,e.target.result);
+    showApartmentPhoto(apt);
+  };
+  reader.readAsDataURL(file);
+}
+
+function showApartmentPhoto(apt){
+  const img = localStorage.getItem("photo_"+apt);
+  if(img){
+    const el = document.getElementById("photo_"+apt);
+    if(el){
+      el.innerHTML='<img src="'+img+'" style="max-width:100%;border-radius:8px;">';
+    }
+  }
 }
 </script>
 
