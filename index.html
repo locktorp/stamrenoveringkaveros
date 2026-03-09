@@ -307,17 +307,29 @@ return "none"
 
 
 function toggleOption(apt,opt,val){
+
+storage = JSON.parse(localStorage.getItem("kaveros_data")||"{}")
+
 if(val) storage[apt+"|OPT|"+opt]=true
 else delete storage[apt+"|OPT|"+opt]
+
 localStorage.setItem("kaveros_data",JSON.stringify(storage))
+
 renderHouse()
+
 }
 
 function toggleState(apt,key,val){
+
+storage = JSON.parse(localStorage.getItem("kaveros_data")||"{}")
+
 if(val) storage[apt+"|STATE|"+key]=true
 else delete storage[apt+"|STATE|"+key]
+
 localStorage.setItem("kaveros_data",JSON.stringify(storage))
+
 renderHouse()
+
 }
 
 function saveNote(apt,text){
@@ -744,7 +756,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-/* -------- SAVE TO FIREBASE -------- */
+/* -------- SAVE TO FIREBASE -------- */  
 
 function firebaseSave(data){
 
