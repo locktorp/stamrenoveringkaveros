@@ -298,8 +298,8 @@ let delay=false
 Object.keys(storage).forEach(k=>{
 if(k.startsWith(apt+"|") && storage[k]=="delay") delay=true
 })
-if(delay) return "delay"
 if(progress==100) return "done"
+if(delay) return "delay"
 if(progress>0) return "progress"
 return "none"
 }
@@ -340,12 +340,24 @@ localStorage.setItem("kaveros_data",JSON.stringify(storage))
 
 
 function markAllClear(apt){
+
+let allClear=true
+
 Object.keys(activities).forEach(cat=>{
 activities[cat].forEach(act=>{
 let key=apt+"|"+cat+"|"+act
-storage[key]="klar"
+if(storage[key]!="klar") allClear=false
 })
 })
+
+Object.keys(activities).forEach(cat=>{
+activities[cat].forEach(act=>{
+let key=apt+"|"+cat+"|"+act
+if(allClear) delete storage[key]
+else storage[key]="klar"
+})
+})
+
 localStorage.setItem("kaveros_data",JSON.stringify(storage))
 renderHouse()
 openApartment(apt)
@@ -431,16 +443,6 @@ html+=`
 })
 })
 
-
-let hist = JSON.parse(localStorage.getItem("kaveros_history")||"{}")
-html+=`<h3>Historik</h3>`
-Object.keys(hist).forEach(k=>{
-if(k.startsWith(num+"|")){
-hist[k].forEach(h=>{
-html+=`<div style="font-size:12px;color:#555;">👷 ${h.user} – ${h.time}</div>`
-})
-}
-})
 
 document.getElementById("apartmentContent").innerHTML=html
 document.getElementById("modal").style.display="flex"
@@ -791,6 +793,24 @@ openApartment(currentApartment)
 
 }
 
+</script>
+<script>
+/* bottom close button patch */
+const oldOpenApartmentPatch = openApartment
+openApartment = function(num){
+oldOpenApartmentPatch(num)
+setTimeout(()=>{
+let c=document.getElementById("apartmentContent")
+if(c && !document.getElementById("bottomClose")){
+let b=document.createElement("button")
+b.id="bottomClose"
+b.innerText="Stäng"
+b.style.marginTop="20px"
+b.onclick=closeModal
+c.appendChild(b)
+}
+},10)
+}
 </script>
 </body>
 </html>
