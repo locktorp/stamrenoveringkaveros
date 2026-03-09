@@ -1,9 +1,9 @@
 
 const activities={
 "RIVNING":["Asbestsanering","Rivning","Håltagning","Städning"],
-"VVS":["Kassettmontage","Rör i badrum","Rör till kök/WC","Avloppstam kök","Blandare diskbänk","Gummi kassettbotten","Kassettfront monterad","Komplettering","Städning"],
-"BYGG":["Formning Genomföringar","Fönstermontage","Torkutrustning utställd","LP50 tak","Gjutning Genomföringar","Stomme väggar","Gipsning slitsar","Stomme tak","Gipsning köksschakt","Ny dörr","Tillbaka kylskåp","Städning","Torkutrustning bortplockad"],
-"KAKEL":["Golvavjämning","Tätskikt","Plattsättning","Fogning","Städning"]
+"VVS":["Kassettmontage","Rör i badrum","Rör till kök/WC"],
+"BYGG":["Formning Genomföringar","Fönstermontage","Torkutrustning utställd","Torkutrustning bortplockad"],
+"KAKEL":["Golvavjämning","Tätskikt","Plattsättning","Fogning"]
 }
 
 const addresses={
@@ -42,10 +42,8 @@ return "none"
 function setStatus(key,val){
 if(storage[key]==val) delete storage[key]
 else storage[key]=val
-
 localStorage.setItem("kaveros_data",JSON.stringify(storage))
 renderHouse()
-
 let apt=key.split("|")[0]
 openApartment(apt)
 }
@@ -73,7 +71,6 @@ html+=`
 <button class="btn-delay ${val==='delay'?'active':''}" onclick="setStatus('${key}','delay')">Försenad</button>
 </span>
 </div>`
-
 })
 })
 

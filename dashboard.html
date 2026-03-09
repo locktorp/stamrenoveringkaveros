@@ -7,16 +7,12 @@
 <title>Dashboard</title>
 <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
 <header class="topbar">
-<div class="left">
 <img src="skanska-logo.png" class="logo">
-</div>
-
-<div class="right">
-<button class="navBtn" onclick="location.href='index.html'">Stamplan</button>
+<div class="nav">
+<button onclick="location.href='index.html'">Stamplan</button>
 </div>
 </header>
 
@@ -25,11 +21,14 @@
 <h2>Projektstatus</h2>
 
 <div class="stats">
-<div class="stat" id="total"></div>
-<div class="stat" id="done"></div>
-<div class="stat" id="progress"></div>
-<div class="stat" id="notStarted"></div>
+<div class="stat total" id="total"></div>
+<div class="stat done" id="done"></div>
+<div class="stat progress" id="progress"></div>
+<div class="stat notstarted" id="notStarted"></div>
 </div>
+
+<h3>Tillval</h3>
+<div id="tillval"></div>
 
 <h3>Försenade aktiviteter</h3>
 <div id="delays" class="delayList"></div>
