@@ -605,43 +605,6 @@ renderDashboard()
 
 function renderTimeline(){
 
-let today = new Date()
-let html=""
-
-Object.keys(schedule).forEach(addr=>{
-
-Object.keys(schedule[addr]).forEach(stam=>{
-
-let s = new Date(schedule[addr][stam].start)
-let e = new Date(schedule[addr][stam].end)
-
-let duration = e - s
-let passed = today - s
-
-let percent = Math.max(0,Math.min(100,(passed/duration)*100))
-
-html+=`
-<div class="timeline-row">
-<div class="timeline-label">${stam}</div>
-
-<div class="timeline-bar">
-
-<div class="timeline-progress"
-style="width:${percent}%">
-</div>
-
-</div>
-
-</div>
-`
-
-})
-
-})
-
-document.getElementById("timeline").innerHTML=html
-}
-
 let total=0,done=0,progress=0,notStarted=0
 let delayMap={}
 let ht=0
