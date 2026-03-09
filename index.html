@@ -363,12 +363,7 @@ localStorage.setItem("kaveros_data",JSON.stringify(storage))
 try{
 let user = localStorage.getItem("kaveros_user") || "okänd"
 if(val=="klar"){
-let hist = JSON.parse(localStorage.getItem("kaveros_history")||"{}")
-if(!hist[key]) hist[key]=[]
-hist[key].push({
-user:user,
-time:new Date().toLocaleString()
-})
+
 localStorage.setItem("kaveros_history",JSON.stringify(hist))
 }
 }catch(e){}
@@ -732,7 +727,6 @@ let remote = snap.data().data
 
 storage = remote
 
-localStorage.setItem("kaveros_data",JSON.stringify(remote))
 firebaseSave(storage)
   
 if(!currentApartment){
