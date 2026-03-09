@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -24,15 +25,9 @@ header{background:white;padding:18px;box-shadow:0 4px 12px rgba(0,0,0,0.08);font
 
 .house{display:flex;gap:10px;}
 
-.stem{
-background:white;
-padding:10px;
-border-radius:10px;
-width:95px;
-min-width:95px;
+.stem{background:white;padding:10px;border-radius:10px;width:95px;min-width:95px;
 text-align:center;
 box-shadow:0 2px 6px rgba(0,0,0,0.08);
-border:2px solid black;
 }
 
 .stem b{display:block;margin-bottom:6px;color:black;}
@@ -141,33 +136,6 @@ margin-top:6px;
 
 
 <style>
-
-.desktop-only{display:block;}
-
-.timeline-row{
-display:flex;
-align-items:center;
-margin:6px 0;
-}
-
-.timeline-label{
-width:80px;
-font-weight:600;
-}
-
-.timeline-bar{
-flex:1;
-height:16px;
-background:#e0e0e0;
-border-radius:6px;
-overflow:hidden;
-}
-
-.timeline-progress{
-height:100%;
-background:#2E7D32;
-}
-  
 .header-logo{
 display:flex;
 align-items:center;
@@ -185,7 +153,6 @@ font-weight:600;
 
 
 <style>
-
 .desktop-only{display:block;}
 
 </style>
@@ -247,8 +214,6 @@ Användare:
 
 <h3>Försenade aktiviteter</h3>
 <div id="delays" class="delayList"></div>
-<h3>Tidslinje produktion</h3>
-<div id="timeline"></div>
 
 </div>
 
@@ -260,27 +225,7 @@ Användare:
 
 <script>
 
-const schedule = {
 
-"Dirigentgatan 1":{
-
-"Stam 5":{start:"2026-03-23",end:"2026-05-29"},
-"Stam 2":{start:"2026-05-30",end:"2026-07-10"},
-"Stam 3":{start:"2026-07-11",end:"2026-08-21"},
-"Stam 4":{start:"2026-08-22",end:"2026-10-02"},
-"Stam 1":{start:"2026-10-03",end:"2026-11-13"}
-
-},
-
-"Dirigentgatan 3":{
-
-"Stam 3":{start:"2025-11-10",end:"2025-12-19"},
-"Stam 4":{start:"2025-12-20",end:"2026-01-30"},
-"Stam 5":{start:"2026-01-31",end:"2026-03-13"}
-
-}
-
-}
 
 
 const drawings = {
@@ -603,7 +548,7 @@ document.getElementById("house").innerHTML=html
 renderDashboard()
 }
 
-function renderTimeline(){
+function renderDashboard(){
 
 let total=0,done=0,progress=0,notStarted=0
 let delayMap={}
