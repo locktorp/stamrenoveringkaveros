@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -6,46 +7,20 @@
 <title>Stamrenovering Kaverös</title>
 <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<header class="header">
-<div>
+<header class="topbar">
+<div class="left">
 <img src="skanska-logo.png" class="logo">
-Stamrenovering Kaverös
 </div>
 
-<div class="userbox">
-Användare:
-<input id="usernameInput" placeholder="namn">
-<button onclick="saveUser()">Spara</button>
-<span id="currentUser"></span>
+<div class="right">
+<button class="navBtn" onclick="location.href='dashboard.html'">Dashboard</button>
 </div>
 </header>
 
 <div class="container">
-
-<h2>Stamplan</h2>
 <div id="house"></div>
-
-<div class="dashboard">
-<h2>Projektstatus</h2>
-
-<div class="stats">
-<div class="stat" id="total"></div>
-<div class="stat" id="done"></div>
-<div class="stat" id="progress"></div>
-<div class="stat" id="notStarted"></div>
-</div>
-
-<h3>Tillval sammanställning</h3>
-<div id="tillvalSummary"></div>
-
-<h3>Försenade aktiviteter</h3>
-<div id="delays" class="delayList"></div>
-
-</div>
-
 </div>
 
 <div id="modal" class="modal">
@@ -53,7 +28,5 @@ Användare:
 </div>
 
 <script src="app.js"></script>
-<script type="module" src="firebase.js"></script>
-
 </body>
 </html>
