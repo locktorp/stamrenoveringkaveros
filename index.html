@@ -764,7 +764,9 @@ let remote = snap.data().data
 
 localStorage.setItem("kaveros_data",JSON.stringify(remote))
 
-location.reload()
+if(!currentApartment){
+renderHouse()
+}
 
 }
 
