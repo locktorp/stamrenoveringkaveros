@@ -4,7 +4,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stamrenovering Kaverös</title>
+Stamrenovering Kaverös
+<button onclick="showStam()" style="margin-left:40px;">Stamplan</button>
+<button onclick="showDash()">Dashboard</button>
 
 <style>
 body{
@@ -55,7 +57,19 @@ font-size:13px;
 
 .dashboard{background:white;padding:10px;border-radius:12px;margin-top:40px;}
 .stats{display:flex;gap:20px;margin-bottom:20px;}
-.stat{background:#f1f4f7;padding:15px;border-radius:8px;flex:1;text-align:center;font-weight:600;}
+.stat{
+padding:15px;
+border-radius:8px;
+flex:1;
+text-align:center;
+font-weight:600;
+color:white;
+}
+
+#total{background:#455A64;}
+#done{background:#2E7D32;}
+#progress{background:#F2A900;}
+#notStarted{background:#9E9E9E;}
 .delayList{color:#c62828;font-weight:600;}
 
 .activity{display:flex;justify-content:space-between;border-bottom:1px solid #eee;padding:6px 0;}
