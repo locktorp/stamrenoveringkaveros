@@ -762,8 +762,11 @@ if(snap.exists()){
 
 let remote = snap.data().data
 
-localStorage.setItem("kaveros_data",JSON.stringify(remote))
+storage = remote
 
+localStorage.setItem("kaveros_data",JSON.stringify(remote))
+firebaseSave(storage)
+  
 if(!currentApartment){
 renderHouse()
 }
