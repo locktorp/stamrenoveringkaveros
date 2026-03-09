@@ -1,12 +1,271 @@
+
 <!DOCTYPE html>
 <html lang="sv">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Stamrenovering Kaverös</title>
+
+<style>
+body{font-family:system-ui;margin:0;background:#f4f6f8;}
+header{background:white;padding:18px;box-shadow:0 4px 12px rgba(0,0,0,0.08);font-size:22px;font-weight:600;}
+.container{max-width:1600px;margin:auto;padding:20px;}
+.houseWrapper{display:flex;gap:25px;}
+.floors{display:flex;flex-direction:column;margin-top:28px;font-weight:700;}
+.floor{height:55px;display:flex;align-items:center;justify-content:center;font-size:14px;}
+.house{display:flex;gap:10px;}
+.stem{background:white;padding:10px;border-radius:10px;width:95px;min-width:95px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,0.08);}
+.stem b{display:block;margin-bottom:6px;color:black;}
+.apt{position:relative;padding:10px 6px;margin:4px 0;border-radius:6px;color:white;font-weight:600;cursor:pointer;font-size:13px;}
+.label-left{position:absolute;left:4px;top:4px;font-size:10px;color:black;font-weight:700;}
+.label-right{position:absolute;right:4px;top:4px;font-size:10px;color:black;font-weight:700;}
+.label-bottom-left{position:absolute;left:4px;bottom:4px;font-size:10px;color:black;font-weight:700;}
+.label-bottom-right{position:absolute;right:4px;bottom:4px;font-size:10px;color:black;font-weight:700;}
+.none{background:#9E9E9E;}
+.done{background:#4CAF50;}
+.progress{background:#F2A900;}
+.delay{background:#e53935;}
+.dashboard{background:white;padding:20px;border-radius:12px;margin-top:40px;}
+.stats{display:flex;gap:20px;margin-bottom:20px;}
+.stat{background:#f1f4f7;padding:15px;border-radius:8px;flex:1;text-align:center;font-weight:600;}
+.delayList{color:#c62828;font-weight:600;}
+.activity{display:flex;justify-content:space-between;border-bottom:1px solid #eee;padding:6px 0;}
+button{border:none;padding:7px 12px;border-radius:6px;cursor:pointer;margin-left:4px;font-weight:600;}
+.btn-klar{background:#27AE60;color:white;}
+.btn-pagar{background:#F2A900;color:white;}
+.btn-delay{background:#e53935;color:white;}
+.active{transform:scale(0.92);box-shadow:inset 0 0 10px rgba(0,0,0,0.6);border:3px solid black;}
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);display:none;align-items:center;justify-content:center;}
+.modal-content{background:white;padding:20px;border-radius:10px;max-width:650px;width:90%;max-height:85%;overflow:auto;}
+</style>
+
 </head>
+
 <body>
-<h1>Stamrenovering Kaverös</h1>
-<p>Placera din fullständiga indexkod här (den du skickade i chatten).</p>
+
+<header style="display:flex;align-items:center;justify-content:space-between;">
+<div>
+<img src="skanska-logo.png" style="height:40px;margin-right:10px;vertical-align:middle;">
+Stamrenovering Kaverös
+</div>
+
+<div style="font-size:14px;">
+Användare:
+<input id="usernameInput" placeholder="namn" style="padding:4px;">
+<button onclick="saveUser()">Spara</button>
+<span id="currentUser" style="margin-left:8px;font-weight:bold;"></span>
+</div>
+</header>
+
+<div class="container">
+<h2>Stamplan</h2>
+<div id="house"></div>
+
+<div class="dashboard">
+<h2>Projektstatus</h2>
+
+<div class="stats">
+<div class="stat" id="total"></div>
+<div class="stat" id="done"></div>
+<div class="stat" id="progress"></div>
+<div class="stat" id="notStarted"></div>
+</div>
+
+<h3>Försenade aktiviteter</h3>
+<div id="delays" class="delayList"></div>
+
+</div>
+</div>
+
+<div id="modal" class="modal">
+<div class="modal-content" id="apartmentContent"></div>
+</div>
+
+<script>
+
+let storage=JSON.parse(localStorage.getItem("kaveros_data")||"{}")
+
+const activities={
+"RIVNING":["Asbestsanering","Rivning","Håltagning","Städning"],
+"VVS":["Kassettmontage","Rör i badrum","Rör till kök/WC","Avloppstam kök","Blandare diskbänk","Gummi kassettbotten","Kassettfront monterad","Komplettering","Städning"],
+"BYGG":["Formning Genomföringar","Fönstermontage","Torkutrustning utställd","LP50 tak","Gjutning Genomföringar","Stomme väggar","Gipsning slitsar","Stomme tak","Gipsning köksschakt","Ny dörr","Tillbaka kylskåp","Städning","Torkutrustning bortplockad"],
+"KAKEL":["Golvavjämning","Tätskikt","Plattsättning","Fogning","Städning"]
+}
+
+const addresses={
+"Dirigentgatan 3":{"Stam 1":["484","488","493","498"]}
+}
+
+function calcProgress(apt){
+let total=0,done=0
+Object.keys(activities).forEach(cat=>{
+activities[cat].forEach(act=>{
+total++
+if(storage[apt+"|"+cat+"|"+act]=="klar") done++
+})
+})
+return Math.round(done/total*100)
+}
+
+function calcStatus(apt){
+let progress=calcProgress(apt)
+let delay=false
+Object.keys(storage).forEach(k=>{
+if(k.startsWith(apt+"|") && storage[k]=="delay") delay=true
+})
+if(progress==100) return "done"
+if(delay) return "delay"
+if(progress>0) return "progress"
+return "none"
+}
+
+function setStatus(key,val){
+if(storage[key]==val) delete storage[key]
+else storage[key]=val
+
+localStorage.setItem("kaveros_data",JSON.stringify(storage))
+
+renderHouse()
+
+let apt=key.split("|")[0]
+openApartment(apt)
+}
+
+function openApartment(num){
+
+let html=`<h2>LGH ${num}</h2>`
+
+Object.keys(activities).forEach(cat=>{
+html+=`<h3>${cat}</h3>`
+activities[cat].forEach(act=>{
+
+let key=num+"|"+cat+"|"+act
+let val=storage[key]||""
+
+html+=`
+<div class="activity">
+<span>${act}</span>
+<span>
+<button class="btn-klar ${val==='klar'?'active':''}" onclick="setStatus('${key}','klar')">Klar</button>
+<button class="btn-pagar ${val==='pagar'?'active':''}" onclick="setStatus('${key}','pagar')">Pågår</button>
+<button class="btn-delay ${val==='delay'?'active':''}" onclick="setStatus('${key}','delay')">Försenad</button>
+</span>
+</div>
+`
+})
+})
+
+html+=`<button onclick="closeModal()">Stäng</button>`
+
+document.getElementById("apartmentContent").innerHTML=html
+document.getElementById("modal").style.display="flex"
+}
+
+function closeModal(){
+document.getElementById("modal").style.display="none"
+}
+
+function renderHouse(){
+
+let html=""
+
+Object.keys(addresses).forEach(addr=>{
+
+html+=`<h3>${addr}</h3>`
+html+=`<div class="house">`
+
+Object.keys(addresses[addr]).forEach(stam=>{
+
+html+=`<div class="stem"><b>${stam}</b>`
+
+addresses[addr][stam].forEach(apt=>{
+
+let status=calcStatus(apt)
+let percent=calcProgress(apt)
+
+html+=`
+<div class="apt ${status}" onclick="openApartment('${apt}')">
+${apt}<br>${percent}%
+</div>
+`
+
+})
+
+html+=`</div>`
+})
+
+html+=`</div>`
+})
+
+document.getElementById("house").innerHTML=html
+}
+
+renderHouse()
+
+</script>
+
+<script>
+let currentUser = localStorage.getItem("kaveros_user") || "";
+
+function saveUser(){
+  const name = document.getElementById("usernameInput").value;
+  if(!name) return;
+  localStorage.setItem("kaveros_user",name);
+  currentUser = name;
+  document.getElementById("currentUser").innerText="Inloggad: "+name;
+}
+
+window.addEventListener("load",()=>{
+  if(currentUser){
+    const el=document.getElementById("currentUser");
+    if(el) el.innerText="Inloggad: "+currentUser;
+  }
+});
+</script>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDZY6BJsd1MkzHIY6gUkwFFXz43ACv1NAk",
+  authDomain: "stamrenovering-kaveros.firebaseapp.com",
+  projectId: "stamrenovering-kaveros"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+function firebaseSave(data){
+setDoc(doc(db,"project","kaveros"),{data:data})
+}
+
+onSnapshot(doc(db,"project","kaveros"),(snap)=>{
+if(snap.exists()){
+let remote = snap.data().data
+localStorage.setItem("kaveros_data",JSON.stringify(remote))
+renderHouse()
+}
+})
+
+const oldSetItem = localStorage.setItem
+
+localStorage.setItem = function(key,value){
+
+oldSetItem.apply(this,arguments)
+
+if(key==="kaveros_data"){
+
+try{
+firebaseSave(JSON.parse(value))
+}catch(e){}
+
+}
+
+}
+
+</script>
+
 </body>
 </html>
