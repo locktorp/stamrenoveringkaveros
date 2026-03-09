@@ -260,7 +260,27 @@ Användare:
 
 <script>
 
+const schedule = {
 
+"Dirigentgatan 1":{
+
+"Stam 5":{start:"2026-03-23",end:"2026-05-29"},
+"Stam 2":{start:"2026-05-30",end:"2026-07-10"},
+"Stam 3":{start:"2026-07-11",end:"2026-08-21"},
+"Stam 4":{start:"2026-08-22",end:"2026-10-02"},
+"Stam 1":{start:"2026-10-03",end:"2026-11-13"}
+
+},
+
+"Dirigentgatan 3":{
+
+"Stam 3":{start:"2025-11-10",end:"2025-12-19"},
+"Stam 4":{start:"2025-12-20",end:"2026-01-30"},
+"Stam 5":{start:"2026-01-31",end:"2026-03-13"}
+
+}
+
+}
 
 
 const drawings = {
@@ -583,7 +603,44 @@ document.getElementById("house").innerHTML=html
 renderDashboard()
 }
 
-function renderDashboard(){
+function renderTimeline(){
+
+let today = new Date()
+let html=""
+
+Object.keys(schedule).forEach(addr=>{
+
+Object.keys(schedule[addr]).forEach(stam=>{
+
+let s = new Date(schedule[addr][stam].start)
+let e = new Date(schedule[addr][stam].end)
+
+let duration = e - s
+let passed = today - s
+
+let percent = Math.max(0,Math.min(100,(passed/duration)*100))
+
+html+=`
+<div class="timeline-row">
+<div class="timeline-label">${stam}</div>
+
+<div class="timeline-bar">
+
+<div class="timeline-progress"
+style="width:${percent}%">
+</div>
+
+</div>
+
+</div>
+`
+
+})
+
+})
+
+document.getElementById("timeline").innerHTML=html
+}
 
 let total=0,done=0,progress=0,notStarted=0
 let delayMap={}
