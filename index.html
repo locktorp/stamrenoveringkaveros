@@ -7,15 +7,7 @@
 <title>Stamrenovering Kaverös</title>
 
 <style>
-body{
-font-family:system-ui;
-margin:0;
-background:#f4f6f8;
-background-image:url('background.jpg');
-background-size:cover;
-background-attachment:fixed;
-background-position:center;
-}
+body{font-family:system-ui;margin:0;background:#f4f6f8;}
 header{background:white;padding:18px;box-shadow:0 4px 12px rgba(0,0,0,0.08);font-size:22px;font-weight:600;}
 .container{max-width:1600px;margin:auto;padding:20px;}
 
@@ -306,8 +298,8 @@ let delay=false
 Object.keys(storage).forEach(k=>{
 if(k.startsWith(apt+"|") && storage[k]=="delay") delay=true
 })
-if(progress==100) return "done"
 if(delay) return "delay"
+if(progress==100) return "done"
 if(progress>0) return "progress"
 return "none"
 }
@@ -372,7 +364,7 @@ try{
 let user = localStorage.getItem("kaveros_user") || "okänd"
 if(val=="klar"){
 
-
+localStorage.setItem("kaveros_history",JSON.stringify(hist))
 }
 }catch(e){}
 
@@ -440,6 +432,13 @@ html+=`
 })
 
 
+let hist = JSON.parse(localStorage.getItem("kaveros_history")||"{}")
+html+=`<h3>Historik</h3>`
+Object.keys(hist).forEach(k=>{
+if(k.startsWith(num+"|")){
+hist[k].forEach(h=>{
+html+=`<div style="font-size:12px;color:#555;">👷 ${h.user} – ${h.time}</div>`
+})
 }
 })
 
