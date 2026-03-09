@@ -1,28 +1,5 @@
 
 let storage = JSON.parse(localStorage.getItem("kaveros_data")||"{}")
-function calcStatus(apt){
-
-let delay=false
-let progress=false
-let done=true
-
-Object.keys(storage).forEach(k=>{
-
-if(!k.startsWith(apt+"|")) return
-
-if(storage[k]=="delay") delay=true
-if(storage[k]=="pagar") progress=true
-if(storage[k]!="klar") done=false
-
-})
-
-if(done && Object.keys(storage).length>0) return "done"
-if(delay) return "delay"
-if(progress) return "progress"
-
-return "none"
-
-}
 let currentApartment=null
 
 function saveUser(){
