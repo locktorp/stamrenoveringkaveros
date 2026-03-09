@@ -5,8 +5,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 Stamrenovering Kaverös
-<button onclick="showStam()" style="margin-left:40px;">Stamplan</button>
-<button onclick="showDash()">Dashboard</button>
 
 <style>
 body{
@@ -168,9 +166,23 @@ font-weight:600;
 
 
 <header style="display:flex;align-items:center;justify-content:space-between;">
-<div>
-<img src="skanska-logo.png" style="height:40px;margin-right:10px;vertical-align:middle;">
+
+<div style="display:flex;align-items:center;gap:25px;">
+
+<img src="skanska-logo.png" style="height:40px;">
+
+<div style="font-size:20px;font-weight:600;">
 Stamrenovering Kaverös
+</div>
+
+<button onclick="showStam()" style="padding:6px 14px;">
+Stamplan
+</button>
+
+<button onclick="showDash()" style="padding:6px 14px;">
+Dashboard
+</button>
+
 </div>
 
 <div class="desktop-only" style="font-size:14px;">
@@ -181,13 +193,7 @@ Användare:
 </div>
 
 </header>
-
 <div class="container">
-
-<div style="display:flex;gap:10px;margin-bottom:10px;">
-<button onclick="showStam()">Stamplan</button>
-<button onclick="showDash()">Dashboard</button>
-</div>
 
 
 
