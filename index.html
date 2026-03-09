@@ -692,51 +692,7 @@ function showApartmentPhoto(apt){
 
 
 <script>
-/* ---- SAFE USER PATCH ---- */
-(function(){
 
-const origSetStatus = window.setStatus;
-
-window.setStatus = function(key,val){
-    if(origSetStatus){
-        origSetStatus(key,val);
-    }
-
-    if(val==="klar"){
-        const user = localStorage.getItem("kaveros_user") || "";
-        if(user){
-            try{
-                let data = JSON.parse(localStorage.getItem("kaveros_data")||"{}");
-                data[key+"_user"] = user;
-                localStorage.setItem("kaveros_data",JSON.stringify(data));
-            }catch(e){}
-        }
-    }
-
-    setTimeout(showUsers,50);
-};
-
-function showUsers(){
-    try{
-        let data = JSON.parse(localStorage.getItem("kaveros_data")||"{}");
-        document.querySelectorAll("[data-activity-key]").forEach(el=>{
-            const key = el.getAttribute("data-activity-key");
-            const user = data[key+"_user"];
-            if(user && !el.querySelector(".userLabel")){
-                const div=document.createElement("div");
-                div.className="userLabel";
-                div.style.fontSize="11px";
-                div.style.color="#666";
-                div.textContent="👷 "+user;
-                el.appendChild(div);
-            }
-        });
-    }catch(e){}
-}
-
-window.addEventListener("load",showUsers);
-
-})();
 </script>
 <script type="module">
 
