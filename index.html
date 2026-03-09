@@ -163,7 +163,29 @@ font-weight:600;
 </style>
 
 </head>
+.timeline-row{
+display:flex;
+align-items:center;
+margin:6px 0;
+}
 
+.timeline-label{
+width:80px;
+font-weight:600;
+}
+
+.timeline-bar{
+flex:1;
+height:16px;
+background:#e0e0e0;
+border-radius:6px;
+overflow:hidden;
+}
+
+.timeline-progress{
+height:100%;
+background:#2E7D32;
+}
 <body>
 
 
@@ -219,6 +241,8 @@ Användare:
 
 <h3>Försenade aktiviteter</h3>
 <div id="delays" class="delayList"></div>
+<h3>Tidslinje produktion</h3>
+<div id="timeline"></div>
 
 </div>
 
