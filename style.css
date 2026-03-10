@@ -49,7 +49,11 @@ button{border:none;padding:7px 12px;border-radius:6px;cursor:pointer;margin-left
 .btn-pagar{background:#F2A900;color:white;}
 .btn-delay{background:#e53935;color:white;}
 
-.active{transform:scale(0.92);box-shadow:inset 0 0 10px rgba(0,0,0,0.6);border:3px solid black;}
+.active{
+transform:scale(0.92);
+box-shadow:inset 0 0 10px rgba(0,0,0,0.6);
+border:3px solid black;
+}
 
 .modal{
 position:fixed;
