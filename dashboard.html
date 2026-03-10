@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stamrenovering Kaverös</title>
+<title>Dashboard</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -22,10 +22,26 @@ Stamrenovering Kaverös
 </header>
 
 <div class="container">
-<div id="house"></div>
+
+<div class="dashboard">
+<h2>Projektstatus</h2>
+
+<div class="stats">
+<div class="stat" id="total"></div>
+<div class="stat" id="done"></div>
+<div class="stat" id="progress"></div>
+<div class="stat" id="notStarted"></div>
+</div>
+
+<h3>Framdrift per stam</h3>
+<div id="stemProgress"></div>
+
+</div>
+
 </div>
 
 <script src="app.js"></script>
 <script src="firebase.js"></script>
+
 </body>
 </html>
