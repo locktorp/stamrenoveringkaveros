@@ -7,10 +7,9 @@
 <title>Dashboard</title>
 <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<header>
+<header style="display:flex;align-items:center;justify-content:space-between;">
 <div>
 <img src="skanska-logo.png" style="height:40px;margin-right:10px;vertical-align:middle;">
 Stamrenovering Kaverös
@@ -23,25 +22,21 @@ Stamrenovering Kaverös
 </header>
 
 <div class="container">
-
 <div class="dashboard">
-
 <h2>Projektstatus</h2>
-
 <div class="stats">
-<div class="stat done" id="done"></div>
-<div class="stat progress" id="progress"></div>
-<div class="stat none" id="notStarted"></div>
+<div class="stat" id="total"></div>
+<div class="stat" id="done"></div>
+<div class="stat" id="progress"></div>
+<div class="stat" id="notStarted"></div>
 </div>
-
-<h3>Framdrift per stam</h3>
-<div id="stemProgress"></div>
-
+<div id="tillvalSummary"></div>
+<div id="delays"></div>
 </div>
-
 </div>
 
 <script src="app.js"></script>
+<script type="module" src="firebase.js"></script>
 
 </body>
 </html>

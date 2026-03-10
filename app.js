@@ -1,76 +1,283 @@
 
+
+
+
+
+const drawings = {
+"Dirigentgatan 6": "Dirigentgatan 6.pdf",
+"Dirigentgatan 3": "Dirigentgatan 3.pdf",
+"Dirigentgatan 1": "Dirigentgatan 1.pdf",
+"Dirigentgatan 4": "Dirigentgatan 4.pdf"
+};
+
+function openDrawing(addr){
+let file = drawings[addr];
+if(file){ window.open(file,"_blank"); }
+}
+
 const activities={
-"RIVNING":["Asbestsanering","Rivning","Håltagning","Slipning av väggar","Städning"],
-"VVS":["Kassettmontage","Rör i badrum"],
-"BYGG":["Formning Genomföringar","Täckning av golv","Stomme väggar"],
-"EL":["Kanalisation vägg och tak","Dragning av IMD-kanalisation"],
-"KAKEL":["Golvavjämning","Tätskikt","Plattsättning"]
+"RIVNING":["Asbestsanering","Rivning","Håltagning","Städning"],
+"VVS":["Kassettmontage","Rör i badrum","Rör till kök/WC","Avloppstam kök","Blandare diskbänk","Gummi kassettbotten","Kassettfront monterad","Komplettering","Städning"],
+"BYGG":["Formning Genomföringar","Fönstermontage","Torkutrustning utställd","LP50 tak","Gjutning Genomföringar","Stomme väggar","Gipsning slitsar","Stomme tak","Gipsning köksschakt","Ny dörr","Tillbaka kylskåp","Städning","Torkutrustning bortplockad"],
+"KÖKSFÖRNYELSE":["Demontering","Målning stommar","Målning väggar","Montering stommar","Golvläggning","Kakel våtdel","Köksfläkt","Vitvaror","Belysning"],
+"EL":["Kanalisation vägg och tak"],
+"MÅLNING":["Spackling tak","Spackling slitsar"],
+"KAKEL":["Golvavjämning","Tätskikt","Plattsättning","Fogning","Städning"],
+"KOMPLETTERING":["Montering dörr","Montering skåp","Installation belysning","Mjukfogning","Montering porslin","Vatten på"]
 }
 
 const addresses={
+
 "Dirigentgatan 6":{
 "Stam 1":["439","444","450","456"],
-"Stam 2":["440","445","451","457"]
+"Stam 2":["440","445","451","457"],
+"Stam 3":["441","446","452","458"],
+"Stam 4":["442","447","453","459"],
+"Stam 5":["443","448","454","460"],
+"Stam 6":["449","455","461"],
+"Stam 7":["463","466","472","478"],
+"Stam 8":["464","467","473","479"],
+"Stam 9":["465","468","474","480"],
+"Stam 10":["469","475","481"],
+"Stam 11":["470","476","482"],
+"Stam 12":["462","471","477","483"]
+},
+
+"Dirigentgatan 3":{
+"Stam 1":["484","488","493","498"],
+"Stam 2":["485","489","494","499"],
+"Stam 3":["486","490","495","500"],
+"Stam 4":["487","491","496","501"],
+"Stam 5":["492","497","502"],
+"Stam 6":["511","517","523"],
+"Stam 7":["503","512","518","524"],
+"Stam 8":["504","507","513","519"],
+"Stam 9":["505","508","514","520"],
+"Stam 10":["506","509","515","521"],
+"Stam 11":["510","516","522"]
+},
+
+"Dirigentgatan 1":{
+"Stam 1":["525","529","534","539"],
+"Stam 2":["526","530","535","540"],
+"Stam 3":["527","531","536","541"],
+"Stam 4":["528","532","537","542"],
+"Stam 5":["533","538","543"],
+"Stam 6":["552","558","564"],
+"Stam 7":["544","553","559","565"],
+"Stam 8":["545","548","554","560"],
+"Stam 9":["546","549","555","561"],
+"Stam 10":["547","550","556","562"],
+"Stam 11":["551","557","563"]
+},
+
+"Dirigentgatan 4":{
+"Stam 1":["394","399","405","411"],
+"Stam 2":["395","400","406","412"],
+"Stam 3":["396","401","407","413"],
+"Stam 4":["397","402","408","414"],
+"Stam 5":["398","403","409","415"],
+"Stam 6":["404","410","416"],
+"Stam 7":["418","421","427","433"],
+"Stam 8":["419","422","428","434"],
+"Stam 9":["420","423","429","435"],
+"Stam 10":["424","430","436"],
+"Stam 11":["425","431","437"],
+"Stam 12":["417","426","432","438"]
 }
+
 }
 
 let storage=JSON.parse(localStorage.getItem("kaveros_data")||"{}")
 
 function calcProgress(apt){
-
-let total=0
-let done=0
-
+let total=0,done=0
 Object.keys(activities).forEach(cat=>{
-
 activities[cat].forEach(act=>{
-
 total++
-
-if(storage[apt+"|"+cat+"|"+act]=="klar"){
-done++
-}
-
+if(storage[apt+"|"+cat+"|"+act]=="klar") done++
 })
-
 })
-
 return Math.round(done/total*100)
-
 }
 
 function calcStatus(apt){
-
 let progress=calcProgress(apt)
-
 let delay=false
-
 Object.keys(storage).forEach(k=>{
-
-if(k.startsWith(apt+"|") && storage[k]=="delay"){
-delay=true
+if(k.startsWith(apt+"|") && storage[k]=="delay") delay=true
+})
+if(delay) return "delay"
+if(progress==100) return "done"
+if(progress>0) return "progress"
+return "none"
 }
 
+
+
+function toggleOption(apt,opt,val){
+
+storage = JSON.parse(localStorage.getItem("kaveros_data")||"{}")
+
+if(val) storage[apt+"|OPT|"+opt]=true
+else delete storage[apt+"|OPT|"+opt]
+
+localStorage.setItem("kaveros_data",JSON.stringify(storage))
+
+renderHouse()
+
+}
+
+function toggleState(apt,key,val){
+
+storage = JSON.parse(localStorage.getItem("kaveros_data")||"{}")
+
+if(val) storage[apt+"|STATE|"+key]=true
+else delete storage[apt+"|STATE|"+key]
+
+localStorage.setItem("kaveros_data",JSON.stringify(storage))
+
+renderHouse()
+
+}
+
+function saveNote(apt,text){
+storage[apt+"|NOTE"]=text
+localStorage.setItem("kaveros_data",JSON.stringify(storage))
+}
+
+
+
+function markAllClear(apt){
+Object.keys(activities).forEach(cat=>{
+activities[cat].forEach(act=>{
+let key=apt+"|"+cat+"|"+act
+storage[key]="klar"
+})
+})
+localStorage.setItem("kaveros_data",JSON.stringify(storage))
+renderHouse()
+openApartment(apt)
+}
+
+
+
+function setStatus(key,val){
+if(storage[key]==val) delete storage[key]
+else storage[key]=val
+
+localStorage.setItem("kaveros_data",JSON.stringify(storage))
+
+// ---- history logging ----
+try{
+let user = localStorage.getItem("kaveros_user") || "okänd"
+if(val=="klar"){
+let hist = JSON.parse(localStorage.getItem("kaveros_history")||"{}")
+if(!hist[key]) hist[key]=[]
+hist[key].push({
+user:user,
+time:new Date().toLocaleString()
+})
+localStorage.setItem("kaveros_history",JSON.stringify(hist))
+}
+}catch(e){}
+
+renderHouse()
+let apt=key.split("|")[0]
+openApartment(apt)
+}
+
+
+function openApartment(num){
+
+let optHT=storage[num+"|OPT|HT"]?"checked":""
+let optKOK=storage[num+"|OPT|KOK"]?"checked":""
+let tom=storage[num+"|STATE|TOM"]?"checked":""
+let eva=storage[num+"|STATE|EVA"]?"checked":""
+let note=storage[num+"|NOTE"]||""
+
+let html=`
+<div style="display:flex;justify-content:space-between;">
+<h2>LGH ${num}</h2>
+<div style="display:flex;gap:10px;">
+<button onclick="markAllClear('${num}')">Klarmarkera alla</button>
+<button onclick="closeModal()">Stäng</button>
+</div>
+</div>
+
+<div class="tillval-grid">
+
+<div>
+<h3>Tillval</h3>
+<label><input type="checkbox" ${optHT} onchange="toggleOption('${num}','HT',this.checked)"> Handdukstork (HT)</label><br>
+<label><input type="checkbox" ${optKOK} onchange="toggleOption('${num}','KOK',this.checked)"> Köksförnyelse (KÖK)</label>
+</div>
+
+<div>
+<h3>Status</h3>
+<label><input type="checkbox" ${tom} onchange="toggleState('${num}','TOM',this.checked)"> Tomställd</label><br>
+<label><input type="checkbox" ${eva} onchange="toggleState('${num}','EVA',this.checked)"> Evakuerad</label>
+</div>
+
+</div>
+
+<h3>Anteckningar</h3>
+<textarea style="width:100%;height:80px;" oninput="saveNote('${num}',this.value)">${note}</textarea>
+`
+
+Object.keys(activities).forEach(cat=>{
+html+=`<h3>${cat}</h3>`
+activities[cat].forEach(act=>{
+
+let key=num+"|"+cat+"|"+act
+let val=storage[key]||""
+
+html+=`
+<div class="activity">
+<span>${act}</span>
+<span>
+<button class="btn-klar ${val==='klar'?'active':''}" onclick="setStatus('${key}','klar')">Klar</button>
+<button class="btn-pagar ${val==='pagar'?'active':''}" onclick="setStatus('${key}','pagar')">Pågår</button>
+<button class="btn-delay ${val==='delay'?'active':''}" onclick="setStatus('${key}','delay')">Försenad</button>
+</span>
+</div>
+`
+})
 })
 
-if(progress==100) return "done"
-if(delay) return "delay"
-if(progress>0) return "progress"
 
-return "none"
+let hist = JSON.parse(localStorage.getItem("kaveros_history")||"{}")
+html+=`<h3>Historik</h3>`
+Object.keys(hist).forEach(k=>{
+if(k.startsWith(num+"|")){
+hist[k].forEach(h=>{
+html+=`<div style="font-size:12px;color:#555;">👷 ${h.user} – ${h.time}</div>`
+})
+}
+})
 
+document.getElementById("apartmentContent").innerHTML=html
+document.getElementById("modal").style.display="flex"
+}
+
+function closeModal(){
+document.getElementById("modal").style.display="none";
 }
 
 function renderHouse(){
-
-if(!document.getElementById("house")) return
 
 let html=""
 
 Object.keys(addresses).forEach(addr=>{
 
-html+=`<h3>${addr}</h3>`
-
+html+=`
+<h3 style="display:flex;align-items:center;gap:10px;">
+${addr}
+<button onclick="openDrawing('${addr}')" style="background:#1976D2;color:white;padding:4px 10px;border-radius:6px;font-size:12px;">
+Fasadritning
+</button>
+</h3>
+`
 html+=`<div class="houseWrapper">`
 
 html+=`
@@ -86,15 +293,25 @@ html+=`<div class="house">`
 
 Object.keys(addresses[addr]).forEach(stam=>{
 
-html+=`<div class="stem"><b>${stam}</b>`
+html+=`<div class="stem"><b>${stam}</b>
 
-addresses[addr][stam].forEach(apt=>{
+`
+
+let sorted=[...addresses[addr][stam]].sort((a,b)=>a-b).reverse()
+
+sorted.forEach(apt=>{
 
 let status=calcStatus(apt)
 let percent=calcProgress(apt)
 
+let ht = storage[apt+"|OPT|HT"] ? '<div class="label-left">HT</div>' : ''
+let kok = storage[apt+"|OPT|KOK"] ? '<div class="label-right">KÖK</div>' : ''
+let tom = storage[apt+"|STATE|TOM"] ? '<div class="label-bottom-left">TOM</div>' : ''
+let evak = storage[apt+"|STATE|EVA"] ? '<div class="label-bottom-right">EVAK</div>' : ''
+
 html+=`
-<div class="apt ${status}">
+<div class="apt ${status}" onclick="openApartment('${apt}')">
+${ht}${kok}${tom}${evak}
 ${apt}<br>${percent}%
 </div>
 `
@@ -102,33 +319,30 @@ ${apt}<br>${percent}%
 })
 
 html+=`</div>`
-
 })
 
 html+=`</div></div>`
-
 })
 
 document.getElementById("house").innerHTML=html
-
+renderDashboard()
 }
 
 function renderDashboard(){
 
-if(!document.getElementById("done")) return
-
-let total=0
-let done=0
-let progress=0
-let notStarted=0
+let total=0,done=0,progress=0,notStarted=0
+let delayMap={}
+let ht=0
+let kok=0
 
 Object.values(addresses).forEach(stams=>{
-
 Object.values(stams).forEach(apts=>{
-
 apts.forEach(a=>{
 
 total++
+
+if(storage[a+"|OPT|HT"]) ht++
+if(storage[a+"|OPT|KOK"]) kok++
 
 let p=calcProgress(a)
 
@@ -136,17 +350,224 @@ if(p==100) done++
 else if(p>0) progress++
 else notStarted++
 
+Object.keys(storage).forEach(k=>{
+if(k.startsWith(a+"|") && storage[k]=="delay"){
+let act=k.split("|")[2]
+if(!delayMap[a]) delayMap[a]=[]
+delayMap[a].push(act)
+}
+})
+})
+})
 })
 
-})
-
-})
-
+document.getElementById("total").innerHTML="Totalt<br>"+total
 document.getElementById("done").innerHTML="Klara<br>"+done
 document.getElementById("progress").innerHTML="Pågår<br>"+progress
 document.getElementById("notStarted").innerHTML="Ej startade<br>"+notStarted
 
+document.getElementById("tillvalSummary").innerHTML=`
+<div class="tillval-box">
+<div class="tillval-card">
+Handdukstork
+<div class="tillval-number">${ht}</div>
+</div>
+<div class="tillval-card">
+Kök
+<div class="tillval-number">${kok}</div>
+</div>
+</div>
+`
+
+let delayHTML=""
+Object.keys(delayMap).forEach(a=>{
+delayHTML+=`LGH ${a}: ${delayMap[a].join(", ")}<br>`
+})
+if(delayHTML=="") delayHTML="Inga förseningar registrerade"
+
+document.getElementById("delays").innerHTML=delayHTML
 }
 
 renderHouse()
-renderDashboard()
+
+
+
+/* --- Safe patch additions --- */
+
+// 1. Ensure 100% = green
+if (typeof calcStatus === "function"){
+const _oldCalcStatus = calcStatus;
+calcStatus = function(apt){
+let progress = calcProgress(apt);
+let delay=false;
+Object.keys(storage).forEach(k=>{
+if(k.startsWith(apt+"|") && storage[k]=="delay") delay=true;
+});
+if(progress==100) return "done";
+if(delay) return "delay";
+if(progress>0) return "progress";
+return "none";
+}
+}
+
+// 2. Toggle markAllClear
+markAllClear = function(apt){
+let allClear=true;
+
+Object.keys(activities).forEach(cat=>{
+activities[cat].forEach(act=>{
+let key=apt+"|"+cat+"|"+act;
+if(storage[key]!="klar") allClear=false;
+});
+});
+
+Object.keys(activities).forEach(cat=>{
+activities[cat].forEach(act=>{
+let key=apt+"|"+cat+"|"+act;
+if(allClear){ delete storage[key]; }
+else{ storage[key]="klar"; }
+});
+});
+
+localStorage.setItem("kaveros_data",JSON.stringify(storage));
+renderHouse();
+openApartment(apt);
+}
+
+// 3. Add bottom close button after modal open
+const _oldOpenApartment = openApartment;
+openApartment = function(num){
+_oldOpenApartment(num);
+setTimeout(()=>{
+let modal=document.getElementById("apartmentContent");
+if(modal && !document.getElementById("bottomCloseBtn")){
+let btn=document.createElement("button");
+btn.id="bottomCloseBtn";
+btn.innerText="Stäng";
+btn.style.marginTop="20px";
+btn.onclick=closeModal;
+modal.appendChild(btn);
+}
+},10);
+}
+
+
+let currentUser = localStorage.getItem("kaveros_user") || "";
+
+function saveUser(){
+  const name = document.getElementById("usernameInput").value;
+  if(!name) return;
+  localStorage.setItem("kaveros_user",name);
+  currentUser = name;
+  document.getElementById("currentUser").innerText="Inloggad: "+name;
+}
+
+window.addEventListener("load",()=>{
+  if(currentUser){
+    const el=document.getElementById("currentUser");
+    if(el) el.innerText="Inloggad: "+currentUser;
+  }
+});
+
+
+function saveApartmentPhoto(event,apt){
+  const file = event.target.files[0];
+  if(!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e){
+    localStorage.setItem("photo_"+apt,e.target.result);
+    showApartmentPhoto(apt);
+  };
+  reader.readAsDataURL(file);
+}
+
+function showApartmentPhoto(apt){
+  const img = localStorage.getItem("photo_"+apt);
+  if(img){
+    const el = document.getElementById("photo_"+apt);
+    if(el){
+      el.innerHTML='<img src="'+img+'" style="max-width:100%;border-radius:8px;">';
+    }
+  }
+}
+
+
+/* ---- SAFE USER PATCH ---- */
+(function(){
+
+const origSetStatus = window.setStatus;
+
+window.setStatus = function(key,val){
+    if(origSetStatus){
+        origSetStatus(key,val);
+    }
+
+    if(val==="klar"){
+        const user = localStorage.getItem("kaveros_user") || "";
+        if(user){
+            try{
+                let data = JSON.parse(localStorage.getItem("kaveros_data")||"{}");
+                data[key+"_user"] = user;
+                localStorage.setItem("kaveros_data",JSON.stringify(data));
+            }catch(e){}
+        }
+    }
+
+    setTimeout(showUsers,50);
+};
+
+function showUsers(){
+    try{
+        let data = JSON.parse(localStorage.getItem("kaveros_data")||"{}");
+        document.querySelectorAll("[data-activity-key]").forEach(el=>{
+            const key = el.getAttribute("data-activity-key");
+            const user = data[key+"_user"];
+            if(user && !el.querySelector(".userLabel")){
+                const div=document.createElement("div");
+                div.className="userLabel";
+                div.style.fontSize="11px";
+                div.style.color="#666";
+                div.textContent="👷 "+user;
+                el.appendChild(div);
+            }
+        });
+    }catch(e){}
+}
+
+window.addEventListener("load",showUsers);
+
+})();
+
+
+
+/* STOP MODAL FROM CLOSING */
+
+let currentApartment = null
+
+const originalOpenApartment = openApartment
+
+openApartment = function(num){
+
+currentApartment = num
+
+originalOpenApartment(num)
+
+}
+
+const originalRenderHouse = renderHouse
+
+renderHouse = function(){
+
+originalRenderHouse()
+
+if(currentApartment){
+
+setTimeout(()=>{
+openApartment(currentApartment)
+},10)
+
+}
+
+}
+
