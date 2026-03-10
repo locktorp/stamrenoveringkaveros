@@ -327,15 +327,28 @@ return Math.round(done/total*100)
 }
 
 function calcStatus(apt){
-let progress=calcProgress(apt)
-let delay=false
+
+let progress = calcProgress(apt)
+let delay = false
+
 Object.keys(storage).forEach(k=>{
-if(k.startsWith(apt+"|") && storage[k]=="delay") delay=true
+
+if(
+k.startsWith(apt+"|") &&
+k.includes("|") &&
+storage[k] === "delay"
+){
+delay = true
+}
+
 })
-if(delay) return "delay"
+
 if(progress==100) return "done"
+if(delay) return "delay"
 if(progress>0) return "progress"
+
 return "none"
+
 }
 
 
