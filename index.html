@@ -360,7 +360,7 @@ if(val) storage[apt+"|OPT|"+opt]=true
 else delete storage[apt+"|OPT|"+opt]
 
 localStorage.setItem("kaveros_data",JSON.stringify(storage))
-
+firebaseSave(storage)
 renderHouse()
 
 }
@@ -373,7 +373,7 @@ if(val) storage[apt+"|STATE|"+key]=true
 else delete storage[apt+"|STATE|"+key]
 
 localStorage.setItem("kaveros_data",JSON.stringify(storage))
-
+firebaseSave(storage)
 renderHouse()
 
 }
@@ -393,6 +393,7 @@ storage[key]="klar"
 })
 })
 localStorage.setItem("kaveros_data",JSON.stringify(storage))
+firebaseSave(storage)
 renderHouse()
 openApartment(apt)
 }
@@ -404,6 +405,7 @@ if(storage[key]==val) delete storage[key]
 else storage[key]=val
 
 localStorage.setItem("kaveros_data",JSON.stringify(storage))
+firebaseSave(storage)
 
 // ---- history logging ----
 try{
@@ -664,6 +666,7 @@ else{ storage[key]="klar"; }
 });
 
 localStorage.setItem("kaveros_data",JSON.stringify(storage));
+firebaseSave(storage)
 renderHouse();
 openApartment(apt);
 }
@@ -793,23 +796,6 @@ renderHouse()
 })
 /* -------- HOOK INTO APP SAVE -------- */
 
-const oldSetItem = localStorage.setItem
-
-localStorage.setItem = function(key,value){
-
-oldSetItem.apply(this,arguments)
-
-if(key==="kaveros_data"){
-
-try{
-
-firebaseSave(JSON.parse(value))
-
-}catch(e){}
-
-}
-
-}
 
 </script>
 
