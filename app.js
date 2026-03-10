@@ -571,3 +571,12 @@ openApartment(currentApartment)
 
 }
 
+/* START APP */
+
+if(document.getElementById("house")){
+renderHouse()
+}
+
+if(document.getElementById("total")){
+renderDashboard()
+}
