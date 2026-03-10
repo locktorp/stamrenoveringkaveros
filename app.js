@@ -1,8 +1,9 @@
 
 const activities={
 "RIVNING":["Asbestsanering","Rivning","Håltagning","Slipning av väggar","Städning"],
-"EL":["Kanalisation vägg och tak","Dragning av IMD-kanalisation"],
+"VVS":["Kassettmontage","Rör i badrum"],
 "BYGG":["Formning Genomföringar","Täckning av golv","Stomme väggar"],
+"EL":["Kanalisation vägg och tak","Dragning av IMD-kanalisation"],
 "KAKEL":["Golvavjämning","Tätskikt","Plattsättning"]
 }
 
@@ -16,21 +17,48 @@ const addresses={
 let storage=JSON.parse(localStorage.getItem("kaveros_data")||"{}")
 
 function calcProgress(apt){
-let total=0,done=0
+
+let total=0
+let done=0
+
 Object.keys(activities).forEach(cat=>{
+
 activities[cat].forEach(act=>{
+
 total++
-if(storage[apt+"|"+cat+"|"+act]=="klar") done++
+
+if(storage[apt+"|"+cat+"|"+act]=="klar"){
+done++
+}
+
 })
+
 })
+
 return Math.round(done/total*100)
+
 }
 
 function calcStatus(apt){
+
 let progress=calcProgress(apt)
+
+let delay=false
+
+Object.keys(storage).forEach(k=>{
+
+if(k.startsWith(apt+"|") && storage[k]=="delay"){
+delay=true
+}
+
+})
+
 if(progress==100) return "done"
+if(delay) return "delay"
 if(progress>0) return "progress"
+
 return "none"
+
 }
 
 function renderHouse(){
@@ -42,6 +70,7 @@ let html=""
 Object.keys(addresses).forEach(addr=>{
 
 html+=`<h3>${addr}</h3>`
+
 html+=`<div class="houseWrapper">`
 
 html+=`
@@ -65,32 +94,42 @@ let status=calcStatus(apt)
 let percent=calcProgress(apt)
 
 html+=`
-<div class="apt ${status}" onclick="alert('Lägenhet '+${apt})">
+<div class="apt ${status}">
 ${apt}<br>${percent}%
 </div>
 `
+
 })
 
 html+=`</div>`
+
 })
 
 html+=`</div></div>`
+
 })
 
 document.getElementById("house").innerHTML=html
+
 }
 
 function renderDashboard(){
 
-if(!document.getElementById("total")) return
+if(!document.getElementById("done")) return
 
-let total=0,done=0,progress=0,notStarted=0
+let total=0
+let done=0
+let progress=0
+let notStarted=0
 
 Object.values(addresses).forEach(stams=>{
+
 Object.values(stams).forEach(apts=>{
+
 apts.forEach(a=>{
 
 total++
+
 let p=calcProgress(a)
 
 if(p==100) done++
@@ -98,10 +137,11 @@ else if(p>0) progress++
 else notStarted++
 
 })
-})
+
 })
 
-document.getElementById("total").innerHTML="Totalt<br>"+total
+})
+
 document.getElementById("done").innerHTML="Klara<br>"+done
 document.getElementById("progress").innerHTML="Pågår<br>"+progress
 document.getElementById("notStarted").innerHTML="Ej startade<br>"+notStarted
