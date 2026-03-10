@@ -7,6 +7,7 @@
 <title>Dashboard</title>
 <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <header style="display:flex;align-items:center;justify-content:space-between;">
@@ -22,17 +23,25 @@ Stamrenovering Kaverös
 </header>
 
 <div class="container">
+
 <div class="dashboard">
 <h2>Projektstatus</h2>
+
 <div class="stats">
 <div class="stat" id="total"></div>
-<div class="stat" id="done"></div>
-<div class="stat" id="progress"></div>
-<div class="stat" id="notStarted"></div>
+<div class="stat done" id="done"></div>
+<div class="stat progress" id="progress"></div>
+<div class="stat none" id="notStarted"></div>
 </div>
+
+<h3>Tillval sammanställning</h3>
 <div id="tillvalSummary"></div>
+
+<h3>Försenade aktiviteter</h3>
 <div id="delays"></div>
+
 </div>
+
 </div>
 
 <script src="app.js"></script>

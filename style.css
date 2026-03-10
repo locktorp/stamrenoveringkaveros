@@ -122,3 +122,9 @@ font-weight:600;
 
 .desktop-only{display:block;}
 
+
+body{background:#d9e0e6;}
+.house{border:4px solid black;border-radius:10px;padding:15px;}
+.stat.done{background:#4CAF50;color:white;}
+.stat.progress{background:#F2A900;color:white;}
+.stat.none{background:#9E9E9E;color:white;}

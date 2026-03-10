@@ -37,8 +37,8 @@ let remote = snap.data().data
 storage = remote
 
 localStorage.setItem("kaveros_data",JSON.stringify(remote))
-firebaseSave(storage)
-  
+// removed loop
+
 if(!currentApartment){
 renderHouse()
 }
