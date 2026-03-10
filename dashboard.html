@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -7,15 +6,13 @@
 <title>Dashboard</title>
 <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<header style="display:flex;align-items:center;justify-content:space-between;">
-<div>
-<img src="skanska-logo.png" style="height:40px;margin-right:10px;vertical-align:middle;">
+<header>
+<div class="header-left">
+<img src="skanska-logo.png" class="logo">
 Stamrenovering Kaverös
 </div>
-
 <nav>
 <a href="index.html">Stamplan</a>
 <a href="dashboard.html">Dashboard</a>
@@ -23,8 +20,8 @@ Stamrenovering Kaverös
 </header>
 
 <div class="container">
-
 <div class="dashboard">
+
 <h2>Projektstatus</h2>
 
 <div class="stats">
@@ -34,14 +31,13 @@ Stamrenovering Kaverös
 <div class="stat none" id="notStarted"></div>
 </div>
 
-<h3>Tillval sammanställning</h3>
-<div id="tillvalSummary"></div>
+<h3>Framdrift stammar</h3>
+<div id="stemProgress"></div>
 
-<h3>Försenade aktiviteter</h3>
+<h3>Förseningar</h3>
 <div id="delays"></div>
 
 </div>
-
 </div>
 
 <script src="app.js"></script>
