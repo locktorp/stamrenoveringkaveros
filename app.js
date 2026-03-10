@@ -73,7 +73,7 @@ const buildings={
 "Dirigentgatan 4":[[411,405,399,394],[412,406,400,395],[413,407,401,396],[414,408,402,397],[415,409,403,398],[416,410,404,null],[433,427,421,418],[434,428,422,419],[435,429,423,420],[436,430,424,null],[437,431,425,null],[438,432,426,417]]
 };
 
-function renderPlan(){
+window.renderPlan = function() {
 
 const root=document.getElementById("content")
 if(!root)return
@@ -215,4 +215,28 @@ await saveApartment(num,data)
 
 window.closeModal=function(){
 document.getElementById("modal").style.display="none"
+}
+
+window.dashboard = function () {
+
+const root = document.getElementById("content")
+
+root.innerHTML = `
+<div class="section">
+<h2>Dashboard</h2>
+
+<p>Dashboarden laddas här.</p>
+
+<p>Här kommer:</p>
+
+<ul>
+<li>Projektstatus</li>
+<li>Tillval</li>
+<li>Framdrift per hus</li>
+<li>Försenade aktiviteter</li>
+</ul>
+
+</div>
+`
+
 }
