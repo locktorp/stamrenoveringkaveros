@@ -743,11 +743,20 @@ const db = getFirestore(app);
 
 /* -------- SAVE TO FIREBASE -------- */  
 
-function firebaseSave(data){
+async function firebaseSave(data){
 
-setDoc(doc(db,"project","kaveros"),{
-data:data
+try{
+
+await setDoc(doc(db,"project","kaveros"),{
+data:data,
+updated: Date.now()
 })
+
+}catch(e){
+
+console.log("Firebase save error",e)
+
+}
 
 }
 
