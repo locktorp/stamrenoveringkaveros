@@ -1,23 +1,15 @@
 
-
 <!DOCTYPE html>
 <html lang="sv">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stamrenovering Kaverös</title>
 
 <style>
-body{
-font-family:system-ui;
-margin:0;
-background:#f4f6f8;
-background-image:url('background.jpg');
-background-size:cover;
-background-position:center;
-background-attachment:fixed;
-}
+body{font-family:system-ui;margin:0;background:#f4f6f8;}
 header{background:white;padding:18px;box-shadow:0 4px 12px rgba(0,0,0,0.08);font-size:22px;font-weight:600;}
-.container{max-width:1600px;margin:auto;padding:10px;}
+.container{max-width:1600px;margin:auto;padding:20px;}
 
 .houseWrapper{display:flex;gap:25px;}
 .floors{display:flex;flex-direction:column;margin-top:28px;font-weight:700;}
@@ -53,21 +45,9 @@ font-size:13px;
 .progress{background:#F2A900;}
 .delay{background:#e53935;}
 
-.dashboard{background:white;padding:10px;border-radius:12px;margin-top:40px;}
+.dashboard{background:white;padding:20px;border-radius:12px;margin-top:40px;}
 .stats{display:flex;gap:20px;margin-bottom:20px;}
-.stat{
-padding:15px;
-border-radius:8px;
-flex:1;
-text-align:center;
-font-weight:600;
-color:white;
-}
-
-#total{background:#455A64;}
-#done{background:#2E7D32;}
-#progress{background:#F2A900;}
-#notStarted{background:#9E9E9E;}
+.stat{background:#f1f4f7;padding:15px;border-radius:8px;flex:1;text-align:center;font-weight:600;}
 .delayList{color:#c62828;font-weight:600;}
 
 .activity{display:flex;justify-content:space-between;border-bottom:1px solid #eee;padding:6px 0;}
@@ -93,7 +73,7 @@ justify-content:center;
 
 .modal-content{
 background:white;
-padding:10px;
+padding:20px;
 border-radius:10px;
 max-width:650px;
 width:90%;
@@ -166,23 +146,9 @@ font-weight:600;
 
 
 <header style="display:flex;align-items:center;justify-content:space-between;">
-
-<div style="display:flex;align-items:center;gap:25px;">
-
-<img src="skanska-logo.png" style="height:40px;">
-
-<div style="font-size:20px;font-weight:600;">
+<div>
+<img src="skanska-logo.png" style="height:40px;margin-right:10px;vertical-align:middle;">
 Stamrenovering Kaverös
-</div>
-
-<button onclick="showStam()" style="padding:6px 14px;">
-Stamplan
-</button>
-
-<button onclick="showDash()" style="padding:6px 14px;">
-Dashboard
-</button>
-
 </div>
 
 <div class="desktop-only" style="font-size:14px;">
@@ -193,13 +159,13 @@ Användare:
 </div>
 
 </header>
+
 <div class="container">
 
+<h2>Stamplan</h2>
+<div id="house"></div>
 
-
-<div id="stamPage"><div id="house"></div></div>
-
-<div id="dashboardPage" class="dashboard" style="display:none;">
+<div class="dashboard">
 <h2>Projektstatus</h2>
 
 <div class="stats">
@@ -327,27 +293,15 @@ return Math.round(done/total*100)
 }
 
 function calcStatus(apt){
-
-let progress = calcProgress(apt)
-let delay = false
-
+let progress=calcProgress(apt)
+let delay=false
 Object.keys(storage).forEach(k=>{
-
-if(
-k.startsWith(apt+"|") &&
-storage[k] === "delay"
-){
-delay = true
-}
-
+if(k.startsWith(apt+"|") && storage[k]=="delay") delay=true
 })
-
-if(progress == 100) return "done"
 if(delay) return "delay"
-if(progress > 0) return "progress"
-
+if(progress==100) return "done"
+if(progress>0) return "progress"
 return "none"
-
 }
 
 
@@ -360,7 +314,7 @@ if(val) storage[apt+"|OPT|"+opt]=true
 else delete storage[apt+"|OPT|"+opt]
 
 localStorage.setItem("kaveros_data",JSON.stringify(storage))
-firebaseSave(storage)
+
 renderHouse()
 
 }
@@ -373,7 +327,7 @@ if(val) storage[apt+"|STATE|"+key]=true
 else delete storage[apt+"|STATE|"+key]
 
 localStorage.setItem("kaveros_data",JSON.stringify(storage))
-firebaseSave(storage)
+
 renderHouse()
 
 }
@@ -393,7 +347,6 @@ storage[key]="klar"
 })
 })
 localStorage.setItem("kaveros_data",JSON.stringify(storage))
-firebaseSave(storage)
 renderHouse()
 openApartment(apt)
 }
@@ -405,13 +358,17 @@ if(storage[key]==val) delete storage[key]
 else storage[key]=val
 
 localStorage.setItem("kaveros_data",JSON.stringify(storage))
-firebaseSave(storage)
 
 // ---- history logging ----
 try{
 let user = localStorage.getItem("kaveros_user") || "okänd"
 if(val=="klar"){
-
+let hist = JSON.parse(localStorage.getItem("kaveros_history")||"{}")
+if(!hist[key]) hist[key]=[]
+hist[key].push({
+user:user,
+time:new Date().toLocaleString()
+})
 localStorage.setItem("kaveros_history",JSON.stringify(hist))
 }
 }catch(e){}
@@ -666,7 +623,6 @@ else{ storage[key]="klar"; }
 });
 
 localStorage.setItem("kaveros_data",JSON.stringify(storage));
-firebaseSave(storage)
 renderHouse();
 openApartment(apt);
 }
@@ -736,7 +692,51 @@ function showApartmentPhoto(apt){
 
 
 <script>
+/* ---- SAFE USER PATCH ---- */
+(function(){
 
+const origSetStatus = window.setStatus;
+
+window.setStatus = function(key,val){
+    if(origSetStatus){
+        origSetStatus(key,val);
+    }
+
+    if(val==="klar"){
+        const user = localStorage.getItem("kaveros_user") || "";
+        if(user){
+            try{
+                let data = JSON.parse(localStorage.getItem("kaveros_data")||"{}");
+                data[key+"_user"] = user;
+                localStorage.setItem("kaveros_data",JSON.stringify(data));
+            }catch(e){}
+        }
+    }
+
+    setTimeout(showUsers,50);
+};
+
+function showUsers(){
+    try{
+        let data = JSON.parse(localStorage.getItem("kaveros_data")||"{}");
+        document.querySelectorAll("[data-activity-key]").forEach(el=>{
+            const key = el.getAttribute("data-activity-key");
+            const user = data[key+"_user"];
+            if(user && !el.querySelector(".userLabel")){
+                const div=document.createElement("div");
+                div.className="userLabel";
+                div.style.fontSize="11px";
+                div.style.color="#666";
+                div.textContent="👷 "+user;
+                el.appendChild(div);
+            }
+        });
+    }catch(e){}
+}
+
+window.addEventListener("load",showUsers);
+
+})();
 </script>
 <script type="module">
 
@@ -758,20 +758,11 @@ const db = getFirestore(app);
 
 /* -------- SAVE TO FIREBASE -------- */  
 
-async function firebaseSave(data){
+function firebaseSave(data){
 
-try{
-
-await setDoc(doc(db,"project","kaveros"),{
-data:data,
-updated: Date.now()
+setDoc(doc(db,"project","kaveros"),{
+data:data
 })
-
-}catch(e){
-
-console.log("Firebase save error",e)
-
-}
 
 }
 
@@ -779,23 +770,29 @@ console.log("Firebase save error",e)
 
 onSnapshot(doc(db,"project","kaveros"),(snap)=>{
 
-if(!snap.exists()) return
+if(snap.exists()){
 
 let remote = snap.data().data
-
-if(!remote) return
 
 storage = remote
 
 localStorage.setItem("kaveros_data",JSON.stringify(remote))
-
+// firebaseSave(storage)
+  
 if(!currentApartment){
 renderHouse()
 }
 
+}
+
 })
+
 /* -------- HOOK INTO APP SAVE -------- */
 
+// removed localStorage hook for stability
+}
+
+}
 
 </script>
 
@@ -808,8 +805,11 @@ let currentApartment = null
 const originalOpenApartment = openApartment
 
 openApartment = function(num){
+
 currentApartment = num
+
 originalOpenApartment(num)
+
 }
 
 const originalRenderHouse = renderHouse
@@ -818,19 +818,16 @@ renderHouse = function(){
 
 originalRenderHouse()
 
+if(currentApartment){
+
+setTimeout(()=>{
+openApartment(currentApartment)
+},10)
+
+}
+
+}
 
 </script>
-
-<script>
-function showDash(){
-document.getElementById("dashboardPage").style.display="block";
-document.getElementById("stamPage").style.display="none";
-}
-function showStam(){
-document.getElementById("dashboardPage").style.display="none";
-document.getElementById("stamPage").style.display="block";
-}
-</script>
-
 </body>
 </html>
