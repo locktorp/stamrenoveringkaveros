@@ -168,6 +168,12 @@ else storage[key]=val
 
 localStorage.setItem("kaveros_data",JSON.stringify(storage))
 
+renderHouse()
+
+let apt=key.split("|")[0]
+openApartment(apt)
+
+
 // ---- history logging ----
 try{
 let user = localStorage.getItem("kaveros_user") || "okänd"
