@@ -761,8 +761,8 @@ let remote = snap.data().data
 
 storage = remote
 
-firebaseSave(storage)
-  
+localStorage.setItem("kaveros_data",JSON.stringify(remote))
+
 if(!currentApartment){
 renderHouse()
 }
