@@ -335,7 +335,6 @@ Object.keys(storage).forEach(k=>{
 
 if(
 k.startsWith(apt+"|") &&
-k.includes("|") &&
 storage[k] === "delay"
 ){
 delay = true
@@ -343,9 +342,9 @@ delay = true
 
 })
 
-if(progress==100) return "done"
+if(progress == 100) return "done"
 if(delay) return "delay"
-if(progress>0) return "progress"
+if(progress > 0) return "progress"
 
 return "none"
 
@@ -833,13 +832,6 @@ renderHouse = function(){
 
 originalRenderHouse()
 
-if(currentApartment && document.getElementById("modal").style.display === "flex"){
-setTimeout(()=>{
-originalOpenApartment(currentApartment)
-},50)
-}
-
-}
 
 </script>
 
