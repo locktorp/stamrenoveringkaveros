@@ -823,11 +823,8 @@ let currentApartment = null
 const originalOpenApartment = openApartment
 
 openApartment = function(num){
-
 currentApartment = num
-
 originalOpenApartment(num)
-
 }
 
 const originalRenderHouse = renderHouse
@@ -836,13 +833,10 @@ renderHouse = function(){
 
 originalRenderHouse()
 
-if(currentApartment){
-
+if(currentApartment && document.getElementById("modal").style.display === "flex"){
 setTimeout(()=>{
-if(currentApartment){
-openApartment(currentApartment)
-}
-},100)
+originalOpenApartment(currentApartment)
+},50)
 }
 
 }
