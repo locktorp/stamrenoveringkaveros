@@ -764,9 +764,11 @@ console.log("Firebase save error",e)
 
 onSnapshot(doc(db,"project","kaveros"),(snap)=>{
 
-if(snap.exists()){
+if(!snap.exists()) return
 
 let remote = snap.data().data
+
+if(!remote) return
 
 storage = remote
 
@@ -776,10 +778,7 @@ if(!currentApartment){
 renderHouse()
 }
 
-}
-
 })
-
 /* -------- HOOK INTO APP SAVE -------- */
 
 const oldSetItem = localStorage.setItem
