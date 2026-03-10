@@ -16,11 +16,11 @@ if(file){ window.open(file,"_blank"); }
 }
 
 const activities={
-"RIVNING":["Asbestsanering","Rivning","Håltagning","Slipning av väggar","Städning"],
+"RIVNING":["Asbestsanering","Rivning","Håltagning","Städning"],
 "VVS":["Kassettmontage","Rör i badrum","Rör till kök/WC","Avloppstam kök","Blandare diskbänk","Gummi kassettbotten","Kassettfront monterad","Komplettering","Städning"],
-"BYGG":["Formning Genomföringar","Täckning av golv","Fönstermontage","Torkutrustning utställd","LP50 tak","Gjutning Genomföringar","Stomme väggar","Gipsning slitsar","Stomme tak","Gipsning köksschakt","Ny dörr","Tillbaka kylskåp","Städning","Torkutrustning bortplockad"],
+"BYGG":["Formning Genomföringar","Fönstermontage","Torkutrustning utställd","LP50 tak","Gjutning Genomföringar","Stomme väggar","Gipsning slitsar","Stomme tak","Gipsning köksschakt","Ny dörr","Tillbaka kylskåp","Städning","Torkutrustning bortplockad"],
 "KÖKSFÖRNYELSE":["Demontering","Målning stommar","Målning väggar","Montering stommar","Golvläggning","Kakel våtdel","Köksfläkt","Vitvaror","Belysning"],
-"EL":["Kanalisation vägg och tak","Dragning av IMD-kanalisation"],
+"EL":["Kanalisation vägg och tak"],
 "MÅLNING":["Spackling tak","Spackling slitsar"],
 "KAKEL":["Golvavjämning","Tätskikt","Plattsättning","Fogning","Städning"],
 "KOMPLETTERING":["Montering dörr","Montering skåp","Installation belysning","Mjukfogning","Montering porslin","Vatten på"]
@@ -167,12 +167,6 @@ if(storage[key]==val) delete storage[key]
 else storage[key]=val
 
 localStorage.setItem("kaveros_data",JSON.stringify(storage))
-
-renderHouse()
-
-let apt=key.split("|")[0]
-openApartment(apt)
-
 
 // ---- history logging ----
 try{
@@ -576,6 +570,7 @@ openApartment(currentApartment)
 }
 
 }
+
 
 /* START APP */
 

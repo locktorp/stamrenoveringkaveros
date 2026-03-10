@@ -49,6 +49,25 @@ renderHouse()
 
 /* -------- HOOK INTO APP SAVE -------- */
 
+const oldSetItem = localStorage.setItem
+
+localStorage.setItem = function(key,value){
+
+oldSetItem.apply(this,arguments)
+
+if(key==="kaveros_data"){
+
+try{
+
+firebaseSave(JSON.parse(value))
+
+}catch(e){}
+
+}
+
+}
+
+
 const originalSetItem = localStorage.setItem
 
 localStorage.setItem = function(key,value){
@@ -56,9 +75,9 @@ localStorage.setItem = function(key,value){
 originalSetItem.apply(this,arguments)
 
 if(key==="kaveros_data"){
-
+try{
 firebaseSave(JSON.parse(value))
-
+}catch(e){}
 }
 
 }
