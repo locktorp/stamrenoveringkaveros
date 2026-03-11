@@ -27,11 +27,17 @@ renderPlan()
 })
 
 function getData(){
-return aptData
+return JSON.parse(JSON.stringify(aptData))
 }
 
 function saveData(d){
-db.ref("apartments").update(d)
+
+aptData = d
+
+console.log("Saving", d)
+
+db.ref("apartments").set(d)
+
 }
 
 function allActivities(){
