@@ -252,7 +252,21 @@ if(data.towel)flags+=" HT"
 if(data.tom)flags+=" TOM"
 if(data.evak)flags+=" EVAK"
 
-btn.innerHTML="LGH "+num+" – "+p+"%<br><small>"+flags+"</small>"
+const data=getData()[num]||{}
+
+let left=""
+let right=""
+
+if(data.towel) left+="HT "
+if(data.kitchen) left+="KÖK"
+
+if(data.tom) right+="TOM "
+if(data.evak) right+="EVAK"
+
+btn.innerHTML=`
+<span class="apt-left">${left}</span>
+<span class="apt-center">LGH ${num} – ${p}%</span>
+<span class="apt-right">${right}</span>
 
 btn.onclick=()=>openModal(num)
 
