@@ -58,7 +58,9 @@ const d=getData()[num]||{}
 const acts=d.activities||{}
 const all=allActivities()
 let done=0
-all.forEach(a=>{if(acts[a]==="klar")done++})
+all.forEach(a=>{
+if(acts[a]==="klar" || acts[a.replace("-", "/")]==="klar")done++
+})
 return Math.round(done/all.length*100)||0
 }
 
