@@ -332,4 +332,10 @@ document.getElementById("modal").style.display="none"
 renderPlan()
 }
 
-window.onload=renderPlan
+window.onload = function(){
+
+if(document.getElementById("content")){
+renderPlan()
+}
+
+}
