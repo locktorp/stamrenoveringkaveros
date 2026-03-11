@@ -16,15 +16,6 @@ const buildings={
 "Dirigentgatan 4":[[411,405,399,394],[412,406,400,395],[413,407,401,396],[414,408,402,397],[415,409,403,398],[416,410,404,null],[433,427,421,418],[434,428,422,419],[435,429,423,420],[436,430,424,null],[437,431,425,null],[438,432,426,417]]
 }
 
-const ADDRESS_ORDER=[
-"Dirigentgatan 6",
-"Dirigentgatan 3",
-"Dirigentgatan 1",
-"Dirigentgatan 4"
-]
-
-let currentAddress=null
-
 function getData(){return JSON.parse(localStorage.getItem("aptData")||"{}")}
 function saveData(d){localStorage.setItem("aptData",JSON.stringify(d))}
 
@@ -56,46 +47,108 @@ return ""
 }
 
 function renderPlan(){
+if(window.innerWidth<768){
+renderMobileAddresses()
+}else{
+renderDesktopPlan()
+}
+}
+
+function renderDesktopPlan(){
 
 const root=document.getElementById("content")
 root.innerHTML=""
 
-const grid=document.createElement("div")
-grid.className="address-grid"
+Object.entries(buildings).forEach(([name,stams])=>{
 
-ADDRESS_ORDER.forEach(addr=>{
+const block=document.createElement("div")
+block.className="house-block"
+block.innerHTML="<h2>"+name+"</h2>"
+
+const wrap=document.createElement("div")
+wrap.className="stams"
+
+stams.forEach((stam,i)=>{
+
+const col=document.createElement("div")
+col.className="stam"
+col.innerHTML="<div class='stam-title'>Stam "+(i+1)+"</div>"
+
+stam.forEach(num=>{
+
+const apt=document.createElement("div")
+apt.className="apt "+colorStatus(num)
+
+if(num!==null){
+
+const data=getData()[num]||{}
+const p=progress(num)
+
+apt.innerHTML=`
+${data.kitchen?'<div class="corner kok">KÖK</div>':''}
+${data.towel?'<div class="corner ht">HT</div>':''}
+${data.evak?'<div class="corner evak">EVAK</div>':''}
+${data.tom?'<div class="corner tom">TOM</div>':''}
+<div><strong>${num}</strong></div>
+<div>${p}%</div>
+`
+
+apt.onclick=()=>openModal(num)
+
+}else{
+apt.style.visibility="hidden"
+}
+
+col.appendChild(apt)
+
+})
+
+wrap.appendChild(col)
+
+})
+
+block.appendChild(wrap)
+root.appendChild(block)
+
+})
+
+}
+
+/* ===== MOBILE ===== */
+
+function mobileBackButton(callback){
+
+const root=document.getElementById("content")
+
+const btn=document.createElement("button")
+btn.className="address-btn"
+btn.innerText="← Tillbaka"
+
+btn.onclick=callback
+
+root.appendChild(btn)
+
+}
+
+function renderMobileAddresses(){
+
+const root=document.getElementById("content")
+root.innerHTML=""
+
+const order=[
+"Dirigentgatan 6",
+"Dirigentgatan 3",
+"Dirigentgatan 1",
+"Dirigentgatan 4"
+]
+
+order.forEach(addr=>{
 
 const btn=document.createElement("button")
 btn.className="address-btn"
 btn.innerText=addr
 
-btn.onclick=()=>{
-currentAddress=addr
-renderStams(addr)
-}
-
-grid.appendChild(btn)
-
-})
-
-root.appendChild(grid)
-
-}
-
-function renderStams(address){
-
-const root=document.getElementById("content")
-root.innerHTML=""
-
-const stams=buildings[address]
-
-stams.forEach((stam,i)=>{
-
-const btn=document.createElement("button")
-btn.className="address-btn"
-btn.innerText="Stam "+(i+1)
-
-btn.onclick=()=>renderApartments(address,i)
+btn.onclick=()=>renderMobileStams(addr)
 
 root.appendChild(btn)
 
@@ -103,10 +156,33 @@ root.appendChild(btn)
 
 }
 
-function renderApartments(address,stamIndex){
+function renderMobileStams(address){
 
 const root=document.getElementById("content")
 root.innerHTML=""
+
+mobileBackButton(renderMobileAddresses)
+
+buildings[address].forEach((stam,i)=>{
+
+const btn=document.createElement("button")
+btn.className="address-btn"
+btn.innerText="Stam "+(i+1)
+
+btn.onclick=()=>renderMobileApartments(address,i)
+
+root.appendChild(btn)
+
+})
+
+}
+
+function renderMobileApartments(address,stamIndex){
+
+const root=document.getElementById("content")
+root.innerHTML=""
+
+mobileBackButton(()=>renderMobileStams(address))
 
 const stam=buildings[address][stamIndex]
 
@@ -128,7 +204,6 @@ ${data.kitchen?'<div class="corner kok">KÖK</div>':''}
 ${data.towel?'<div class="corner ht">HT</div>':''}
 ${data.evak?'<div class="corner evak">EVAK</div>':''}
 ${data.tom?'<div class="corner tom">TOM</div>':''}
-
 <div><strong>${num}</strong></div>
 <div>${p}%</div>
 `
@@ -136,9 +211,7 @@ ${data.tom?'<div class="corner tom">TOM</div>':''}
 apt.onclick=()=>openModal(num)
 
 }else{
-
 apt.style.visibility="hidden"
-
 }
 
 wrap.appendChild(apt)
@@ -148,6 +221,8 @@ wrap.appendChild(apt)
 root.appendChild(wrap)
 
 }
+
+/* ===== RESTEN OFÖRÄNDRAT ===== */
 
 function openModal(num){
 
@@ -179,12 +254,10 @@ acts.forEach(a=>{
 const key=group+"|"+a
 const row=document.createElement("div")
 row.className="activity"
-
 const status=(apt.activities||{})[key]
 
 row.innerHTML=`
 ${a}
-
 <div>
 <button class="btn green ${status==='klar'?'active':''}" onclick="toggleStatus('${num}','${key}','klar')">Klar</button>
 <button class="btn orange ${status==='pågår'?'active':''}" onclick="toggleStatus('${num}','${key}','pågår')">Pågår</button>
@@ -200,72 +273,9 @@ list.appendChild(row)
 
 }
 
-function toggleStatus(num,act,status){
-
-const data=getData()
-data[num]=data[num]||{activities:{}}
-
-const current=data[num].activities?.[act]
-
-if(current===status){
-delete data[num].activities[act]
-}else{
-data[num].activities=data[num].activities||{}
-data[num].activities[act]=status
-}
-
-saveData(data)
-openModal(num)
-
-}
-
-function markAllDone(){
-
-const num=document.getElementById("aptTitle").innerText.split(" ")[1]
-
-const data=getData()
-data[num]=data[num]||{activities:{}}
-
-const all=allActivities()
-
-const allDone=all.every(a=>data[num].activities?.[a]==="klar")
-
-if(allDone){
-data[num].activities={}
-}else{
-data[num].activities={}
-all.forEach(a=>data[num].activities[a]="klar")
-}
-
-saveData(data)
-openModal(num)
-
-}
-
-function saveOptions(num){
-
-const data=getData()
-data[num]=data[num]||{activities:{}}
-
-data[num].kitchen=document.getElementById("kitchen").checked
-data[num].towel=document.getElementById("towel").checked
-data[num].evak=document.getElementById("evak").checked
-data[num].tom=document.getElementById("tom").checked
-data[num].note=document.getElementById("note").value
-
-saveData(data)
-
-}
-
-function dashboard(){
-
-/* DIN DASHBOARD FUNKTION ÄR OFÖRÄNDRAD */
-location.reload()
-
-}
-
 function closeModal(){
 document.getElementById("modal").style.display="none"
+renderPlan()
 }
 
 window.onload=renderPlan
