@@ -1,30 +1,28 @@
 <!DOCTYPE html>
 <html lang="sv">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Stamrenovering Kaverös</title>
 
 <link rel="stylesheet" href="style.css">
 
-</head>
+<!-- chart library for dashboard -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+</head>
 <body>
 
 <div class="header">
 
 <img src="skanska-logo.png" class="logo">
 
-<div class="title">
-Stamrenovering Kaverös
-</div>
+<div class="title">Stamrenovering Kaverös</div>
 
 <div class="nav">
-
 <button onclick="renderPlan()">Stamplan</button>
 <button onclick="dashboard()">Dashboard</button>
-
 </div>
 
 </div>
@@ -34,32 +32,26 @@ Stamrenovering Kaverös
 <div class="modal" id="modal">
 
 <div class="modal-header">
-
 <h3 id="aptTitle"></h3>
-
 <div class="close" onclick="closeModal()">✕</div>
-
 </div>
 
-<button class="markall" onclick="markAllDone()">
-Klarmarkera alla
-</button>
+<button class="markall" onclick="markAllDone()">Klarmarkera alla</button>
 
 <div class="columns">
 
 <div>
-
 <h4>TILLVAL</h4>
 
 <label>
-<input type="checkbox" id="kitchen" onchange="saveOptions(currentApartment)">
+<input type="checkbox" id="kitchen" onchange="saveOptions(aptTitle.innerText.split(' ')[1])">
 Köksförnyelse
 </label>
 
 <br>
 
 <label>
-<input type="checkbox" id="towel" onchange="saveOptions(currentApartment)">
+<input type="checkbox" id="towel" onchange="saveOptions(aptTitle.innerText.split(' ')[1])">
 Handdukstork
 </label>
 
@@ -70,14 +62,14 @@ Handdukstork
 <h4>STATUS</h4>
 
 <label>
-<input type="checkbox" id="tom" onchange="saveOptions(currentApartment)">
+<input type="checkbox" id="tom" onchange="saveOptions(aptTitle.innerText.split(' ')[1])">
 Tomställd
 </label>
 
 <br>
 
 <label>
-<input type="checkbox" id="evak" onchange="saveOptions(currentApartment)">
+<input type="checkbox" id="evak" onchange="saveOptions(aptTitle.innerText.split(' ')[1])">
 Evakuerad
 </label>
 
@@ -87,7 +79,9 @@ Evakuerad
 
 <h4>Anteckningar</h4>
 
-<textarea id="note" onchange="saveOptions(currentApartment)"></textarea>
+<textarea id="note"
+onchange="saveOptions(aptTitle.innerText.split(' ')[1])">
+</textarea>
 
 <h4>Aktiviteter</h4>
 
