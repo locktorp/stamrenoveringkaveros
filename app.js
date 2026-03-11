@@ -22,10 +22,15 @@ db.ref("apartments").on("value",(snapshot)=>{
 
 aptData = snapshot.val() || {}
 
+if(document.getElementById("content")){
 renderPlan()
+}
+
+if(typeof dashboard === "function"){
+dashboard()
+}
 
 })
-
 function getData(){
 return JSON.parse(JSON.stringify(aptData))
 }
