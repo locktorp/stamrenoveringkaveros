@@ -38,10 +38,28 @@ Stamrenovering Kaverös
 
 </div>
 
-<div class="container" id="content"></div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+<script>
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDZY6BJsd1MkzHIY6gUkwFFXz43ACv1NAk",
+  authDomain: "stamrenovering-kaveros.firebaseapp.com",
+  databaseURL: "https://stamrenovering-kaveros-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "stamrenovering-kaveros",
+  storageBucket: "stamrenovering-kaveros.firebasestorage.app",
+  messagingSenderId: "974224372973",
+  appId: "1:974224372973:web:009e07621ecf4cbe5f88e4",
+  measurementId: "G-DBMWLVR20L"
+};
+
+firebase.initializeApp(firebaseConfig)
+const db = firebase.database()
+
+</script>
 
 <script src="app.js"></script>
-<script src="dashboard.js"></script>
 
 </body>
 </html>
