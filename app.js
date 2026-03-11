@@ -52,17 +52,17 @@ return ""
 
 function renderPlan(){
 if(window.innerWidth<768){
-renderMobileAddresses()
+mobileAddresses()
 }else{
-renderDesktopPlan()
+desktopPlan()
 }
 }
 
 /* ========================= */
-/* DESKTOP (ORIGINAL) */
+/* DESKTOP ORIGINAL */
 /* ========================= */
 
-function renderDesktopPlan(){
+function desktopPlan(){
 
 const root=document.getElementById("content")
 root.innerHTML=""
@@ -126,12 +126,12 @@ root.appendChild(block)
 /* MOBILE NAVIGATION */
 /* ========================= */
 
-function mobileBack(callback){
+function backButton(callback){
 
 const root=document.getElementById("content")
 
 const btn=document.createElement("button")
-btn.className="address-btn"
+btn.className="address-btn back-btn"
 btn.innerText="← Tillbaka"
 btn.onclick=callback
 
@@ -139,7 +139,7 @@ root.appendChild(btn)
 
 }
 
-function renderMobileAddresses(){
+function mobileAddresses(){
 
 const root=document.getElementById("content")
 root.innerHTML=""
@@ -156,7 +156,8 @@ order.forEach(addr=>{
 const btn=document.createElement("button")
 btn.className="address-btn"
 btn.innerText=addr
-btn.onclick=()=>renderMobileStams(addr)
+
+btn.onclick=()=>mobileStams(addr)
 
 root.appendChild(btn)
 
@@ -164,19 +165,20 @@ root.appendChild(btn)
 
 }
 
-function renderMobileStams(address){
+function mobileStams(address){
 
 const root=document.getElementById("content")
 root.innerHTML=""
 
-mobileBack(renderMobileAddresses)
+backButton(mobileAddresses)
 
 buildings[address].forEach((stam,i)=>{
 
 const btn=document.createElement("button")
 btn.className="address-btn"
 btn.innerText="Stam "+(i+1)
-btn.onclick=()=>renderMobileApartments(address,i)
+
+btn.onclick=()=>mobileApartments(address,i)
 
 root.appendChild(btn)
 
@@ -184,30 +186,28 @@ root.appendChild(btn)
 
 }
 
-function renderMobileApartments(address,stamIndex){
+function mobileApartments(address,stamIndex){
 
 const root=document.getElementById("content")
 root.innerHTML=""
 
-mobileBack(()=>renderMobileStams(address))
+backButton(()=>mobileStams(address))
 
 const stam=buildings[address][stamIndex]
 
 stam.forEach(num=>{
 
-const apt=document.createElement("button")
-apt.className="address-btn "+colorStatus(num)
-
-if(num!==null){
+if(num===null)return
 
 const p=progress(num)
 
-apt.innerHTML=`LGH ${num} – ${p}%`
-apt.onclick=()=>openModal(num)
+const btn=document.createElement("button")
+btn.className="address-btn "+colorStatus(num)
+btn.innerText="LGH "+num+" – "+p+"%"
 
-}
+btn.onclick=()=>openModal(num)
 
-root.appendChild(apt)
+root.appendChild(btn)
 
 })
 
@@ -267,101 +267,63 @@ list.appendChild(row)
 
 }
 
-/* ========================= */
-/* DASHBOARD */
-/* ========================= */
+function toggleStatus(num,act,status){
 
-function dashboard(){
+const data=getData()
+data[num]=data[num]||{activities:{}}
 
-const root=document.getElementById("content")
+const current=data[num].activities?.[act]
+
+if(current===status){
+delete data[num].activities[act]
+}else{
+data[num].activities=data[num].activities||{}
+data[num].activities[act]=status
+}
+
+saveData(data)
+openModal(num)
+renderPlan()
+
+}
+
+function markAllDone(){
+
+const num=document.getElementById("aptTitle").innerText.split(" ")[1]
 const data=getData()
 
-let total=172
-let done=0
-let progressing=0
-let notstarted=0
+data[num]=data[num]||{activities:{}}
 
-let kitchen=0
-let towel=0
+const all=allActivities()
 
-let delayed=[]
+const allDone=all.every(a=>data[num].activities?.[a]==="klar")
 
-Object.values(buildings).flat(2).forEach(num=>{
-
-if(num===null)return
-
-const p=progress(num)
-
-if(p===100)done++
-else if(p>0)progressing++
-else notstarted++
-
-const d=data[num]||{}
-
-if(d.kitchen)kitchen++
-if(d.towel)towel++
-
-Object.entries(d.activities||{}).forEach(([act,status])=>{
-if(status==="försenad"){
-delayed.push("LGH "+num+" – "+act.split("|")[1])
+if(allDone){
+data[num].activities={}
+}else{
+data[num].activities={}
+all.forEach(a=>data[num].activities[a]="klar")
 }
-})
 
-})
+saveData(data)
+openModal(num)
+renderPlan()
 
-let houseHTML=""
-
-Object.entries(buildings).forEach(([house,stams])=>{
-
-let sum=0
-let count=0
-
-stams.flat().forEach(num=>{
-if(num!==null){
-sum+=progress(num)
-count++
 }
-})
 
-const p=Math.round(sum/count)
+function saveOptions(num){
 
-houseHTML+=`
-${house}
-<div class="progressbar">
-<div class="bar" style="width:${p}%"></div>
-</div>
-${p}%
-<br><br>
-`
+const data=getData()
+data[num]=data[num]||{activities:{}}
 
-})
+data[num].kitchen=document.getElementById("kitchen").checked
+data[num].towel=document.getElementById("towel").checked
+data[num].evak=document.getElementById("evak").checked
+data[num].tom=document.getElementById("tom").checked
+data[num].note=document.getElementById("note").value
 
-root.innerHTML=`
-
-<div class="dashboard">
-<div class="card total"><h2>${total}</h2><p>Totalt</p></div>
-<div class="card done"><h2>${done}</h2><p>Klara</p></div>
-<div class="card progress"><h2>${progressing}</h2><p>Pågår</p></div>
-<div class="card notstarted"><h2>${notstarted}</h2><p>Ej startade</p></div>
-</div>
-
-<div class="dashboard">
-<div class="card option"><h2>${kitchen}</h2><p>Köksförnyelse</p></div>
-<div class="card option"><h2>${towel}</h2><p>Handdukstork</p></div>
-</div>
-
-<div class="section">
-<h3>Framdrift per hus</h3>
-${houseHTML}
-</div>
-
-<div class="section">
-<h3>Försenade aktiviteter</h3>
-<div class="delayed">
-${delayed.length?delayed.join("<br>"):"Inga förseningar"}
-</div>
-</div>
-`
+saveData(data)
+renderPlan()
 
 }
 
