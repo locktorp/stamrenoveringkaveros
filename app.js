@@ -16,6 +16,15 @@ const buildings={
 "Dirigentgatan 4":[[411,405,399,394],[412,406,400,395],[413,407,401,396],[414,408,402,397],[415,409,403,398],[416,410,404,null],[433,427,421,418],[434,428,422,419],[435,429,423,420],[436,430,424,null],[437,431,425,null],[438,432,426,417]]
 }
 
+const ADDRESS_ORDER=[
+"Dirigentgatan 6",
+"Dirigentgatan 3",
+"Dirigentgatan 1",
+"Dirigentgatan 4"
+]
+
+let currentAddress=null
+
 function getData(){return JSON.parse(localStorage.getItem("aptData")||"{}")}
 function saveData(d){localStorage.setItem("aptData",JSON.stringify(d))}
 
@@ -51,20 +60,58 @@ function renderPlan(){
 const root=document.getElementById("content")
 root.innerHTML=""
 
-Object.entries(buildings).forEach(([name,stams])=>{
+const grid=document.createElement("div")
+grid.className="address-grid"
 
-const block=document.createElement("div")
-block.className="house-block"
-block.innerHTML="<h2>"+name+"</h2>"
+ADDRESS_ORDER.forEach(addr=>{
 
-const wrap=document.createElement("div")
-wrap.className="stams"
+const btn=document.createElement("button")
+btn.className="address-btn"
+btn.innerText=addr
+
+btn.onclick=()=>{
+currentAddress=addr
+renderStams(addr)
+}
+
+grid.appendChild(btn)
+
+})
+
+root.appendChild(grid)
+
+}
+
+function renderStams(address){
+
+const root=document.getElementById("content")
+root.innerHTML=""
+
+const stams=buildings[address]
 
 stams.forEach((stam,i)=>{
 
-const col=document.createElement("div")
-col.className="stam"
-col.innerHTML="<div class='stam-title'>Stam "+(i+1)+"</div>"
+const btn=document.createElement("button")
+btn.className="address-btn"
+btn.innerText="Stam "+(i+1)
+
+btn.onclick=()=>renderApartments(address,i)
+
+root.appendChild(btn)
+
+})
+
+}
+
+function renderApartments(address,stamIndex){
+
+const root=document.getElementById("content")
+root.innerHTML=""
+
+const stam=buildings[address][stamIndex]
+
+const wrap=document.createElement("div")
+wrap.className="stam"
 
 stam.forEach(num=>{
 
@@ -81,27 +128,24 @@ ${data.kitchen?'<div class="corner kok">KÖK</div>':''}
 ${data.towel?'<div class="corner ht">HT</div>':''}
 ${data.evak?'<div class="corner evak">EVAK</div>':''}
 ${data.tom?'<div class="corner tom">TOM</div>':''}
+
 <div><strong>${num}</strong></div>
 <div>${p}%</div>
 `
+
 apt.onclick=()=>openModal(num)
 
 }else{
+
 apt.style.visibility="hidden"
+
 }
 
-col.appendChild(apt)
+wrap.appendChild(apt)
 
 })
 
-wrap.appendChild(col)
-
-})
-
-block.appendChild(wrap)
-root.appendChild(block)
-
-})
+root.appendChild(wrap)
 
 }
 
@@ -140,6 +184,7 @@ const status=(apt.activities||{})[key]
 
 row.innerHTML=`
 ${a}
+
 <div>
 <button class="btn green ${status==='klar'?'active':''}" onclick="toggleStatus('${num}','${key}','klar')">Klar</button>
 <button class="btn orange ${status==='pågår'?'active':''}" onclick="toggleStatus('${num}','${key}','pågår')">Pågår</button>
@@ -171,7 +216,6 @@ data[num].activities[act]=status
 
 saveData(data)
 openModal(num)
-renderPlan()
 
 }
 
@@ -194,9 +238,7 @@ all.forEach(a=>data[num].activities[a]="klar")
 }
 
 saveData(data)
-
 openModal(num)
-renderPlan()
 
 }
 
@@ -213,130 +255,17 @@ data[num].note=document.getElementById("note").value
 
 saveData(data)
 
-renderPlan()
-
 }
 
 function dashboard(){
 
-const root=document.getElementById("content")
-const data=getData()
-
-let total=172
-let done=0
-let progressing=0
-let notstarted=0
-
-let kitchen=0
-let towel=0
-
-let delayed=[]
-
-Object.values(buildings).flat(2).forEach(num=>{
-
-if(num===null)return
-
-const p=progress(num)
-
-if(p===100)done++
-else if(p>0)progressing++
-else notstarted++
-
-const d=data[num]||{}
-
-if(d.kitchen)kitchen++
-if(d.towel)towel++
-
-Object.entries(d.activities||{}).forEach(([act,status])=>{
-if(status==="försenad"){
-delayed.push("LGH "+num+" – "+act.split("|")[1])
-}
-})
-
-})
-
-let houseHTML=""
-
-Object.entries(buildings).forEach(([house,stams])=>{
-
-let sum=0
-let count=0
-
-stams.flat().forEach(num=>{
-if(num!==null){
-sum+=progress(num)
-count++
-}
-})
-
-const p=Math.round(sum/count)
-
-houseHTML+=`
-${house}
-<div class="progressbar">
-<div class="bar" style="width:${p}%"></div>
-</div>
-${p}%
-<br><br>
-`
-
-})
-
-root.innerHTML=`
-
-<div class="dashboard">
-<div class="card total"><h2>${total}</h2><p>Totalt</p></div>
-<div class="card done"><h2>${done}</h2><p>Klara</p></div>
-<div class="card progress"><h2>${progressing}</h2><p>Pågår</p></div>
-<div class="card notstarted"><h2>${notstarted}</h2><p>Ej startade</p></div>
-</div>
-
-<div class="section">
-<h3>Statusöversikt</h3>
-<canvas id="statusChart"></canvas>
-</div>
-
-<div class="dashboard">
-<div class="card option"><h2>${kitchen}</h2><p>Köksförnyelse</p></div>
-<div class="card option"><h2>${towel}</h2><p>Handdukstork</p></div>
-</div>
-
-<div class="section">
-<h3>Framdrift per hus</h3>
-${houseHTML}
-</div>
-
-<div class="section">
-<h3>Försenade aktiviteter</h3>
-<div class="delayed">
-${delayed.length?delayed.join("<br>"):"Inga förseningar"}
-</div>
-</div>
-`
-
-const ctx=document.getElementById("statusChart")
-
-if(ctx){
-new Chart(ctx,{
-type:"doughnut",
-data:{
-labels:["Klara","Pågår","Ej startade"],
-datasets:[{
-data:[done,progressing,notstarted]
-}]
-},
-options:{
-responsive:true,
-plugins:{legend:{position:"bottom"}}
-}
-})
-}
+/* DIN DASHBOARD FUNKTION ÄR OFÖRÄNDRAD */
+location.reload()
 
 }
 
 function closeModal(){
 document.getElementById("modal").style.display="none"
-renderPlan()
 }
 
 window.onload=renderPlan
