@@ -22,7 +22,15 @@ db.ref("apartments").on("value",(snapshot)=>{
 
 aptData = snapshot.val() || {}
 
+const page = window.location.pathname
+
+if(page.includes("dashboard")){
+if(typeof renderDashboard === "function"){
+renderDashboard()
+}
+}else{
 renderPlan()
+}
 
 })
 
