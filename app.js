@@ -1,4 +1,3 @@
-
 const ACTIVITY_GROUPS={
 "RIVNING":["Asbestsanering","Rivning","Slipning väggar","Håltagning","Städning"],
 "VVS":["Kassettmontage","Rör i badrum","Rör till kök/WC","Avloppstam kök","Blandare diskbänk","Gummi kassettbotten","Kassettfront monterad","Städning"],
@@ -48,6 +47,7 @@ return ""
 }
 
 function renderPlan(){
+
 const root=document.getElementById("content")
 root.innerHTML=""
 
@@ -102,11 +102,14 @@ block.appendChild(wrap)
 root.appendChild(block)
 
 })
+
 }
 
 function openModal(num){
+
 const modal=document.getElementById("modal")
 modal.style.display="block"
+
 document.getElementById("aptTitle").innerText="LGH "+num
 
 const data=getData()
@@ -132,6 +135,7 @@ acts.forEach(a=>{
 const key=group+"|"+a
 const row=document.createElement("div")
 row.className="activity"
+
 const status=(apt.activities||{})[key]
 
 row.innerHTML=`
@@ -142,14 +146,17 @@ ${a}
 <button class="btn red ${status==='försenad'?'active':''}" onclick="toggleStatus('${num}','${key}','försenad')">Försenad</button>
 </div>
 `
+
 list.appendChild(row)
 
 })
 
 })
+
 }
 
 function toggleStatus(num,act,status){
+
 const data=getData()
 data[num]=data[num]||{activities:{}}
 
@@ -165,10 +172,13 @@ data[num].activities[act]=status
 saveData(data)
 openModal(num)
 renderPlan()
+
 }
 
 function markAllDone(){
+
 const num=document.getElementById("aptTitle").innerText.split(" ")[1]
+
 const data=getData()
 data[num]=data[num]||{activities:{}}
 
@@ -184,11 +194,14 @@ all.forEach(a=>data[num].activities[a]="klar")
 }
 
 saveData(data)
+
 openModal(num)
 renderPlan()
+
 }
 
 function saveOptions(num){
+
 const data=getData()
 data[num]=data[num]||{activities:{}}
 
@@ -199,7 +212,9 @@ data[num].tom=document.getElementById("tom").checked
 data[num].note=document.getElementById("note").value
 
 saveData(data)
+
 renderPlan()
+
 }
 
 function dashboard(){
@@ -276,6 +291,11 @@ root.innerHTML=`
 <div class="card notstarted"><h2>${notstarted}</h2><p>Ej startade</p></div>
 </div>
 
+<div class="section">
+<h3>Statusöversikt</h3>
+<canvas id="statusChart"></canvas>
+</div>
+
 <div class="dashboard">
 <div class="card option"><h2>${kitchen}</h2><p>Köksförnyelse</p></div>
 <div class="card option"><h2>${towel}</h2><p>Handdukstork</p></div>
@@ -293,6 +313,25 @@ ${delayed.length?delayed.join("<br>"):"Inga förseningar"}
 </div>
 </div>
 `
+
+const ctx=document.getElementById("statusChart")
+
+if(ctx){
+new Chart(ctx,{
+type:"doughnut",
+data:{
+labels:["Klara","Pågår","Ej startade"],
+datasets:[{
+data:[done,progressing,notstarted]
+}]
+},
+options:{
+responsive:true,
+plugins:{legend:{position:"bottom"}}
+}
+})
+}
+
 }
 
 function closeModal(){
