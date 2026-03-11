@@ -334,7 +334,9 @@ renderPlan()
 
 window.onload = function(){
 
-if(document.getElementById("content")){
+const page = window.location.pathname
+
+if(page.endsWith("index.html") || page.endsWith("/")){
 renderPlan()
 }
 
