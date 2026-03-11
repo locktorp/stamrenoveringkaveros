@@ -114,9 +114,22 @@ max-height:90vh;
 .address-btn{
 width:100%;
 padding:18px;
-font-size:18px;
 margin:10px 0;
+font-size:18px;
+font-weight:bold;
+color:black;
 border-radius:10px;
+}
+
+.back-btn{
+background:black;
+color:white;
+}
+
+.columns label{
+display:flex;
+align-items:center;
+gap:8px;
 }
 
 }
