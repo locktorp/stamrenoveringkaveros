@@ -314,7 +314,8 @@ list.appendChild(g)
 
 acts.forEach(a=>{
 
-const key=group+"|"+a
+const key=(group+"|"+a).replaceAll("/","-")
+  
 const row=document.createElement("div")
 row.className="activity"
 
