@@ -1,4 +1,4 @@
-function dashboard(){
+function renderDashboard(){
 
 const root=document.getElementById("content")
 
