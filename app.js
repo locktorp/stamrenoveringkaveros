@@ -16,8 +16,23 @@ const buildings={
 "Dirigentgatan 4":[[411,405,399,394],[412,406,400,395],[413,407,401,396],[414,408,402,397],[415,409,403,398],[416,410,404,null],[433,427,421,418],[434,428,422,419],[435,429,423,420],[436,430,424,null],[437,431,425,null],[438,432,426,417]]
 }
 
-function getData(){return JSON.parse(localStorage.getItem("aptData")||"{}")}
-function saveData(d){localStorage.setItem("aptData",JSON.stringify(d))}
+let aptData = {}
+
+db.ref("apartments").on("value",(snapshot)=>{
+
+aptData = snapshot.val() || {}
+
+renderPlan()
+
+})
+
+function getData(){
+return aptData
+}
+
+function saveData(d){
+db.ref("apartments").set(d)
+}
 
 function allActivities(){
 let list=[]
