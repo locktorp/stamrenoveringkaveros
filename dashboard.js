@@ -1,32 +1,30 @@
+function getData(){
+return JSON.parse(localStorage.getItem("aptData")||"{}")
+}
+
 function dashboard(){
 
 const root=document.getElementById("dashboard")
 
-const data=JSON.parse(localStorage.getItem("aptData")||"{}")
+const data=getData()
 
-let total=172
+let total=0
 let done=0
-let progressing=0
+let progressCount=0
 let notstarted=0
 
 Object.values(buildings).flat(2).forEach(num=>{
 
 if(num===null)return
 
+total++
+
 const acts=data[num]?.activities||{}
 
-const all=allActivities()
+let finished=Object.values(acts).filter(v=>v==="klar").length
 
-let d=0
-
-all.forEach(a=>{
-if(acts[a]==="klar")d++
-})
-
-const p=Math.round(d/all.length*100)||0
-
-if(p===100)done++
-else if(p>0)progressing++
+if(finished>0 && finished<allActivities().length)progressCount++
+else if(finished===allActivities().length)done++
 else notstarted++
 
 })
@@ -46,7 +44,7 @@ root.innerHTML=`
 </div>
 
 <div class="card progress">
-<h2>${progressing}</h2>
+<h2>${progressCount}</h2>
 <p>Pågår</p>
 </div>
 
