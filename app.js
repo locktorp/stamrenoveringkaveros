@@ -399,3 +399,4 @@ renderPlan()
 }
 
 }
+window.addEventListener("load", renderPlan)
