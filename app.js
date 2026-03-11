@@ -188,6 +188,8 @@ root.appendChild(btn)
 
 function mobileApartments(address,stamIndex){
 
+lastMobileView = ()=>mobileApartments(address,stamIndex)
+  
 const root=document.getElementById("content")
 root.innerHTML=""
 
@@ -203,7 +205,16 @@ const p=progress(num)
 
 const btn=document.createElement("button")
 btn.className="address-btn "+colorStatus(num)
-btn.innerText="LGH "+num+" – "+p+"%"
+const data=getData()[num]||{}
+
+let flags=""
+
+if(data.kitchen)flags+=" KÖK"
+if(data.towel)flags+=" HT"
+if(data.tom)flags+=" TOM"
+if(data.evak)flags+=" EVAK"
+
+btn.innerHTML="LGH "+num+" – "+p+"%<br><small>"+flags+"</small>"
 
 btn.onclick=()=>openModal(num)
 
@@ -327,9 +338,18 @@ renderPlan()
 
 }
 
+let lastMobileView=null
+
 function closeModal(){
+
 document.getElementById("modal").style.display="none"
+
+if(window.innerWidth<768 && lastMobileView){
+lastMobileView()
+}else{
 renderPlan()
+}
+
 }
 
 window.onload = function(){
