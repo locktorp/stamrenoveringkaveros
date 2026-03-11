@@ -31,7 +31,7 @@ return aptData
 }
 
 function saveData(d){
-db.ref("apartments").set(d)
+db.ref("apartments").update(d)
 }
 
 function allActivities(){
