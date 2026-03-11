@@ -163,6 +163,14 @@ root.appendChild(btn)
 
 })
 
+const searchBtn=document.createElement("button")
+searchBtn.className="address-btn search-btn"
+searchBtn.innerText="🔎 Sök lägenhet"
+
+searchBtn.onclick=mobileSearch
+
+root.appendChild(searchBtn)  
+  
 }
 
 function mobileStams(address){
@@ -183,6 +191,36 @@ btn.onclick=()=>mobileApartments(address,i)
 root.appendChild(btn)
 
 })
+
+}
+
+function mobileSearch(){
+
+const root=document.getElementById("content")
+root.innerHTML=""
+
+backButton(mobileAddresses)
+
+const input=document.createElement("input")
+input.placeholder="Ange lägenhetsnummer"
+input.className="search-input"
+
+const btn=document.createElement("button")
+btn.innerText="Sök"
+btn.className="address-btn"
+
+btn.onclick=function(){
+
+const num=input.value.trim()
+
+if(!num)return
+
+openModal(num)
+
+}
+
+root.appendChild(input)
+root.appendChild(btn)
 
 }
 
