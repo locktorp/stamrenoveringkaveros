@@ -150,27 +150,6 @@ color:black;
 border-radius:10px;
 }
 
-.address-btn{
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-.apt-left{
-font-size:11px;
-font-weight:bold;
-}
-
-.apt-center{
-flex:1;
-text-align:center;
-}
-
-.apt-right{
-font-size:11px;
-font-weight:bold;
-}
-  
 .search-btn{
 background:#dbeafe;
 border:2px dashed #4a90e2;
