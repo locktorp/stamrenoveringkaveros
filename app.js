@@ -43,7 +43,12 @@ db.ref("apartments").set(d)
 function allActivities(){
 let list=[]
 Object.entries(ACTIVITY_GROUPS).forEach(([g,acts])=>{
-acts.forEach(a=>list.push(g+"|"+a))
+acts.forEach(a=>{
+
+const key=(g+"|"+a).replace(/[.#$[\]/]/g,"-")
+list.push(key)
+
+})
 })
 return list
 }
@@ -314,7 +319,7 @@ list.appendChild(g)
 
 acts.forEach(a=>{
 
-const key=(group+"|"+a).replaceAll("/","-")
+const key=(group+"|"+a).replace(/[.#$[\]/]/g,"-")
   
 const row=document.createElement("div")
 row.className="activity"
