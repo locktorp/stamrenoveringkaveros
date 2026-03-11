@@ -150,6 +150,21 @@ color:black;
 border-radius:10px;
 }
 
+.search-btn{
+background:#dbeafe;
+border:2px dashed #4a90e2;
+}  
+
+.search-input{
+width:100%;
+padding:14px;
+margin:10px 0;
+font-size:18px;
+border-radius:8px;
+border:1px solid #ccc;
+box-sizing:border-box;
+}  
+  
 .address-btn.green{
 background:#7ed67e;
 }
