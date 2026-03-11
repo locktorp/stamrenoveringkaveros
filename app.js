@@ -46,97 +46,12 @@ if(p>0)return "orange"
 return ""
 }
 
-/* ========================= */
-/* PLAN VIEW */
-/* ========================= */
-
 function renderPlan(){
 if(window.innerWidth<768){
 mobileAddresses()
 }else{
 desktopPlan()
 }
-}
-
-/* ========================= */
-/* DESKTOP ORIGINAL */
-/* ========================= */
-
-function desktopPlan(){
-
-const root=document.getElementById("content")
-root.innerHTML=""
-
-Object.entries(buildings).forEach(([name,stams])=>{
-
-const block=document.createElement("div")
-block.className="house-block"
-block.innerHTML="<h2>"+name+"</h2>"
-
-const wrap=document.createElement("div")
-wrap.className="stams"
-
-stams.forEach((stam,i)=>{
-
-const col=document.createElement("div")
-col.className="stam"
-col.innerHTML="<div class='stam-title'>Stam "+(i+1)+"</div>"
-
-stam.forEach(num=>{
-
-const apt=document.createElement("div")
-apt.className="apt "+colorStatus(num)
-
-if(num!==null){
-
-const data=getData()[num]||{}
-const p=progress(num)
-
-apt.innerHTML=`
-${data.kitchen?'<div class="corner kok">KÖK</div>':''}
-${data.towel?'<div class="corner ht">HT</div>':''}
-${data.evak?'<div class="corner evak">EVAK</div>':''}
-${data.tom?'<div class="corner tom">TOM</div>':''}
-<div><strong>${num}</strong></div>
-<div>${p}%</div>
-`
-
-apt.onclick=()=>openModal(num)
-
-}else{
-apt.style.visibility="hidden"
-}
-
-col.appendChild(apt)
-
-})
-
-wrap.appendChild(col)
-
-})
-
-block.appendChild(wrap)
-root.appendChild(block)
-
-})
-
-}
-
-/* ========================= */
-/* MOBILE NAVIGATION */
-/* ========================= */
-
-function backButton(callback){
-
-const root=document.getElementById("content")
-
-const btn=document.createElement("button")
-btn.className="address-btn back-btn"
-btn.innerText="← Tillbaka"
-btn.onclick=callback
-
-root.appendChild(btn)
-
 }
 
 function mobileAddresses(){
@@ -156,7 +71,6 @@ order.forEach(addr=>{
 const btn=document.createElement("button")
 btn.className="address-btn"
 btn.innerText=addr
-
 btn.onclick=()=>mobileStams(addr)
 
 root.appendChild(btn)
@@ -166,11 +80,10 @@ root.appendChild(btn)
 const searchBtn=document.createElement("button")
 searchBtn.className="address-btn search-btn"
 searchBtn.innerText="🔎 Sök lägenhet"
-
 searchBtn.onclick=mobileSearch
 
-root.appendChild(searchBtn)  
-  
+root.appendChild(searchBtn)
+
 }
 
 function mobileStams(address){
@@ -227,7 +140,7 @@ root.appendChild(btn)
 function mobileApartments(address,stamIndex){
 
 lastMobileView = ()=>mobileApartments(address,stamIndex)
-  
+
 const root=document.getElementById("content")
 root.innerHTML=""
 
@@ -240,19 +153,26 @@ stam.forEach(num=>{
 if(num===null)return
 
 const p=progress(num)
-
 const btn=document.createElement("button")
+
 btn.className="address-btn "+colorStatus(num)
+
 const data=getData()[num]||{}
 
-let flags=""
+let left=""
+let right=""
 
-if(data.kitchen)flags+=" KÖK"
-if(data.towel)flags+=" HT"
-if(data.tom)flags+=" TOM"
-if(data.evak)flags+=" EVAK"
+if(data.towel)left+="HT "
+if(data.kitchen)left+="KÖK "
 
-btn.innerHTML="LGH "+num+" – "+p+"%<br><small>"+flags+"</small>"
+if(data.tom)right+="TOM "
+if(data.evak)right+="EVAK"
+
+btn.innerHTML=`
+<span class="apt-left">${left}</span>
+<span class="apt-center">LGH ${num} – ${p}%</span>
+<span class="apt-right">${right}</span>
+`
 
 btn.onclick=()=>openModal(num)
 
@@ -262,117 +182,16 @@ root.appendChild(btn)
 
 }
 
-/* ========================= */
-/* MODAL */
-/* ========================= */
+function backButton(callback){
 
-function openModal(num){
+const root=document.getElementById("content")
 
-const modal=document.getElementById("modal")
-modal.style.display="block"
+const btn=document.createElement("button")
+btn.className="address-btn back-btn"
+btn.innerText="← Tillbaka"
+btn.onclick=callback
 
-document.getElementById("aptTitle").innerText="LGH "+num
-
-const data=getData()
-const apt=data[num]||{activities:{},kitchen:false,towel:false,evak:false,tom:false,note:""}
-
-document.getElementById("kitchen").checked=apt.kitchen
-document.getElementById("towel").checked=apt.towel
-document.getElementById("evak").checked=apt.evak
-document.getElementById("tom").checked=apt.tom
-document.getElementById("note").value=apt.note||""
-
-const list=document.getElementById("activities")
-list.innerHTML=""
-
-Object.entries(ACTIVITY_GROUPS).forEach(([group,acts])=>{
-
-const g=document.createElement("h4")
-g.innerText=group
-list.appendChild(g)
-
-acts.forEach(a=>{
-
-const key=group+"|"+a
-const row=document.createElement("div")
-row.className="activity"
-
-const status=(apt.activities||{})[key]
-
-row.innerHTML=`
-${a}
-<div>
-<button class="btn green ${status==='klar'?'active':''}" onclick="toggleStatus('${num}','${key}','klar')">Klar</button>
-<button class="btn orange ${status==='pågår'?'active':''}" onclick="toggleStatus('${num}','${key}','pågår')">Pågår</button>
-<button class="btn red ${status==='försenad'?'active':''}" onclick="toggleStatus('${num}','${key}','försenad')">Försenad</button>
-</div>
-`
-
-list.appendChild(row)
-
-})
-
-})
-
-}
-
-function toggleStatus(num,act,status){
-
-const data=getData()
-data[num]=data[num]||{activities:{}}
-
-const current=data[num].activities?.[act]
-
-if(current===status){
-delete data[num].activities[act]
-}else{
-data[num].activities=data[num].activities||{}
-data[num].activities[act]=status
-}
-
-saveData(data)
-openModal(num)
-renderPlan()
-
-}
-
-function markAllDone(){
-
-const num=document.getElementById("aptTitle").innerText.split(" ")[1]
-const data=getData()
-
-data[num]=data[num]||{activities:{}}
-
-const all=allActivities()
-
-const allDone=all.every(a=>data[num].activities?.[a]==="klar")
-
-if(allDone){
-data[num].activities={}
-}else{
-data[num].activities={}
-all.forEach(a=>data[num].activities[a]="klar")
-}
-
-saveData(data)
-openModal(num)
-renderPlan()
-
-}
-
-function saveOptions(num){
-
-const data=getData()
-data[num]=data[num]||{activities:{}}
-
-data[num].kitchen=document.getElementById("kitchen").checked
-data[num].towel=document.getElementById("towel").checked
-data[num].evak=document.getElementById("evak").checked
-data[num].tom=document.getElementById("tom").checked
-data[num].note=document.getElementById("note").value
-
-saveData(data)
-renderPlan()
+root.appendChild(btn)
 
 }
 
@@ -390,12 +209,6 @@ renderPlan()
 
 }
 
-window.onload = function(){
-
-const page = window.location.pathname
-
-if(page.endsWith("index.html") || page === "/" || page === ""){
+window.onload=function(){
 renderPlan()
-}
-
 }
