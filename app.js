@@ -22,15 +22,10 @@ db.ref("apartments").on("value",(snapshot)=>{
 
 aptData = snapshot.val() || {}
 
-if(document.getElementById("content")){
 renderPlan()
-}
-
-if(typeof dashboard === "function"){
-dashboard()
-}
 
 })
+
 function getData(){
 return JSON.parse(JSON.stringify(aptData))
 }
@@ -63,9 +58,7 @@ const d=getData()[num]||{}
 const acts=d.activities||{}
 const all=allActivities()
 let done=0
-all.forEach(a=>{
-if(acts[a]==="klar" || acts[a.replace("-", "/")]==="klar")done++
-})
+all.forEach(a=>{if(acts[a]==="klar")done++})
 return Math.round(done/all.length*100)||0
 }
 
@@ -426,14 +419,10 @@ renderPlan()
 
 window.onload = function(){
 
-if(document.getElementById("content")){
+const page = window.location.pathname
 
-if(window.location.href.includes("dashboard")){
-dashboard()
-}else{
+if(page.endsWith("index.html") || page === "/" || page === ""){
 renderPlan()
-}
-
 }
 
 }
