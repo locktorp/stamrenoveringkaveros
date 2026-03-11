@@ -47,7 +47,7 @@ return ""
 }
 
 /* ========================= */
-/* PLAN VIEW */
+/* PLAN */
 /* ========================= */
 
 function renderPlan(){
@@ -59,7 +59,7 @@ desktopPlan()
 }
 
 /* ========================= */
-/* DESKTOP ORIGINAL */
+/* DESKTOP */
 /* ========================= */
 
 function desktopPlan(){
@@ -123,23 +123,40 @@ root.appendChild(block)
 }
 
 /* ========================= */
-/* MOBILE NAVIGATION */
+/* MOBILE */
 /* ========================= */
 
-function backButton(callback){
+let mobileState="addresses"
+let currentAddress=null
+let currentStam=null
 
-const root=document.getElementById("content")
+function backStep(){
+
+if(mobileState==="apartments"){
+mobileStams(currentAddress)
+return
+}
+
+if(mobileState==="stams"){
+mobileAddresses()
+}
+
+}
+
+function mobileBackButton(root){
 
 const btn=document.createElement("button")
 btn.className="address-btn back-btn"
 btn.innerText="← Tillbaka"
-btn.onclick=callback
+btn.onclick=backStep
 
 root.appendChild(btn)
 
 }
 
 function mobileAddresses(){
+
+mobileState="addresses"
 
 const root=document.getElementById("content")
 root.innerHTML=""
@@ -167,10 +184,13 @@ root.appendChild(btn)
 
 function mobileStams(address){
 
+mobileState="stams"
+currentAddress=address
+
 const root=document.getElementById("content")
 root.innerHTML=""
 
-backButton(mobileAddresses)
+mobileBackButton(root)
 
 buildings[address].forEach((stam,i)=>{
 
@@ -188,10 +208,14 @@ root.appendChild(btn)
 
 function mobileApartments(address,stamIndex){
 
+mobileState="apartments"
+currentAddress=address
+currentStam=stamIndex
+
 const root=document.getElementById("content")
 root.innerHTML=""
 
-backButton(()=>mobileStams(address))
+mobileBackButton(root)
 
 const stam=buildings[address][stamIndex]
 
@@ -199,11 +223,19 @@ stam.forEach(num=>{
 
 if(num===null)return
 
+const data=getData()[num]||{}
 const p=progress(num)
 
 const btn=document.createElement("button")
 btn.className="address-btn "+colorStatus(num)
-btn.innerText="LGH "+num+" – "+p+"%"
+
+btn.innerHTML=`
+${data.kitchen?'<div class="corner kok">KÖK</div>':''}
+${data.towel?'<div class="corner ht">HT</div>':''}
+${data.evak?'<div class="corner evak">EVAK</div>':''}
+${data.tom?'<div class="corner tom">TOM</div>':''}
+<strong>${num}</strong> ${p}%
+`
 
 btn.onclick=()=>openModal(num)
 
@@ -264,66 +296,6 @@ list.appendChild(row)
 })
 
 })
-
-}
-
-function toggleStatus(num,act,status){
-
-const data=getData()
-data[num]=data[num]||{activities:{}}
-
-const current=data[num].activities?.[act]
-
-if(current===status){
-delete data[num].activities[act]
-}else{
-data[num].activities=data[num].activities||{}
-data[num].activities[act]=status
-}
-
-saveData(data)
-openModal(num)
-renderPlan()
-
-}
-
-function markAllDone(){
-
-const num=document.getElementById("aptTitle").innerText.split(" ")[1]
-const data=getData()
-
-data[num]=data[num]||{activities:{}}
-
-const all=allActivities()
-
-const allDone=all.every(a=>data[num].activities?.[a]==="klar")
-
-if(allDone){
-data[num].activities={}
-}else{
-data[num].activities={}
-all.forEach(a=>data[num].activities[a]="klar")
-}
-
-saveData(data)
-openModal(num)
-renderPlan()
-
-}
-
-function saveOptions(num){
-
-const data=getData()
-data[num]=data[num]||{activities:{}}
-
-data[num].kitchen=document.getElementById("kitchen").checked
-data[num].towel=document.getElementById("towel").checked
-data[num].evak=document.getElementById("evak").checked
-data[num].tom=document.getElementById("tom").checked
-data[num].note=document.getElementById("note").value
-
-saveData(data)
-renderPlan()
 
 }
 
