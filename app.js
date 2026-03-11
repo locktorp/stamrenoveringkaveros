@@ -426,10 +426,14 @@ renderPlan()
 
 window.onload = function(){
 
-const page = window.location.pathname
+if(document.getElementById("content")){
 
-if(page.endsWith("index.html") || page === "/" || page === ""){
+if(window.location.href.includes("dashboard")){
+dashboard()
+}else{
 renderPlan()
+}
+
 }
 
 }
