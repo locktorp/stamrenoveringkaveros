@@ -85,26 +85,33 @@ return ""
 /* ========================= */
 
 function renderPlan(){
+
 if(window.innerWidth<768){
+
 mobileAddresses()
+
 }else{
 
-function isHouseComplete(stams){
-
-let all = []
-
-stams.forEach(stam=>{
-stam.forEach(num=>{
-if(num!==null) all.push(num)
-})
-})
-
-return all.every(num => progress(num) === 100)
-
-}
-  
 desktopPlan()
+
+if(!window.hasScrolled){
+
+window.hasScrolled = true
+
+setTimeout(() => {
+
+const el = document.getElementById("Dirigentgatan 3")
+
+if(el){
+el.scrollIntoView({ behavior: "auto", block: "start" })
 }
+
+}, 100)
+
+}
+
+}
+
 }
 
 /* ========================= */
@@ -120,7 +127,8 @@ Object.entries(buildings).forEach(([name,stams])=>{
   
 const block=document.createElement("div")
 block.className="house-block"
-block.innerHTML="<h2>"+name+"</h2>"
+
+block.innerHTML = "<h2 id='"+name+"'>"+name+"</h2>"
 
 const wrap=document.createElement("div")
 wrap.className="stams"
