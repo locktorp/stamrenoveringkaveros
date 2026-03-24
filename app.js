@@ -88,6 +88,21 @@ function renderPlan(){
 if(window.innerWidth<768){
 mobileAddresses()
 }else{
+
+function isHouseComplete(stams){
+
+let all = []
+
+stams.forEach(stam=>{
+stam.forEach(num=>{
+if(num!==null) all.push(num)
+})
+})
+
+return all.every(num => progress(num) === 100)
+
+}
+  
 desktopPlan()
 }
 }
@@ -103,6 +118,8 @@ root.innerHTML=""
 
 Object.entries(buildings).forEach(([name,stams])=>{
 
+if(isHouseComplete(stams)) return
+  
 const block=document.createElement("div")
 block.className="house-block"
 block.innerHTML="<h2>"+name+"</h2>"
