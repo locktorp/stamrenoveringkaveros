@@ -117,8 +117,6 @@ const root=document.getElementById("content")
 root.innerHTML=""
 
 Object.entries(buildings).forEach(([name,stams])=>{
-
-if(isHouseComplete(stams)) return
   
 const block=document.createElement("div")
 block.className="house-block"
