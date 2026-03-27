@@ -238,3 +238,21 @@ margin:0 !important;
 }
 
 }
+
+<div class="header">
+
+<input type="checkbox" id="menuToggle">
+
+<label for="menuToggle" class="menu-icon">☰</label>
+
+<img src="Skanska_logo.svg.png" class="logo">
+
+<div class="title">Stamrenovering Kaverös</div>
+
+<div class="nav">
+<a href="index.html">Stamplan</a>
+<a href="dashboard.html">Dashboard</a>
+<a href="tidplan.html">Tidplan</a>
+</div>
+
+</div>
