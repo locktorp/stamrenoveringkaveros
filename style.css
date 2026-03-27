@@ -1,11 +1,26 @@
 
 body{font-family:Arial,sans-serif;margin:0;background:url('bakgrund.jpg') center/cover fixed;}
-.header{display:flex;align-items:center;padding:10px 20px;background:white;box-shadow:0 3px 8px rgba(0,0,0,0.25);}
+.header{
+display:flex;
+align-items:center;
+padding:10px 20px;
+background:white;
+box-shadow:0 3px 8px rgba(0,0,0,0.25);
+
+position:fixed;
+top:0;
+left:0;
+width:100%;
+z-index:1000;
+}
 .logo{height:42px;margin-right:12px}
 .title{font-size:22px;font-weight:bold}
 .nav{margin-left:auto}
 .nav button{margin-left:10px;padding:10px 16px;border:none;border-radius:6px;background:#e6e6e6;cursor:pointer;font-weight:bold;}
-.container{padding:20px}
+.container{
+padding:20px;
+margin-top:80px;
+}
 
 .house-block{background:rgba(255,255,255,0.9);padding:20px;margin-bottom:40px;border-radius:12px;box-shadow:0 8px 25px rgba(0,0,0,0.3);}
 .stams{display:flex;gap:10px}
