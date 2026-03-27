@@ -6,8 +6,12 @@
 <title>Stamrenovering Kaverös</title>
 <style>
 body{font-family:Inter,Arial;margin:0;background:#f4f6f8}
-header{background:white;padding:16px 24px;border-bottom:3px solid #111;font-weight:700}
-.wrapper{overflow:auto;height:calc(100vh - 60px);}
+
+.wrapper{
+overflow:auto;
+height:calc(100vh - 60px);
+margin-top:80px;
+}
 .gantt{position:relative;min-width:3500px;padding:10px}
 .grid{display:grid;grid-template-columns:200px repeat(90,110px);}
 .cell{
@@ -192,10 +196,19 @@ animation:blink 1s infinite;
 
 <img src="Skanska_logo.svg.png" class="bg-logo">  
   
-<header>
+<div class="header">
+
 <img src="Skanska_logo.svg.png" class="logo">
-<span>TIDPLAN - STAMRENOVERING KAVERÖS</span>
-</header>
+
+<div class="title">Stamrenovering Kaverös</div>
+
+<div class="nav">
+<button onclick="window.location.href='index.html'">Stamplan</button>
+<button onclick="window.location.href='dashboard.html'">Dashboard</button>
+<button onclick="window.location.href='tidplan.html'">Tidplan</button>
+</div>
+
+</div>
 
 <div class="ticker">
 <span><b>ÖVERLÄMNING STAM 5, V13</b> | Slutstädning onsdag | Mjukfogning torsdag | Besiktning fredag</span>
