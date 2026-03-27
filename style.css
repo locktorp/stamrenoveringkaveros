@@ -206,24 +206,3 @@ gap:8px;
 }
 
 }
-@media (max-width: 768px){
-
-.header{
-position:sticky;
-top:0;
-}
-
-.wrapper{
-margin-top:10px;
-}
-
-}
-function toggleMenu(){
-const menu = document.getElementById("mobileMenu")
-menu.style.display = menu.style.display === "block" ? "none" : "block"
-}
-
-function go(page){
-document.getElementById("mobileMenu").style.display="none"
-window.location.href = page
-}
