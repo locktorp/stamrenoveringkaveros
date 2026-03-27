@@ -206,3 +206,15 @@ gap:8px;
 }
 
 }
+@media (max-width: 768px){
+
+.header{
+position:sticky;
+top:0;
+}
+
+.wrapper{
+margin-top:10px;
+}
+
+}
