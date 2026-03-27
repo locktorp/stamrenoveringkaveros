@@ -512,17 +512,23 @@ delete delays[selected]
 }
 
 closePopup()
+fetch("./header.html")
+.then(res => res.text())
+.then(data => {
+
+document.getElementById("header-container").innerHTML = data
+
+// 🔥 kör EFTER headern är laddad
 build()
 centerOnToday()
+
+})
 
 }
 setInterval(()=>{
 drawToday()
 drawProgress()
 },60000)
-
-build()
-centerOnToday() 
 
 </script>
 
