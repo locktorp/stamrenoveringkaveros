@@ -457,3 +457,12 @@ renderPlan()
 }
 
 }
+
+function toggleMenu(){
+  const menu = document.getElementById("mobileMenu")
+  menu.style.display = menu.style.display === "flex" ? "none" : "flex"
+}
+
+function goTo(page){
+  window.location.href = page
+}
