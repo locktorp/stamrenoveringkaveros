@@ -206,3 +206,43 @@ gap:8px;
 }
 
 </div>
+#menuToggle{
+display:none;
+}
+
+.menu-icon{
+display:none;
+font-size:26px;
+margin-left:auto;
+cursor:pointer;
+}
+
+@media (max-width:768px){
+
+.menu-icon{
+display:block;
+}
+
+.nav{
+display:none;
+flex-direction:column;
+width:100%;
+background:white;
+margin-top:10px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+#menuToggle:checked + .menu-icon + .nav{
+display:flex;
+}
+
+.nav a{
+padding:14px;
+text-decoration:none;
+color:black;
+font-weight:bold;
+border-bottom:1px solid #eee;
+}
+
+}
