@@ -217,3 +217,24 @@ gap:8px;
 }
 
 }
+@media (max-width:768px){
+
+.header{
+display:flex !important;
+flex-wrap:nowrap !important;
+justify-content:flex-start !important;
+align-items:center !important;
+text-align:left !important;
+}
+
+.logo{
+height:30px !important;
+margin-right:10px !important;
+}
+
+.title{
+font-size:14px !important;
+margin:0 !important;
+}
+
+}
