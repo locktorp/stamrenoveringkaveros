@@ -15,7 +15,9 @@ z-index:1000;
 }
 .logo{height:42px;margin-right:12px}
 .title{font-size:22px;font-weight:bold}
-.nav{margin-left:auto}
+.nav{
+margin-left:20px;
+}
 .nav button{margin-left:10px;padding:10px 16px;border:none;border-radius:6px;background:#e6e6e6;cursor:pointer;font-weight:bold;}
 .container{
 padding:20px;
