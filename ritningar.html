@@ -97,9 +97,14 @@ background:#d0d0d0;
 <button onclick="openPdf('01Källare Hus 4.pdf')">Källare</button>
 <button onclick="openPdf('02Entréplan Hus 4.pdf')">Entréplan</button>
 <button onclick="openPdf('03Vån 1-3 Hus 4.pdf')">Vån 1–3</button>
-</div>
+ </div>
+  </div>
+
 </div>
 
+<div id="viewer" class="viewer hidden">
+  <button class="close-btn" onclick="closeViewer()">✕</button>
+  <iframe id="pdfFrame"></iframe>
 </div>
 
 <script>
