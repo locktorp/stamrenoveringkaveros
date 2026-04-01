@@ -46,7 +46,7 @@ height:calc(100% - 80px);
 <div id="header-container"></div>
 
 <div class="viewer">
-<iframe src="arbetsplatsinfo.pdf"></iframe>
+<iframe src="arbetsplatsinfo.jpg"></iframe>
 </div>
 
 <script>
