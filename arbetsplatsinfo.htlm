@@ -22,11 +22,10 @@ height:100%;
 background:#000;
 }
 
-/* PDF */
-.viewer iframe{
+.viewer img{
 width:100%;
 height:100%;
-border:none;
+object-fit:contain;
 }
 
 /* desktop header offset */
@@ -46,7 +45,7 @@ height:calc(100% - 80px);
 <div id="header-container"></div>
 
 <div class="viewer">
-<iframe src="arbetsplatsinfo.jpg"></iframe>
+<img src="arbetsplatsinfo.jpg">
 </div>
 
 <script>
