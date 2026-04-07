@@ -17,6 +17,11 @@ max-width:1200px;
 margin:auto;
 }
 
+h1,
+.section-title{
+    color: white;
+}
+
 /* TABELL */
 .table{
 width:100%;
@@ -63,6 +68,20 @@ color:red;
 font-weight:bold;
 margin:20px 0;
 }
+
+/* 🔥 AKTUELL VECKA */
+.current-week{
+background:#ff9800 !important;
+color:white;
+font-weight:bold;
+animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+0%{opacity:1;}
+50%{opacity:0.6;}
+100%{opacity:1;}
+}
 </style>
 
 </head>
@@ -91,13 +110,13 @@ margin:20px 0;
 <th>KOMMENTAR</th>
 </tr>
 
-<tr><td>Stam 2</td><td>4</td><td>0</td><td>0</td><td>V.15</td><td>Onsdag</td><td>Torsdag</td><td><b>Torsdag V.16</b></td><td></td></tr>
-<tr><td>Stam 6</td><td>3</td><td>0</td><td>1</td><td>V.16</td><td>Tisdag</td><td>Onsdag</td><td><b>Torsdag V.16</b></td><td></td></tr>
-<tr><td>Stam 7</td><td>4</td><td>0</td><td>4</td><td>V.17</td><td>Onsdag</td><td>Torsdag</td><td><b>Torsdag V.18</b></td><td></td></tr>
-<tr><td>Stam 8</td><td>4</td><td>0</td><td>4</td><td>V.18</td><td>Tisdag</td><td>Onsdag</td><td><b>Torsdag V.18</b></td><td class="comment">Första maj, fredag</td></tr>
-<tr><td>Stam 9</td><td>4</td><td>4</td><td>2</td><td>V.19</td><td>Onsdag</td><td>Torsdag</td><td><b>Onsdag V.20</b></td><td></td></tr>
-<tr><td>Stam 10</td><td>4</td><td>0</td><td>0</td><td>V.20</td><td>Måndag</td><td>Tisdag</td><td><b>Fredag V.21</b></td><td class="comment">Kristi himmelsfärd</td></tr>
-<tr><td>Stam 11</td><td>3</td><td>0</td><td>0</td><td>V.21</td><td>Onsdag</td><td>Torsdag</td><td><b>Fredag V.21</b></td><td></td></tr>
+<tr><td>Stam 2</td><td>4</td><td>0</td><td>0</td><td class="week">V.15</td><td>Onsdag</td><td>Torsdag</td><td><b>Torsdag V.16</b></td><td></td></tr>
+<tr><td>Stam 6</td><td>3</td><td>0</td><td>1</td><td class="week">V.16</td><td>Tisdag</td><td>Onsdag</td><td><b>Torsdag V.16</b></td><td></td></tr>
+<tr><td>Stam 7</td><td>4</td><td>0</td><td>4</td><td class="week">V.17</td><td>Onsdag</td><td>Torsdag</td><td><b>Torsdag V.18</b></td><td></td></tr>
+<tr><td>Stam 8</td><td>4</td><td>0</td><td>4</td><td class="week">V.18</td><td>Tisdag</td><td>Onsdag</td><td><b>Torsdag V.18</b></td><td class="comment">Första maj</td></tr>
+<tr><td>Stam 9</td><td>4</td><td>4</td><td>2</td><td class="week">V.19</td><td>Onsdag</td><td>Torsdag</td><td><b>Onsdag V.20</b></td><td></td></tr>
+<tr><td>Stam 10</td><td>4</td><td>0</td><td>0</td><td class="week">V.20</td><td>Måndag</td><td>Tisdag</td><td><b>Fredag V.21</b></td><td class="comment">Kristi himmelsfärd</td></tr>
+<tr><td>Stam 11</td><td>3</td><td>0</td><td>0</td><td class="week">V.21</td><td>Onsdag</td><td>Torsdag</td><td><b>Fredag V.21</b></td><td></td></tr>
 </table>
 
 <!-- ===== DIRIGENTGATAN 1 ===== -->
@@ -116,18 +135,17 @@ margin:20px 0;
 <th>KOMMENTAR</th>
 </tr>
 
-<tr><td>Stam 5</td><td>3</td><td>0</td><td>1</td><td>V.22</td><td>Onsdag</td><td>Torsdag</td><td><b>Torsdag V.23</b></td><td></td></tr>
-<tr><td>Stam 2</td><td>4</td><td>0</td><td>0</td><td>V.23</td><td>Tisdag</td><td>Onsdag</td><td><b>Fredag V.24</b></td><td></td></tr>
-<tr><td>Stam 3</td><td>8</td><td>0</td><td>1</td><td>V.24</td><td>Onsdag</td><td>Torsdag</td><td><b>Fredag V.24</b></td><td></td></tr>
-<tr><td>Stam 4</td><td>4</td><td>0</td><td>4</td><td>V.25</td><td>Tisdag</td><td>Onsdag</td><td><b>Fredag V.26</b></td><td class="comment">Midsommarvecka</td></tr>
-<tr><td>Stam 1</td><td>4</td><td>0</td><td>3</td><td>V.26</td><td>Onsdag</td><td>Torsdag</td><td><b>Torsdag V.27</b></td><td></td></tr>
-<tr><td>Stam 6</td><td>3</td><td>0</td><td>0</td><td>V.27</td><td>Tisdag</td><td>Onsdag</td><td><b>Torsdag V.27</b></td><td></td></tr>
+<tr><td>Stam 5</td><td>3</td><td>0</td><td>1</td><td class="week">V.22</td><td>Onsdag</td><td>Torsdag</td><td><b>Torsdag V.23</b></td><td></td></tr>
+<tr><td>Stam 2</td><td>4</td><td>0</td><td>0</td><td class="week">V.23</td><td>Tisdag</td><td>Onsdag</td><td><b>Fredag V.24</b></td><td></td></tr>
+<tr><td>Stam 3</td><td>8</td><td>0</td><td>1</td><td class="week">V.24</td><td>Onsdag</td><td>Torsdag</td><td><b>Fredag V.24</b></td><td></td></tr>
+<tr><td>Stam 4</td><td>4</td><td>0</td><td>4</td><td class="week">V.25</td><td>Tisdag</td><td>Onsdag</td><td><b>Fredag V.26</b></td><td class="comment">Midsommar</td></tr>
+<tr><td>Stam 1</td><td>4</td><td>0</td><td>3</td><td class="week">V.26</td><td>Onsdag</td><td>Torsdag</td><td><b>Torsdag V.27</b></td><td></td></tr>
+<tr><td>Stam 6</td><td>3</td><td>0</td><td>0</td><td class="week">V.27</td><td>Tisdag</td><td>Onsdag</td><td><b>Torsdag V.27</b></td><td></td></tr>
 </table>
 
 <div class="semester">SEMESTER</div>
 
 <table class="table">
-
 <tr>
 <th>STAM</th>
 <th>BADRUM</th>
@@ -140,14 +158,13 @@ margin:20px 0;
 <th>KOMMENTAR</th>
 </tr>
 
-<tr><td>Stam 7</td><td>4</td><td>0</td><td>4</td><td>V.32</td><td>Onsdag</td><td>Torsdag</td><td><b>Fredag V.33</b></td><td></td></tr>
-<tr><td>Stam 8</td><td>4</td><td>0</td><td>4</td><td>V.33</td><td>Onsdag</td><td>Torsdag</td><td><b></b></td><td></td></tr>
-<tr><td>Stam 9</td><td>4</td><td>4</td><td>1</td><td>V.42</td><td>Onsdag</td><td>Torsdag</td><td><b>Torsdag V.43</b></td><td></td></tr>
-<tr><td>Stam 10</td><td>4</td><td>0</td><td>4</td><td>V.43</td><td>Tisdag</td><td>Onsdag</td><td><b>Torsdag V.44</b></td><td></td></tr>
-<tr><td>Stam 11</td><td>4</td><td>0</td><td>0</td><td>V.44</td><td>Tisdag</td><td>Onsdag</td><td><b>Torsdag V.44</b></td><td></td></tr>
-
+<tr><td>Stam 7</td><td>4</td><td>0</td><td>4</td><td class="week">V.32</td><td>Onsdag</td><td>Torsdag</td><td><b>Fredag V.33</b></td><td></td></tr>
+<tr><td>Stam 8</td><td>4</td><td>0</td><td>4</td><td class="week">V.33</td><td>Onsdag</td><td>Torsdag</td><td></td><td></td></tr>
+<tr><td>Stam 9</td><td>4</td><td>4</td><td>1</td><td class="week">V.42</td><td>Onsdag</td><td>Torsdag</td><td><b>Torsdag V.43</b></td><td></td></tr>
+<tr><td>Stam 10</td><td>4</td><td>0</td><td>4</td><td class="week">V.43</td><td>Tisdag</td><td>Onsdag</td><td><b>Torsdag V.44</b></td><td></td></tr>
+<tr><td>Stam 11</td><td>4</td><td>0</td><td>0</td><td class="week">V.44</td><td>Tisdag</td><td>Onsdag</td><td><b>Torsdag V.44</b></td><td></td></tr>
 </table>
-  
+
 </div>
 
 <script>
@@ -156,6 +173,25 @@ fetch("header.html")
 .then(data => {
 document.getElementById("header-container").innerHTML = data
 })
+
+// 🔥 highlight aktuell vecka
+function getCurrentWeek(){
+  const now = new Date()
+  const start = new Date(now.getFullYear(), 0, 1)
+  const days = Math.floor((now - start) / (24*60*60*1000))
+  return Math.ceil((days + start.getDay() + 1) / 7)
+}
+
+function highlightWeek(){
+  const week = getCurrentWeek()
+  document.querySelectorAll(".week").forEach(cell=>{
+    if(cell.innerText.includes("V."+week)){
+      cell.classList.add("current-week")
+    }
+  })
+}
+
+highlightWeek()
 </script>
 
 </body>
