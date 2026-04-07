@@ -2,59 +2,106 @@
 <html lang="sv">
 <head>
 <meta charset="UTF-8">
-<title>Arbetsplatsinfo</title>
-
-<link rel="stylesheet" href="style.css">
+<title>Arbetsplatsinformation</title>
 
 <style>
-
-body{
-margin:0;
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    margin: 0;
+    padding: 20px;
 }
 
-/* container */
-.viewer{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:#000;
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
 }
 
-.viewer img{
-width:100%;
-height:100%;
-object-fit:contain;
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
 }
 
-/* desktop header offset */
-@media (min-width:768px){
-.viewer{
-top:80px;
-height:calc(100% - 80px);
-}
+.card {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    text-decoration: none;
+    color: black;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: 0.2s;
 }
 
+.card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+.card h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 14px;
+    line-height: 1.4;
+}
 </style>
 
 </head>
-
 <body>
 
-<div id="header-container"></div>
+<h1>Arbetsplatsinformation</h1>
 
-<div class="viewer">
-<img src="arbetsplatsinfo.jpg">
+<div class="board">
+
+<a href="arbetsmiljoplan.pdf" class="card">
+    <h2>Arbetsmiljöplan</h2>
+    <p>Det är ett lagkrav att arbetsmiljöplanen finns tillgänglig och hålls uppdaterad.</p>
+</a>
+
+<a href="regler.pdf" class="card">
+    <h2>Ordnings- och skyddsregler</h2>
+    <p>Alla ska känna till arbetsplatsens regler.</p>
+</a>
+
+<a href="miljorond.pdf" class="card">
+    <h2>Skydds- och miljörond</h2>
+    <p>Visar brister och åtgärder.</p>
+</a>
+
+<a href="etiska.pdf" class="card">
+    <h2>Rapportering – etiska övertramp</h2>
+    <p>Rapportera misstänkta överträdelser.</p>
+</a>
+
+<a href="nödsituation.pdf" class="card">
+    <h2>Anslag nödsituation</h2>
+    <p>Kontakt med räddningstjänst.</p>
+</a>
+
+<a href="larmkedja.pdf" class="card">
+    <h2>Larmkedja</h2>
+    <p>Information vid allvarliga händelser.</p>
+</a>
+
+<a href="olycka.pdf" class="card">
+    <h2>Checklista arbetsplatsolycka</h2>
+    <p>Nödlägesrutiner.</p>
+</a>
+
+<a href="förhandsanmälan.pdf" class="card">
+    <h2>Förhandsanmälan</h2>
+    <p>Lagkrav från Arbetsmiljöverket.</p>
+</a>
+
+<a href="miljöolycka.pdf" class="card">
+    <h2>Miljöolycka / tillbud</h2>
+    <p>Rutiner vid miljöincidenter.</p>
+</a>
+
 </div>
-
-<script>
-fetch("./header.html")
-.then(res => res.text())
-.then(data => {
-document.getElementById("header-container").innerHTML = data
-})
-</script>
 
 </body>
 </html>
