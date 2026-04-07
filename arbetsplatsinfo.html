@@ -5,42 +5,78 @@
 <title>Klickbar infotavla</title>
 
 <style>
-    body {
-        margin: 0;
-        text-align: center;
-        background: #0f3c82;
-    }
+body {
+    margin: 0;
+    background: #0f3c82;
+}
 
-    img {
-        max-width: 100%;
-        height: auto;
-    }
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 2048px;
+    margin: auto;
+}
+
+.container img {
+    width: 100%;
+    display: block;
+}
+
+/* Klickytor */
+.area {
+    position: absolute;
+    display: block;
+}
+
+/* Debug (ta bort sen) */
+.area:hover {
+    background: rgba(255, 0, 0, 0.2);
+}
 </style>
 </head>
 
 <body>
 
-<img src="arbetsplatsinfo.png" usemap="#infomap">
+<div class="container">
 
-<map name="infomap">
+<img src="arbetsplatsinfo.png">
 
-    <!-- ===== RAD 1 ===== -->
-    <area shape="rect" coords="0,350,341,800" href="arbetsmiljoanslag.pdf" target="_blank">
-    <area shape="rect" coords="341,350,682,800" href="nodsituation.pdf" target="_blank">
-    <area shape="rect" coords="682,350,1024,800" href="larmkedja.pdf" target="_blank">
-    <area shape="rect" coords="1024,350,1365,800" href="arbetsplatsolycka.pdf" target="_blank">
-    <area shape="rect" coords="1365,350,1706,800" href="miljoolycka.pdf" target="_blank">
-    <area shape="rect" coords="1706,350,2048,800" href="forhandsanmalan.pdf" target="_blank">
+<!-- ===== RAD 1 ===== -->
+<a class="area" href="arbetsmiljoanslag.pdf" target="_blank"
+   style="left:2%; top:25%; width:15%; height:30%;"></a>
 
-    <!-- ===== RAD 2 ===== -->
-    <area shape="rect" coords="0,800,341,1389" href="arbetsmiljoplan.pdf" target="_blank">
-    <area shape="rect" coords="341,800,682,1389" href="ordningsregler.pdf" target="_blank">
-    <area shape="rect" coords="682,800,1024,1389" href="skyddsrond.pdf" target="_blank">
-    <area shape="rect" coords="1024,800,1365,1389" href="rapportering.pdf" target="_blank">
-    <area shape="rect" coords="1365,800,1706,1389" href="miljoinventering.pdf" target="_blank">
-    <!-- sista rutan tom i din bild -->
-    
-</map>
+<a class="area" href="nodsituation.pdf" target="_blank"
+   style="left:18%; top:25%; width:15%; height:30%;"></a>
+
+<a class="area" href="larmkedja.pdf" target="_blank"
+   style="left:34%; top:25%; width:15%; height:30%;"></a>
+
+<a class="area" href="arbetsplatsolycka.pdf" target="_blank"
+   style="left:50%; top:25%; width:15%; height:30%;"></a>
+
+<a class="area" href="miljoolycka.pdf" target="_blank"
+   style="left:66%; top:25%; width:15%; height:30%;"></a>
+
+<a class="area" href="forhandsanmalan.pdf" target="_blank"
+   style="left:82%; top:25%; width:15%; height:30%;"></a>
+
+<!-- ===== RAD 2 ===== -->
+<a class="area" href="arbetsmiljoplan.pdf" target="_blank"
+   style="left:2%; top:60%; width:15%; height:30%;"></a>
+
+<a class="area" href="ordningsregler.pdf" target="_blank"
+   style="left:18%; top:60%; width:15%; height:30%;"></a>
+
+<a class="area" href="skyddsrond.pdf" target="_blank"
+   style="left:34%; top:60%; width:15%; height:30%;"></a>
+
+<a class="area" href="rapportering.pdf" target="_blank"
+   style="left:50%; top:60%; width:15%; height:30%;"></a>
+
+<a class="area" href="miljoinventering.pdf" target="_blank"
+   style="left:66%; top:60%; width:15%; height:30%;"></a>
+
+</div>
 
 </body>
 </html>
