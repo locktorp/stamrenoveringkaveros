@@ -179,17 +179,6 @@ z-index:0;                /* bakom allt */
 pointer-events:none;      /* går att klicka igenom */
 }
 
-.blink{
-color:#ef4444;
-animation:blink 1s infinite;
-}
-
-@keyframes blink{
-0%{opacity:1;}
-50%{opacity:0.2;}
-100%{opacity:1;}
-}
-
 .header{
 display:flex;
 align-items:center;
@@ -316,11 +305,6 @@ if(val.includes("Överlämning") &&
    isHandover = true
 }
 })
-
-// om ja → gör den blinkande
-if(isHandover){
-stamEl.classList.add("blink")
-}
 
 // lägg in i grid
 grid.appendChild(stamEl)
