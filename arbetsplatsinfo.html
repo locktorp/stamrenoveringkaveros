@@ -37,6 +37,8 @@ body {
 
 <body>
 
+<div id="header-container"></div>    
+
 <div class="container">
 
 <img src="arbetsplatsinfo.png">
@@ -78,5 +80,13 @@ body {
 
 </div>
 
+<script>
+fetch("header.html")
+.then(res => res.text())
+.then(data => {
+    document.getElementById("header-container").innerHTML = data
+})
+</script>
+    
 </body>
 </html>
