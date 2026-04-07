@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<title>Överlämningsplan</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+body{
+margin:0;
+}
+
+.container{
+padding:100px 20px 40px;
+max-width:1200px;
+margin:auto;
+}
+
+/* TABELL */
+.table{
+width:100%;
+border-collapse:collapse;
+background:white;
+box-shadow:0 6px 18px rgba(0,0,0,0.25);
+border-radius:10px;
+overflow:hidden;
+margin-bottom:40px;
+}
+
+.table th,
+.table td{
+border:1px solid #ddd;
+padding:8px;
+text-align:center;
+}
+
+.table th{
+background:#143275;
+color:white;
+}
+
+.section-title{
+margin:30px 0 10px;
+font-size:20px;
+font-weight:bold;
+}
+
+/* färger */
+.yellow{background:#ffe600;}
+.green{background:#2ecc71;color:white;}
+.red{background:#e53935;color:white;}
+
+.comment{
+font-style:italic;
+color:#555;
+}
+
+/* semester */
+.semester{
+text-align:center;
+color:red;
+font-weight:bold;
+margin:20px 0;
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="header-container"></div>
+
+<div class="container">
+
+<h1>Plan för överlämningsveckor</h1>
+
+<!-- ===== DIRIGENTGATAN 3 ===== -->
+<div class="section-title">Dirigentgatan 3</div>
+
+<table class="table">
+<tr>
+<th>STAM</th>
+<th>BADRUM</th>
+<th>WC</th>
+<th>KÖK</th>
+<th class="yellow">VECKA</th>
+<th>SLUTSTÄD</th>
+<th class="green">FOGNING</th>
+<th class="red">BESIKTNING</th>
+<th>KOMMENTAR</th>
+</tr>
+
+<tr><td>Stam 2</td><td>4</td><td>0</td><td>0</td><td>V.15</td><td>Onsdag</td><td>Torsdag</td><td><b>Torsdag V.16</b></td><td></td></tr>
+<tr><td>Stam 6</td><td>3</td><td>0</td><td>1</td><td>V.16</td><td>Tisdag</td><td>Onsdag</td><td><b>Torsdag V.16</b></td><td></td></tr>
+<tr><td>Stam 7</td><td>4</td><td>0</td><td>4</td><td>V.17</td><td>Onsdag</td><td>Torsdag</td><td><b>Torsdag V.18</b></td><td></td></tr>
+<tr><td>Stam 8</td><td>4</td><td>0</td><td>4</td><td>V.18</td><td>Tisdag</td><td>Onsdag</td><td><b>Torsdag V.18</b></td><td class="comment">Första maj, fredag</td></tr>
+<tr><td>Stam 9</td><td>4</td><td>4</td><td>2</td><td>V.19</td><td>Onsdag</td><td>Torsdag</td><td><b>Onsdag V.20</b></td><td></td></tr>
+<tr><td>Stam 10</td><td>4</td><td>0</td><td>0</td><td>V.20</td><td>Måndag</td><td>Tisdag</td><td><b>Fredag V.21</b></td><td class="comment">Kristi himmelsfärd</td></tr>
+<tr><td>Stam 11</td><td>3</td><td>0</td><td>0</td><td>V.21</td><td>Onsdag</td><td>Torsdag</td><td><b>Fredag V.21</b></td><td></td></tr>
+</table>
+
+<!-- ===== DIRIGENTGATAN 1 ===== -->
+<div class="section-title">Dirigentgatan 1</div>
+
+<table class="table">
+<tr>
+<th>STAM</th>
+<th>BADRUM</th>
+<th>WC</th>
+<th>KÖK</th>
+<th class="yellow">VECKA</th>
+<th>SLUTSTÄD</th>
+<th class="green">FOGNING</th>
+<th class="red">BESIKTNING</th>
+<th>KOMMENTAR</th>
+</tr>
+
+<tr><td>Stam 5</td><td>3</td><td>0</td><td>1</td><td>V.22</td><td>Onsdag</td><td>Torsdag</td><td><b>Torsdag V.23</b></td><td></td></tr>
+<tr><td>Stam 2</td><td>4</td><td>0</td><td>0</td><td>V.23</td><td>Tisdag</td><td>Onsdag</td><td><b>Fredag V.24</b></td><td></td></tr>
+<tr><td>Stam 3</td><td>8</td><td>0</td><td>1</td><td>V.24</td><td>Onsdag</td><td>Torsdag</td><td><b>Fredag V.24</b></td><td></td></tr>
+<tr><td>Stam 4</td><td>4</td><td>0</td><td>4</td><td>V.25</td><td>Tisdag</td><td>Onsdag</td><td><b>Fredag V.26</b></td><td class="comment">Midsommarvecka</td></tr>
+<tr><td>Stam 1</td><td>4</td><td>0</td><td>3</td><td>V.26</td><td>Onsdag</td><td>Torsdag</td><td><b>Torsdag V.27</b></td><td></td></tr>
+<tr><td>Stam 6</td><td>3</td><td>0</td><td>0</td><td>V.27</td><td>Tisdag</td><td>Onsdag</td><td><b>Torsdag V.27</b></td><td></td></tr>
+</table>
+
+<div class="semester">SEMESTER</div>
+
+</div>
+
+<script>
+fetch("header.html")
+.then(res => res.text())
+.then(data => {
+document.getElementById("header-container").innerHTML = data
+})
+</script>
+
+</body>
+</html>
