@@ -2,106 +2,49 @@
 <html lang="sv">
 <head>
 <meta charset="UTF-8">
-<title>Arbetsplatsinformation</title>
+<title>Klickbar infotavla</title>
 
 <style>
-body {
-    font-family: Arial, sans-serif;
-    background: #f4f4f4;
-    margin: 0;
-    padding: 20px;
-}
+    body {
+        margin: 0;
+        text-align: center;
+        background: #eee;
+    }
 
-h1 {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.board {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-}
-
-.card {
-    background: white;
-    border-radius: 10px;
-    padding: 15px;
-    text-decoration: none;
-    color: black;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    transition: 0.2s;
-}
-
-.card:hover {
-    transform: scale(1.03);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-}
-
-.card h2 {
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
-.card p {
-    font-size: 14px;
-    line-height: 1.4;
-}
+    img {
+        max-width: 100%;
+        height: auto;
+    }
 </style>
-
 </head>
+
 <body>
 
-<h1>Arbetsplatsinformation</h1>
+<h2>Arbetsplatsinformation</h2>
 
-<div class="board">
+<img src="arbetsplatsinfo.png" usemap="#infomap">
 
-<a href="arbetsmiljoplan.pdf" class="card">
-    <h2>Arbetsmiljöplan</h2>
-    <p>Det är ett lagkrav att arbetsmiljöplanen finns tillgänglig och hålls uppdaterad.</p>
-</a>
+<map name="infomap">
 
-<a href="regler.pdf" class="card">
-    <h2>Ordnings- och skyddsregler</h2>
-    <p>Alla ska känna till arbetsplatsens regler.</p>
-</a>
+    <!-- RAD 1 -->
+    <area shape="rect" coords="0,0,400,250" href="arbetsmiljoanslag.pdf" target="_blank">
+    <area shape="rect" coords="400,0,800,250" href="arbetsmiljoplan.pdf" target="_blank">
+    <area shape="rect" coords="800,0,1200,250" href="ordningsregler.pdf" target="_blank">
 
-<a href="miljorond.pdf" class="card">
-    <h2>Skydds- och miljörond</h2>
-    <p>Visar brister och åtgärder.</p>
-</a>
+    <!-- RAD 2 -->
+    <area shape="rect" coords="0,250,400,500" href="skyddsrond.pdf" target="_blank">
+    <area shape="rect" coords="400,250,800,500" href="rapportering.pdf" target="_blank">
+    <area shape="rect" coords="800,250,1200,500" href="nodsituation.pdf" target="_blank">
 
-<a href="etiska.pdf" class="card">
-    <h2>Rapportering – etiska övertramp</h2>
-    <p>Rapportera misstänkta överträdelser.</p>
-</a>
+    <!-- RAD 3 -->
+    <area shape="rect" coords="0,500,400,750" href="larmkedja.pdf" target="_blank">
+    <area shape="rect" coords="400,500,800,750" href="arbetsplatsolycka.pdf" target="_blank">
+    <area shape="rect" coords="800,500,1200,750" href="forhandsanmalan.pdf" target="_blank">
 
-<a href="nödsituation.pdf" class="card">
-    <h2>Anslag nödsituation</h2>
-    <p>Kontakt med räddningstjänst.</p>
-</a>
+    <!-- RAD 4 -->
+    <area shape="rect" coords="0,750,400,1000" href="miljoolycka.pdf" target="_blank">
 
-<a href="larmkedja.pdf" class="card">
-    <h2>Larmkedja</h2>
-    <p>Information vid allvarliga händelser.</p>
-</a>
-
-<a href="olycka.pdf" class="card">
-    <h2>Checklista arbetsplatsolycka</h2>
-    <p>Nödlägesrutiner.</p>
-</a>
-
-<a href="förhandsanmälan.pdf" class="card">
-    <h2>Förhandsanmälan</h2>
-    <p>Lagkrav från Arbetsmiljöverket.</p>
-</a>
-
-<a href="miljöolycka.pdf" class="card">
-    <h2>Miljöolycka / tillbud</h2>
-    <p>Rutiner vid miljöincidenter.</p>
-</a>
-
-</div>
+</map>
 
 </body>
 </html>
