@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Logga in</title>
+</head>
+<body>
+  <h2>Logga in</h2>
+  <input type="password" id="password" placeholder="Lösenord">
+  <button onclick="login()">Logga in</button>
+
+  <script>
+    function login() {
+      const pwd = document.getElementById("password").value;
+
+      if (pwd === "hemligt123") {
+        localStorage.setItem("loggedIn", "true");
+        window.location.href = "index.html";
+      } else {
+        alert("Fel lösenord");
+      }
+    }
+  </script>
+</body>
+</html>
