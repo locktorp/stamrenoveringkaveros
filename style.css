@@ -224,3 +224,45 @@ gap:8px;
 .logout-btn:hover {
   background-color: #333;
 }
+/* ===== HAMBURGERMENY ===== */
+
+/* Desktop – ingen förändring */
+.menu-toggle {
+  display: none;
+}
+
+/* Mobil */
+@media (max-width: 768px) {
+
+  .menu-toggle {
+    display: block;
+    font-size: 26px;
+    background: none;
+    border: none;
+    margin-left: auto;
+    cursor: pointer;
+  }
+
+  .nav {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background: white;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  .nav.show {
+    display: flex;
+  }
+
+  .nav button {
+    width: 100%;
+    margin: 5px 0;
+  }
+
+}
+.menu-toggle {
+  display: none;
+}  
