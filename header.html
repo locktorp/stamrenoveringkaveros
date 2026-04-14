@@ -17,15 +17,9 @@
 <button onclick="window.location.href='arbetsplatsinfo.html'">
 Arbetsplatsinfo
 </button>
-
-<button onclick="logout()">Logga ut</button>
-
-<script>
-  function logout() {
-    localStorage.removeItem("loggedIn");
-    window.location.href = "login.html";
-  }
-</script>
+<button onclick="localStorage.clear(); window.location.href='login.html';">
+  Logga ut
+</button>
   
 </div>
 
