@@ -12,8 +12,9 @@
     function login() {
       const pwd = document.getElementById("password").value;
 
-      if (pwd === "kaverös") {
+      if (pwd === "kaveros") {
         localStorage.setItem("loggedIn", "true");
+        localStorage.setItem("expires", new Date().getTime() + 86400000);
         window.location.href = "index.html";
       } else {
         alert("Fel lösenord");
