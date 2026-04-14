@@ -204,5 +204,13 @@ display:flex;
 align-items:center;
 gap:8px;
 }
+/* ===== LOGGA UT KNAPP ===== */
+.logout-btn {
+  background-color: black;
+  color: white;
+}
 
+.logout-btn:hover {
+  background-color: #333;
+}
 }
