@@ -228,9 +228,10 @@ gap:8px;
 }
 /* ===== HAMBURGERMENY ===== */
 
-/* Mobil */
+/* ===== MOBIL ===== */
+
 .menu-toggle {
-  display: block;
+  display: block !important;
   font-size: 32px;
   padding: 10px;
   background: none;
@@ -242,12 +243,10 @@ gap:8px;
   top: 10px;
 }
 
-/* Göm menyn */
 .nav {
   display: none;
 }
 
-/* Visa när aktiv */
 .nav.show {
   display: flex;
   flex-direction: column;
@@ -265,3 +264,8 @@ gap:8px;
 .menu-toggle {
   display: none;
 }  
+
+  /* ===== DESKTOP ===== */
+.menu-toggle {
+  display: none !important;
+}
