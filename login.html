@@ -1,35 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="sv">
 <head>
-  <title>Logga in</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Välkommen till Stamrenovering Kaverös</title>
+
   <style>
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #4facfe, #00f2fe);
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: 0;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
     }
 
     .login-box {
       background: white;
-      padding: 40px;
+      padding: 25px;
       border-radius: 12px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      width: 90%;
+      max-width: 320px;
       text-align: center;
-      width: 300px;
     }
 
     h2 {
+      margin-bottom: 5px;
+      font-size: 20px;
+    }
+
+    p {
+      margin-top: 0;
       margin-bottom: 20px;
+      color: #666;
+      font-size: 14px;
     }
 
     input {
       width: 100%;
-      padding: 12px;
-      margin: 10px 0;
+      padding: 14px;
+      margin-bottom: 10px;
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 16px;
@@ -37,18 +49,31 @@
 
     button {
       width: 100%;
-      padding: 12px;
+      padding: 14px;
       background: #4facfe;
       border: none;
       color: white;
       font-size: 16px;
       border-radius: 8px;
       cursor: pointer;
-      transition: 0.2s;
     }
 
-    button:hover {
+    button:active {
       background: #3a8dde;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+      display: none;
+      margin-bottom: 10px;
+    }
+
+    label {
+      font-size: 14px;
+      display: block;
+      margin-bottom: 15px;
+      text-align: left;
     }
   </style>
 </head>
@@ -56,12 +81,26 @@
 <body>
 
   <div class="login-box">
-    <h2>Logga in</h2>
+    <h2>Välkommen</h2>
+    <p>Stamrenovering Kaverös</p>
+
     <input type="password" id="password" placeholder="Lösenord">
+
+    <label>
+      <input type="checkbox" onclick="togglePassword()"> Visa lösenord
+    </label>
+
+    <p id="error" class="error">Fel lösenord</p>
+
     <button onclick="login()">Logga in</button>
   </div>
 
   <script>
+    // Om redan inloggad → gå direkt in
+    if (localStorage.getItem("loggedIn") === "true") {
+      window.location.href = "index.html";
+    }
+
     function login() {
       const pwd = document.getElementById("password").value;
 
@@ -70,9 +109,21 @@
         localStorage.setItem("expires", new Date().getTime() + 86400000);
         window.location.href = "index.html";
       } else {
-        alert("Fel lösenord");
+        document.getElementById("error").style.display = "block";
       }
     }
+
+    function togglePassword() {
+      const input = document.getElementById("password");
+      input.type = input.type === "password" ? "text" : "password";
+    }
+
+    // Enter = logga in
+    document.getElementById("password").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        login();
+      }
+    });
   </script>
 
 </body>
