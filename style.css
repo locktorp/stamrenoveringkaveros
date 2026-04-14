@@ -94,8 +94,6 @@ textarea{width:100%;height:60px;margin-top:6px}
 
 @media (max-width:768px){
 
-@media (max-width:768px){
-
 .header{
 flex-wrap:wrap;
 justify-content:center;
@@ -116,12 +114,9 @@ margin-bottom:10px;
   
 .nav{
 margin-top:10px;
-}
-
-.nav{
 width:100%;
-display:flex;
 gap:10px;
+display: none;
 }
 
 .nav a{
@@ -217,6 +212,7 @@ display:flex;
 align-items:center;
 gap:8px;
 }
+
 /* ===== LOGGA UT KNAPP ===== */
 .logout-btn {
   background-color: black;
@@ -226,12 +222,11 @@ gap:8px;
 .logout-btn:hover {
   background-color: #333;
 }
-/* ===== HAMBURGERMENY ===== */
 
-/* ===== MOBIL ===== */
+/* ===== HAMBURGERMENY (MOBIL) ===== */
 
 .menu-toggle {
-  display: block !important;
+  display: block;
   font-size: 32px;
   padding: 10px;
   background: none;
@@ -243,10 +238,7 @@ gap:8px;
   top: 10px;
 }
 
-.nav {
-  display: none;
-}
-
+/* Visa meny när aktiv */
 .nav.show {
   display: flex;
   flex-direction: column;
@@ -261,11 +253,10 @@ gap:8px;
   width: 100%;
   margin: 5px 0;
 }
-.menu-toggle {
-  display: none;
-}  
+
+}
 
   /* ===== DESKTOP ===== */
 .menu-toggle {
-  display: none !important;
+  display: none
 }
