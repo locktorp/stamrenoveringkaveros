@@ -1,3 +1,14 @@
+<script>
+  const loggedIn = localStorage.getItem("loggedIn");
+  const expires = localStorage.getItem("expires");
+
+  if (loggedIn !== "true" || new Date().getTime() > expires) {
+    localStorage.removeItem("loggedIn");
+    localStorage.removeItem("expires");
+    window.location.href = "login.html";
+  }
+</script>
+
 <!DOCTYPE html>
 <html lang="sv">
 
