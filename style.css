@@ -24,6 +24,17 @@ padding:20px;
 margin-top:80px;
 }
 
+/* ===== LOGGA UT KNAPP ===== */
+.logout-btn {
+  background-color: black;
+  color: white;
+}
+
+.logout-btn:hover {
+  background-color: #333;
+}
+
+
 .house-block{background:rgba(255,255,255,0.9);padding:20px;margin-bottom:40px;border-radius:12px;box-shadow:0 8px 25px rgba(0,0,0,0.3);}
 .stams{display:flex;gap:10px}
 
