@@ -137,15 +137,15 @@ fetch("header.html")
 .then(res => res.text())
 .then(data => {
   document.getElementById("header-container").innerHTML = data;
-});
 
-// 🔥 GLOBAL EVENT LISTENER (detta är nyckeln)
-document.addEventListener("click", function(e) {
-  if (e.target.closest(".menu-toggle")) {
-    const menu = document.getElementById("navMenu");
-    if (menu) {
+  // 🔥 KOPPLA EFTER ATT HEADERN LADDATS
+  const btn = document.querySelector(".menu-toggle");
+  const menu = document.getElementById("navMenu");
+
+  if (btn && menu) {
+    btn.addEventListener("click", () => {
       menu.classList.toggle("show");
-    }
+    });
   }
 });
 </script>
