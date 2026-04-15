@@ -253,22 +253,24 @@ gap:8px;
   display: flex;
   flex-direction: column;
 
-  position: absolute;   
-  top: 60px;            
-  left: 10;
+  position: absolute;
+  top: 60px;
+  left: 10px;
 
   width: 220px;
   background: white;
 
   padding: 10px;
-  border-radius: 0 0 10px 10px;
+  border-radius: 10px;
 
-  z-index: 9998;        
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  z-index: 9998;
 }
 
-.nav button {
-  width: 100%;
+/* Knappar i menyn */
+.nav.show button {
   text-align: left;
+  width: 100%;
   margin: 5px 0;
 }
-
+}
