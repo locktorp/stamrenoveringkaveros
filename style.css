@@ -283,10 +283,3 @@ gap:8px;
 .tidplan-page .wrapper {
   margin-top: 0;
 }
-
-.tidplan-page .week {
-  position: sticky;
-  top: 110px;
-  z-index: 999;
-  background: white;
-}
