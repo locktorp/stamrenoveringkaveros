@@ -18,7 +18,9 @@ margin-top: 0;
 }
 .gantt{position:relative;min-width:3500px;padding:10px}
 .grid{display:grid;grid-template-columns:200px repeat(90,110px);}
+
 .cell{
+position: relative;  
 border-right:1px solid #d1d5db;
 border-bottom:1px solid #d1d5db;
 height:44px;
@@ -49,7 +51,7 @@ border-bottom:4px solid #111;
 border-top:4px solid #111;
 position:sticky;
 top:40px;
-z-index:50;
+z-index:400;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -91,7 +93,8 @@ align-items:center;
 position:sticky;
 left:0;
 background:white;
-z-index:100;
+z-index:300;
+min-width: 200px;  
 border-right:4px solid #111;
 }
 .task{background:#9ca3af;color:white;border-radius:6px;font-size:11px;padding:3px;display:flex;align-items:center;justify-content:center;cursor:pointer;height:30px;text-align:center;box-shadow: 0 3px 8px rgba(0,0,0,0.25);border:1px solid #374151;}
