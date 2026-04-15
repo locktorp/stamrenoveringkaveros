@@ -17,7 +17,12 @@ height: calc(100vh - 110px);
 margin-top: 0;
 }
 .gantt{position:relative;min-width:3500px;padding:10px}
-.grid{display:grid;grid-template-columns:200px repeat(90,110px);}
+.grid{
+  display:grid;
+  grid-template-columns:200px repeat(90,110px);
+
+  overflow: visible; 
+}
 
 .cell{
 position: relative;  
