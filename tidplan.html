@@ -93,6 +93,8 @@ position:relative;
 left:0;
 background:white;
 z-index:1000;
+margin-left: 0;
+  padding-left: 10px;  
 border-right:4px solid #111;
 box-shadow: 4px 0 0 white;  
 }
@@ -483,7 +485,7 @@ wrap.addEventListener("scroll", () => {
   const scrollLeft = wrap.scrollLeft
 
   document.querySelectorAll(".stam").forEach(el => {
-    el.style.transform = `translateX(${scrollLeft + 200}px)`
+  el.style.transform = `translateX(${scrollLeft}px)`
   })
 })
 </script>  
