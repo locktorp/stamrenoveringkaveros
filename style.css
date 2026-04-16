@@ -304,3 +304,15 @@ gap:8px;
   background: white;
   z-index: 1000;
 }
+
+.stam::before{
+  content: "";
+  position: absolute;
+  left: -200px;
+  top: 0;
+  bottom: 0;
+  width: 200px;
+
+  background: white;
+  z-index: -1;
+}
