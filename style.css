@@ -300,9 +300,10 @@ gap:8px;
 
 .stam{
   position: relative; /* 
-
+  overflow: hidden;
   background: white;
   z-index: 1000;
+  min-width: 200px;
 }
 
 .stam::before{
