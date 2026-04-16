@@ -284,7 +284,6 @@ gap:8px;
   margin-top: 0;
 }
 
-/* 🔥 FIXA STICKY KOLUMN PÅ RIKTIGT */
 .grid{
   isolation: isolate;
 }
@@ -297,4 +296,11 @@ gap:8px;
   z-index: 9999;
 
   box-shadow: 4px 0 0 white;
+}
+
+.stam{
+  position: relative; /* 
+
+  background: white;
+  z-index: 1000;
 }
