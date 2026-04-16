@@ -289,7 +289,7 @@ if(val.includes("Överlämning") &&
 })
 
 // lägg in i grid
-leftCol.appendChild(stamEl)
+grid.appendChild(stamEl)
 st.cells.forEach((val,i)=>{
 let c=cell("")
 if(val!=""){let id=tasks.length;tasks.push({week:i,label:val});let status=getStatus(i,id);c.innerHTML=`<div class="task ${status}" onclick="openPopup(${id})">${val}</div>`}
