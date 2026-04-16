@@ -485,11 +485,16 @@ wrap.addEventListener("scroll", () => {
   const scrollLeft = wrap.scrollLeft
 
   document.querySelectorAll(".stam").forEach(el => {
-  el.style.transform = `translateX(${scrollLeft}px)`
+    el.style.transform = `translateX(${scrollLeft}px)`
   })
-})
-</script>  
 
+  /* 🔥 LÄGG IN DENNA RAD PRECIS HÄR */
+  document.querySelectorAll(".addr").forEach(el => {
+    el.style.transform = `translateX(${scrollLeft}px)`
+  })
+
+})
+</script>
 <script>
 fetch("header.html")
 .then(res => res.text())
