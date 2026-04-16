@@ -5,7 +5,7 @@
 body{
   font-family:Arial,sans-serif;
   margin:0;
-  padding-top: 80px;   /* 👈 LÄGG TILL DENNA */
+  padding-top: 0;
   background:url('bakgrund.jpg') center/cover fixed;
 }
 .header{
