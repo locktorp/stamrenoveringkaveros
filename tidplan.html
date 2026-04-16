@@ -484,15 +484,16 @@ const wrap = document.getElementById("wrap")
 wrap.addEventListener("scroll", () => {
   const scrollLeft = wrap.scrollLeft
 
+  /* STAM (som du redan har) */
   document.querySelectorAll(".stam").forEach(el => {
     el.style.transform = `translateX(${scrollLeft}px)`
   })
 
-  /* 🔥 LÄGG IN DENNA RAD PRECIS HÄR */
   document.querySelectorAll(".addr").forEach(el => {
     el.style.transform = `translateX(${scrollLeft}px)`
+    el.style.display = "block" 
+    el.style.width = "200px"
   })
-
 })
 </script>
 <script>
