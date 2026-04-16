@@ -17,7 +17,10 @@ height: calc(100vh - 110px);
 margin-top: 0;
 }
 .gantt{position:relative;min-width:3500px;padding:10px}
-.grid{display:grid;grid-template-columns:200px repeat(90,110px);}
+.grid{
+  display:grid;
+  grid-template-columns: repeat(90,110px);
+}
 .cell{
 border-right:1px solid #d1d5db;
 border-bottom:1px solid #d1d5db;
@@ -195,13 +198,25 @@ pointer-events:none;      /* går att klicka igenom */
 </div>
   
 <div class="wrapper" id="wrap">
-<div class="gantt">
-<div id="grid" class="grid"></div>
-<div id="today" class="today-line">
-<div class="today-label">IDAG</div>
-</div>
-<svg id="progress"></svg>
-</div>
+  <div class="layout">
+
+    <div id="leftCol" class="left-col"></div>
+
+    <div class="right-wrapper">
+      <div class="gantt">
+
+        <div id="grid" class="grid"></div>
+
+        <div id="today" class="today-line">
+          <div class="today-label">IDAG</div>
+        </div>
+
+        <svg id="progress"></svg>
+
+      </div>
+    </div>
+
+  </div>
 </div>
 <div id="popup" class="popup">
 <div id="taskTitle"></div>
@@ -230,7 +245,9 @@ function build(){
 tasks=[]
   
 const grid=document.getElementById("grid")
+const leftCol=document.getElementById("leftCol")
 grid.innerHTML=""
+leftCol.innerHTML=""
 grid.appendChild(cell(""))
 let year=2025
 let span=0
@@ -272,7 +289,7 @@ if(val.includes("Överlämning") &&
 })
 
 // lägg in i grid
-grid.appendChild(stamEl)
+leftCol.appendChild(stamEl)
 st.cells.forEach((val,i)=>{
 let c=cell("")
 if(val!=""){let id=tasks.length;tasks.push({week:i,label:val});let status=getStatus(i,id);c.innerHTML=`<div class="task ${status}" onclick="openPopup(${id})">${val}</div>`}
