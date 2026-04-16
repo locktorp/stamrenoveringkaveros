@@ -303,7 +303,7 @@ gap:8px;
   overflow: hidden;
   background: white;
   z-index: 1000;
-  min-width: 200px;
+  min-width: 220px;
 }
 
 .stam::before{
