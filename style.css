@@ -278,7 +278,11 @@ gap:8px;
   width: 100%;
   margin: 5px 0;
 }
-}
+ .container{
+    margin-top: 0;  
+  }
+
+}   
 
 .tidplan-page .wrapper {
   margin-top: 0;
