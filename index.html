@@ -154,13 +154,30 @@ document.addEventListener("click", function(e) {
 </script>
 
 <script>
-function getActivity(){
-  const weekIndex = 2
+function getCurrentWeekIndex(){
+  const today = new Date()
 
-  const section = data.sections[0]
-  const stam = section.stams[0]
+  const date = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()))
+  const dayNum = date.getUTCDay() || 7
 
-  return stam.cells[weekIndex]
+  date.setUTCDate(date.getUTCDate() + 4 - dayNum)
+
+  const yearStart = new Date(Date.UTC(date.getUTCFullYear(),0,1))
+  const week = Math.ceil((((date - yearStart) / 86400000) + 1) / 7)
+
+  return data.weeks.findIndex(w => w === week)
+}
+
+function getActivity(address, stamName){
+  const index = getCurrentWeekIndex()
+
+  const section = data.sections.find(s => s.address === address)
+  if(!section) return ""
+
+  const stam = section.stams.find(s => s.name === stamName)
+  if(!stam) return ""
+
+  return stam.cells[index] || ""
 }
 </script>
 
