@@ -168,16 +168,15 @@ function getCurrentWeekIndex(){
   return data.weeks.findIndex(w => w === week)
 }
 
+<script>
 function getActivity(address, stamName){
-  const index = getCurrentWeekIndex()
 
-  const section = data.sections.find(s => s.address === address)
-  if(!section) return ""
+  const weekIndex = 2
 
-  const stam = section.stams.find(s => s.name === stamName)
-  if(!stam) return ""
+  const section = data.sections[0]   // 🔥 SKIPPA MATCHNING
+  const stam = section.stams[0]
 
-  return stam.cells[index] || ""
+  return stam.cells[weekIndex]
 }
 </script>
 
