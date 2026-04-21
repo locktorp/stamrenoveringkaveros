@@ -139,8 +139,9 @@ const col=document.createElement("div")
 col.className="stam"
 col.innerHTML="<div class='stam-title'>Stam "+(i+1)+"</div>"
 
-const activity = getActivity()
-
+const stamName = "Stam " + (i+1)
+const activity = getActivity(name, stamName)
+  
 const act = document.createElement("div")
 act.innerText = activity
 
