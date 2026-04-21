@@ -152,45 +152,6 @@ document.addEventListener("click", function(e) {
   }
 });
 </script>
-
-<script>
-function getCurrentWeekIndex(){
-  const today = new Date()
-
-  const date = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()))
-  const dayNum = date.getUTCDay() || 7
-
-  date.setUTCDate(date.getUTCDate() + 4 - dayNum)
-
-  const yearStart = new Date(Date.UTC(date.getUTCFullYear(),0,1))
-  const week = Math.ceil((((date - yearStart) / 86400000) + 1) / 7)
-
-  return data.weeks.findIndex(w => w === week)
-}
-
-<script>
-function getActivity(){
-  return "TEST"
-}
-</script>
-
-<script>
-const data = {
-  weeks: [10,11,12,13,14],
-
-  sections: [
-    {
-      address: "Dirigentgatan 3",
-      stams: [
-        {
-          name: "Stam 1",
-          cells: ["", "Rivning", "Bygg", "Kakel", "Klar"]
-        }
-      ]
-    }
-  ]
-}
-</script>
   
 </body>
 </html>
