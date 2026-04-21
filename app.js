@@ -137,7 +137,15 @@ stams.forEach((stam,i)=>{
 
 const col=document.createElement("div")
 col.className="stam"
-col.innerHTML="<div class='stam-title'>Stam "+(i+1)+"</div>"
+const stamName = "Stam " + (i+1)
+
+/* 🔥 HÄMTA AKTIVITET */
+const activity = getActivity(name, stamName)
+
+col.innerHTML = `
+  <div class='stam-title'>${stamName}</div>
+  <div class='stam-activity'>${activity}</div>
+`
 
 stam.forEach(num=>{
 
