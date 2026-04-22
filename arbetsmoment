@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arbetsmoment per takt</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+body{
+  font-family: Arial;
+  margin:0;
+  background:#f4f6f8;
+}
+
+.container{
+  padding:20px;
+}
+
+table{
+  width:100%;
+  border-collapse: collapse;
+  background:white;
+}
+
+th, td{
+  border:1px solid #ccc;
+  padding:10px;
+  text-align:left;
+}
+
+th{
+  background:#143275;
+  color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div id="header-container"></div>
+
+<div class="container">
+  <h1>Arbetsmoment per takt</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Steg</th>
+        <th>Aktivitet</th>
+      </tr>
+    </thead>
+
+    <tbody id="tableBody"></tbody>
+  </table>
+</div>
+
+<script>
+// 🔴 LÄGG IN DIN DATA HÄR (från Excel)
+const steps = [
+  "Rivning + Sanering",
+  "VS-arbeten",
+  "Torktid",
+  "Torktid",
+  "Bygg",
+  "Bygg",
+  "Flytspackling + målning",
+  "Kakel och klinkers",
+  "Komplettering",
+  "Överlämning"
+]
+
+// bygg tabellen
+const tbody = document.getElementById("tableBody")
+
+steps.forEach((step, i) => {
+  const tr = document.createElement("tr")
+
+  tr.innerHTML = `
+    <td>${i+1}</td>
+    <td>${step}</td>
+  `
+
+  tbody.appendChild(tr)
+})
+</script>
+
+<script>
+fetch("header.html")
+.then(res => res.text())
+.then(data => {
+  document.getElementById("header-container").innerHTML = data
+})
+</script>
+
+</body>
+</html>
