@@ -19,7 +19,7 @@ position:fixed;
 top:0;
 left:0;
 width:100%;
-z-index:1000;
+z-index:99999;
 }
 .logo{height:32px;margin-right:12px}
 .title{font-size:22px;font-weight:bold}
