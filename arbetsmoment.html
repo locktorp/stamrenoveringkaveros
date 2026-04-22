@@ -5,42 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Arbetsmoment per takt</title>
 
-<link rel="stylesheet" href="style.css">
-
 <style>
-body{
-  margin:0;
-  font-family: Arial;
-  background:#f4f6f8;
-}
+body{margin:0;font-family:Arial;background:#f4f6f8;}
+.container{padding:20px;}
+.table-wrapper{overflow:auto;background:white;}
 
-.container{
-  padding:20px;
-}
+table{border-collapse:collapse;min-width:1800px;}
+th,td{border:1px solid #999;padding:6px;vertical-align:top;font-size:12px;}
+th{color:white;text-align:center;font-weight:bold;}
 
-.table-wrapper{
-  overflow:auto;
-  background:white;
-}
-
-table{
-  border-collapse:collapse;
-  min-width:1400px;
-}
-
-th, td{
-  border:1px solid #999;
-  padding:6px;
-  vertical-align:top;
-  font-size:13px;
-}
-
-th{
-  color:white;
-  text-align:center;
-}
-
-/* Färger exakt som din bild */
 .step1{background:#a9d5b5;}
 .step2{background:#e6d3b3;}
 .step3{background:#c6d9f1;}
@@ -52,17 +25,11 @@ th{
 .step9{background:#f4b6a6;}
 .step10{background:#93c47d;}
 
-.day{
-  font-weight:bold;
-  background:#eee;
-  width:80px;
-}
+.day{background:#eee;font-weight:bold;width:80px;}
 </style>
 </head>
 
 <body>
-
-<div id="header-container"></div>
 
 <div class="container">
 <h1>Arbetsmoment per takt</h1>
@@ -72,17 +39,17 @@ th{
 
 <thead>
 <tr>
-  <th></th>
-  <th class="step1">1<br>Rivning</th>
-  <th class="step2">2<br>VS-arbeten</th>
-  <th class="step3">3<br>Torktid</th>
-  <th class="step4">4<br>Torktid</th>
-  <th class="step5">5<br>Bygg 1</th>
-  <th class="step6">6<br>Bygg 2</th>
-  <th class="step7">7<br>Flytspackling</th>
-  <th class="step8">8<br>Kakel</th>
-  <th class="step9">9<br>Komplettering</th>
-  <th class="step10">10<br>Överlämning</th>
+<th></th>
+<th class="step1">1<br>Rivning</th>
+<th class="step2">2<br>VS-arbeten</th>
+<th class="step3">3<br>Torktid</th>
+<th class="step4">4<br>Torktid</th>
+<th class="step5">5<br>Bygg 1</th>
+<th class="step6">6<br>Bygg 2</th>
+<th class="step7">7<br>Flytspackling + Målning</th>
+<th class="step8">8<br>Kakel & klinker</th>
+<th class="step9">9<br>Komplettering</th>
+<th class="step10">10<br>Överlämning</th>
 </tr>
 </thead>
 
@@ -90,64 +57,98 @@ th{
 
 <!-- DAG 1 -->
 <tr>
-  <td class="day">Dag 1</td>
-
-  <td>
-    RIV - Sanering<br>
-    VVS - Avstängning vatten
-  </td>
-
-  <td>
-    BYGG - Formning<br>
-    VVS - Kassett
-  </td>
-
-  <td>
-    BYGG - Isolering<br>
-    BYGG - Gips
-  </td>
-
-  <td>
-    MÅL - Spackling
-  </td>
-
-  <td>BYGG - Rivning</td>
-  <td>BYGG - Rivning</td>
-  <td>MÅL - Spackling</td>
-  <td>KAKEL - Tätskikt</td>
-  <td>BYGG - Montering</td>
-  <td></td>
+<td class="day">Dag 1</td>
+<td>För<br>VVS - Avstängning vatten<br>RIV - Tömning av inrede<br>RIV - Sanering</td>
+<td>BYGG - Formning Kassettgenomföring, brunn och köksstam<br>VVS - Kassettmontage<br>EL - Dragning kanalisation för IMD<br>VVS - Avlopp köksstam<br>BYGG - Fönstermontage</td>
+<td>BYGG - Isolering och igensättning köksschakt<br>BYGG - Gipsning trummor<br>VVS - Fixtur lilla WC</td>
+<td>MÅL - Spackling trummor</td>
+<td>BYGG - Rivning badrumsdörr<br>BYGG - Förstärkning hallvägg<br>BYGG - Byggnation yttervägg<br>BYGG - Stomning undertak</td>
+<td>BYGG - Rivning badrumsdörr<br>BYGG - Förstärkning hallvägg<br>BYGG - Byggnation yttervägg<br>BYGG - Stomning undertak</td>
+<td>MÅL - Spackling undertak</td>
+<td>KAKEL - Tätskikt väggar och golv</td>
+<td>BYGG - Montering Dörrar<br>BYGG - Montering skåpsinrede</td>
+<td></td>
 </tr>
 
 <!-- DAG 2 -->
 <tr>
-  <td class="day">Dag 2</td>
+<td class="day">Dag 2</td>
+<td>RIV - Sanering<br>RIV - Bilning vägg & golv<br>RIV - Rivning lättväggar</td>
+<td>VVS - Avlopp kassett<br>VVS - Avlopp brunnar<br>VVS - Montering brunnar<br>BYGG - Gjutning kassett<br>BYGG - Kortlingar<br>BYGG - LP-50<br>BYGG - Fönstermontage<br>VVS - Vattenmatning</td>
+<td>BYGG - Isolering<br>BYGG - Gipsning<br>BYGG - Schakt lilla WC</td>
+<td>MÅL - Spackling</td>
+<td>BYGG - Rivning<br>BYGG - Förstärkning<br>BYGG - Byggnation<br>BYGG - Stomning</td>
+<td>BYGG - Rivning<br>BYGG - Förstärkning<br>BYGG - Byggnation<br>BYGG - Stomning</td>
+<td>MÅL - Spackling<br>KAKEL - Skrapspackling</td>
+<td>KAKEL - Tätskikt<br>KAKEL - Plattsättning</td>
+<td>BYGG - Montering<br>VS - Montering porslin</td>
+<td></td>
+</tr>
 
-  <td>RIV - Sanering</td>
-  <td>VVS - Avlopp</td>
-  <td>BYGG - Isolering</td>
-  <td>MÅL - Spackling</td>
-  <td>BYGG - Rivning</td>
-  <td>BYGG - Rivning</td>
-  <td>MÅL - Spackling</td>
-  <td>KAKEL - Tätskikt</td>
-  <td>BYGG - Montering</td>
-  <td></td>
+<!-- DAG 3 -->
+<tr>
+<td class="day">Dag 3</td>
+<td>RIV - Sanering<br>RIV - Bilning<br>RIV - Rivning lättväggar<br>EL - Utsättning</td>
+<td>VVS - Stam<br>VVS - Vattendragning<br>BYGG - Gjutning<br>BYGG - Komplettering</td>
+<td>BYGG - Isolering<br>BYGG - Gipsning<br>BYGG - Schakt</td>
+<td>MÅL - Målning</td>
+<td>BYGG - Rivning<br>BYGG - Förstärkning<br>BYGG - Byggnation<br>BYGG - Stomning</td>
+<td>BYGG - Rivning<br>BYGG - Förstärkning<br>BYGG - Byggnation<br>BYGG - Stomning</td>
+<td>MÅL - Målning</td>
+<td>KAKEL - Tätskikt<br>KAKEL - Plattsättning</td>
+<td>BYGG - Montering<br>VS - Montering</td>
+<td>SLUTSTÄDNING<br>AVTÄCKNING</td>
+</tr>
+
+<!-- DAG 4 -->
+<tr>
+<td class="day">Dag 4</td>
+<td>RIV - Bilning<br>RIV - Spårning<br>RIV - Slipning</td>
+<td>VVS - Stam<br>VVS - Dragning<br>VVS - Tätskikt<br>VVS - Blandare</td>
+<td>BYGG - Täckning</td>
+<td>EL - Kanalisation</td>
+<td>BYGG - Rivning<br>BYGG - Förstärkning<br>BYGG - Byggnation<br>BYGG - Stomning</td>
+<td></td>
+<td>MÅL - Målning</td>
+<td>KAKEL - Plattsättning<br>KAKEL - Primning</td>
+<td>VS - Montering<br>EL - Installation</td>
+<td>MJUKFOGNING</td>
+</tr>
+
+<!-- DAG 5 -->
+<tr>
+<td class="day">Dag 5</td>
+<td>RIV - Håltagning<br>RIV - Slipning</td>
+<td>VVS - Tätskikt<br>VVS - Isolering<br>VVS - Blandare</td>
+<td>BYGG - Återställning</td>
+<td>VENT - Förlängning</td>
+<td>BYGG - Rivning<br>BYGG - Förstärkning<br>BYGG - Byggnation<br>BYGG - Stomning</td>
+<td></td>
+<td>KAKEL - Golvavjämning</td>
+<td>KAKEL - Fogning</td>
+<td>VS - Montering<br>EL - Installation</td>
+<td>BESIKTNING<br>ANMÄRKNINGAR</td>
+</tr>
+
+<!-- TILLVAL -->
+<tr>
+<td class="day">TILLVAL</td>
+<td>RIV - Handdukstork<br>RIV - Kakel<br>RIV - Golv<br>VENT - Spisfläkt</td>
+<td>VENT - Spisfläkt</td>
+<td>MODEXA - Demontering<br>MODEXA - Montering</td>
+<td>MÅL - Målning kök</td>
+<td>KAKEL - Kök</td>
+<td>GOLV - Parkett<br>VENT - Köksfläkt<br>EL - Kanalisation</td>
+<td>MODEXA - Montering</td>
+<td>Vitvaror</td>
+<td>VVS - Handdukstork<br>EL - Handdukstork<br>EL - Belysning</td>
+<td>Mjukfogning kök</td>
 </tr>
 
 </tbody>
-
 </table>
 </div>
 </div>
-
-<script>
-fetch("header.html")
-.then(res => res.text())
-.then(data => {
-  document.getElementById("header-container").innerHTML = data
-})
-</script>
 
 </body>
 </html>
