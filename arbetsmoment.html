@@ -25,11 +25,45 @@ th{text-align:center;color:#fff;font-weight:bold;}
 .step10{background:#93c47d;}
 
 .day{background:#eee;font-weight:bold;width:80px;}
+
+.header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:70px;
+
+  background:white;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  padding:0 20px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.1);
+  z-index:9999;
+}
+
+body{
+  margin:0;
+  padding-top:70px; /* 🔥 SUPER VIKTIGT */
+}
+  
 </style>
 </head>
 
 <body>
 
+<header class="header">
+  <div class="logo">SKANSKA</div>
+  <div class="title">Stamrenovering Kaverös</div>
+
+  <nav class="nav">
+    <button onclick="location.href='index.html'">Framdrift</button>
+    <button onclick="location.href='tidplan.html'">Tidplan</button>
+    <button onclick="location.href='arbetsmoment.html'">Arbetsmoment per takt</button>
+  </nav>
+</header>
+  
 <div class="container">
 <h1>Arbetsmoment per takt</h1>
 
