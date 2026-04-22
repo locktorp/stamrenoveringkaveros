@@ -10,186 +10,140 @@
 <style>
 body{
   margin:0;
-  font-family: Arial, sans-serif;
+  font-family: Arial;
   background:#f4f6f8;
 }
 
-/* Container */
 .container{
   padding:20px;
 }
 
-/* Rubrik */
-h1{
-  margin-bottom:20px;
-}
-
-/* Tabell */
+/* TABELL */
 .table-wrapper{
-  overflow-x:auto;
+  overflow:auto;
   background:white;
-  border-radius:10px;
-  box-shadow:0 5px 20px rgba(0,0,0,0.1);
 }
 
 table{
-  width:100%;
   border-collapse:collapse;
-  min-width:900px;
+  min-width:1200px;
 }
 
+th, td{
+  border:1px solid #999;
+  padding:8px;
+  vertical-align:top;
+  font-size:13px;
+}
+
+/* HEADER STEG */
 th{
-  background:#143275;
   color:white;
-  padding:12px;
-  text-align:left;
-  font-size:14px;
+  text-align:center;
 }
 
-td{
-  padding:10px;
-  border-bottom:1px solid #ddd;
-  font-size:14px;
-}
+.step-1{background:#a9d5b5;}
+.step-2{background:#e6d3b3;}
+.step-3{background:#c6d9f1;}
+.step-4{background:#c6d9f1;}
+.step-5{background:#6fa8dc;}
+.step-6{background:#3d85c6;}
+.step-7{background:#d9d9d9;}
+.step-8{background:#eeeeee;}
+.step-9{background:#f4b6a6;}
+.step-10{background:#93c47d;}
 
-tr:hover{
-  background:#f1f5fb;
-}
-
-/* Steg badge */
-.step{
+/* DAG */
+.day{
   font-weight:bold;
-  background:#e8eefc;
-  padding:4px 10px;
-  border-radius:6px;
-  display:inline-block;
+  background:#eee;
+  width:80px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
 <div id="header-container"></div>
 
 <div class="container">
-  <h1>Arbetsmoment per takt</h1>
+<h1>Arbetsmoment per takt</h1>
 
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th>Steg</th>
-          <th>Aktivitet</th>
-          <th>Beskrivning</th>
-          <th>Ansvar</th>
-          <th>Kommentar</th>
-        </tr>
-      </thead>
+<div class="table-wrapper">
+<table>
 
-      <tbody id="tableBody"></tbody>
-    </table>
-  </div>
+<thead>
+<tr>
+  <th></th>
+  <th class="step-1">1<br>Rivning</th>
+  <th class="step-2">2<br>VS-arbeten</th>
+  <th class="step-3">3<br>Torktid</th>
+  <th class="step-4">4<br>Torktid</th>
+  <th class="step-5">5<br>Bygg 1</th>
+  <th class="step-6">6<br>Bygg 2</th>
+  <th class="step-7">7<br>Flytspackling</th>
+  <th class="step-8">8<br>Kakel</th>
+  <th class="step-9">9<br>Komplettering</th>
+  <th class="step-10">10<br>Överlämning</th>
+</tr>
+</thead>
+
+<tbody id="body"></tbody>
+
+</table>
+</div>
 </div>
 
 <script>
 
-/* 🔥 HÄR LÄGGER DU ALL INFO FRÅN DIN EXCEL */
-/* (jag har strukturerat upp den – fyll på mer info om du vill) */
-
+/* 🔥 EXEMPEL DATA (du fyller på från Excel) */
 const data = [
   {
-    steg: 1,
-    aktivitet: "Rivning + Sanering",
-    beskrivning: "Rivning av badrum och sanering",
-    ansvar: "Entreprenör",
-    kommentar: ""
+    day: "Dag 1",
+    rows: [
+      ["RIV - Sanering", "BYGG - Formning", "BYGG - Isolering", "MÅL - Spackling", "BYGG - Rivning", "BYGG - Rivning", "MÅL - Spackling", "KAKEL - Tätskikt", "BYGG - Montering", ""],
+      ["VVS - Avstängning", "VVS - Kassett", "BYGG - Gips", "", "", "", "", "", "", ""]
+    ]
   },
+
   {
-    steg: 2,
-    aktivitet: "VS-arbeten",
-    beskrivning: "Dragning av vatten och avlopp",
-    ansvar: "VS",
-    kommentar: ""
-  },
-  {
-    steg: 3,
-    aktivitet: "Torktid",
-    beskrivning: "Torktid efter rivning",
-    ansvar: "",
-    kommentar: ""
-  },
-  {
-    steg: 4,
-    aktivitet: "Torktid",
-    beskrivning: "Fortsatt torkning",
-    ansvar: "",
-    kommentar: ""
-  },
-  {
-    steg: 5,
-    aktivitet: "Bygg",
-    beskrivning: "Återuppbyggnad",
-    ansvar: "Snickare",
-    kommentar: ""
-  },
-  {
-    steg: 6,
-    aktivitet: "Bygg",
-    beskrivning: "Fortsatt byggnation",
-    ansvar: "Snickare",
-    kommentar: ""
-  },
-  {
-    steg: 7,
-    aktivitet: "Flytspackling + målning",
-    beskrivning: "Golv och målning",
-    ansvar: "",
-    kommentar: ""
-  },
-  {
-    steg: 8,
-    aktivitet: "Kakel och klinkers",
-    beskrivning: "Plattsättning",
-    ansvar: "",
-    kommentar: ""
-  },
-  {
-    steg: 9,
-    aktivitet: "Komplettering",
-    beskrivning: "Småfix och detaljer",
-    ansvar: "",
-    kommentar: ""
-  },
-  {
-    steg: 10,
-    aktivitet: "Överlämning",
-    beskrivning: "Slutbesiktning och överlämning",
-    ansvar: "",
-    kommentar: ""
+    day: "Dag 2",
+    rows: [
+      ["RIV - Sanering", "VVS - Avlopp", "BYGG - Isolering", "MÅL - Spackling", "BYGG - Rivning", "BYGG - Rivning", "MÅL - Spackling", "KAKEL - Tätskikt", "BYGG - Montering", ""]
+    ]
   }
 ]
 
-/* 🔥 BYGG TABELL */
-const tbody = document.getElementById("tableBody")
+/* BYGG TABELL */
+const tbody = document.getElementById("body")
 
-data.forEach(row => {
-  const tr = document.createElement("tr")
+data.forEach(day => {
 
-  tr.innerHTML = `
-    <td><span class="step">${row.steg}</span></td>
-    <td>${row.aktivitet}</td>
-    <td>${row.beskrivning}</td>
-    <td>${row.ansvar}</td>
-    <td>${row.kommentar}</td>
-  `
+  day.rows.forEach((row, i) => {
 
-  tbody.appendChild(tr)
+    const tr = document.createElement("tr")
+
+    if(i === 0){
+      const tdDay = document.createElement("td")
+      tdDay.className = "day"
+      tdDay.rowSpan = day.rows.length
+      tdDay.innerText = day.day
+      tr.appendChild(tdDay)
+    }
+
+    row.forEach(cell => {
+      const td = document.createElement("td")
+      td.innerText = cell
+      tr.appendChild(td)
+    })
+
+    tbody.appendChild(tr)
+  })
+
 })
 
 </script>
 
-<!-- HEADER LOAD -->
 <script>
 fetch("header.html")
 .then(res => res.text())
