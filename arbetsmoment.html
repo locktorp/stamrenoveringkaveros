@@ -18,7 +18,6 @@ body{
   padding:20px;
 }
 
-/* TABELL */
 .table-wrapper{
   overflow:auto;
   background:white;
@@ -26,22 +25,24 @@ body{
 
 table{
   border-collapse:collapse;
-  min-width:1200px;
+  min-width:1400px;
 }
 
 th, td{
   border:1px solid #999;
-  padding:8px;
+  padding:6px;
   vertical-align:top;
   font-size:13px;
 }
 
-/* HEADER STEG */
+/* HEADER */
 th{
   color:white;
   text-align:center;
+  font-weight:bold;
 }
 
+/* FÄRGER */
 .step-1{background:#a9d5b5;}
 .step-2{background:#e6d3b3;}
 .step-3{background:#c6d9f1;}
@@ -58,6 +59,16 @@ th{
   font-weight:bold;
   background:#eee;
   width:80px;
+  text-align:left;
+}
+
+/* MULTI ROW IN CELL */
+.task{
+  padding:3px 0;
+  border-bottom:1px solid #eee;
+}
+.task:last-child{
+  border-bottom:none;
 }
 </style>
 </head>
@@ -96,25 +107,45 @@ th{
 
 <script>
 
-/* 🔥 EXEMPEL DATA (du fyller på från Excel) */
+/* 🔥 DATA – EXAKT STRUKTUR SOM DIN EXCEL */
 const data = [
-  {
-    day: "Dag 1",
-    rows: [
-      ["RIV - Sanering", "BYGG - Formning", "BYGG - Isolering", "MÅL - Spackling", "BYGG - Rivning", "BYGG - Rivning", "MÅL - Spackling", "KAKEL - Tätskikt", "BYGG - Montering", ""],
-      ["VVS - Avstängning", "VVS - Kassett", "BYGG - Gips", "", "", "", "", "", "", ""]
+{
+  day: "Dag 1",
+  rows: [
+    [
+      "RIV - Sanering\nVVS - Avstängning vatten",
+      "BYGG - Formning\nVVS - Kassett",
+      "BYGG - Isolering\nBYGG - Gips",
+      "MÅL - Spackling",
+      "BYGG - Rivning",
+      "BYGG - Rivning",
+      "MÅL - Spackling",
+      "KAKEL - Tätskikt",
+      "BYGG - Montering",
+      ""
     ]
-  },
-
-  {
-    day: "Dag 2",
-    rows: [
-      ["RIV - Sanering", "VVS - Avlopp", "BYGG - Isolering", "MÅL - Spackling", "BYGG - Rivning", "BYGG - Rivning", "MÅL - Spackling", "KAKEL - Tätskikt", "BYGG - Montering", ""]
+  ]
+},
+{
+  day: "Dag 2",
+  rows: [
+    [
+      "RIV - Sanering",
+      "VVS - Avlopp",
+      "BYGG - Isolering",
+      "MÅL - Spackling",
+      "BYGG - Rivning",
+      "BYGG - Rivning",
+      "MÅL - Spackling",
+      "KAKEL - Tätskikt",
+      "BYGG - Montering",
+      ""
     ]
-  }
+  ]
+}
 ]
 
-/* BYGG TABELL */
+/* 🔥 BYGG TABELL */
 const tbody = document.getElementById("body")
 
 data.forEach(day => {
@@ -133,7 +164,12 @@ data.forEach(day => {
 
     row.forEach(cell => {
       const td = document.createElement("td")
-      td.innerText = cell
+
+      td.innerHTML = cell
+        .split("\n")
+        .map(item => `<div class="task">${item}</div>`)
+        .join("")
+
       tr.appendChild(td)
     })
 
