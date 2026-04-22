@@ -35,40 +35,27 @@ th, td{
   font-size:13px;
 }
 
-/* HEADER */
 th{
   color:white;
   text-align:center;
-  font-weight:bold;
 }
 
-/* FÄRGER */
-.step-1{background:#a9d5b5;}
-.step-2{background:#e6d3b3;}
-.step-3{background:#c6d9f1;}
-.step-4{background:#c6d9f1;}
-.step-5{background:#6fa8dc;}
-.step-6{background:#3d85c6;}
-.step-7{background:#d9d9d9;}
-.step-8{background:#eeeeee;}
-.step-9{background:#f4b6a6;}
-.step-10{background:#93c47d;}
+/* Färger exakt som din bild */
+.step1{background:#a9d5b5;}
+.step2{background:#e6d3b3;}
+.step3{background:#c6d9f1;}
+.step4{background:#c6d9f1;}
+.step5{background:#6fa8dc;}
+.step6{background:#3d85c6;}
+.step7{background:#d9d9d9;}
+.step8{background:#eeeeee;}
+.step9{background:#f4b6a6;}
+.step10{background:#93c47d;}
 
-/* DAG */
 .day{
   font-weight:bold;
   background:#eee;
   width:80px;
-  text-align:left;
-}
-
-/* MULTI ROW IN CELL */
-.task{
-  padding:3px 0;
-  border-bottom:1px solid #eee;
-}
-.task:last-child{
-  border-bottom:none;
 }
 </style>
 </head>
@@ -86,99 +73,73 @@ th{
 <thead>
 <tr>
   <th></th>
-  <th class="step-1">1<br>Rivning</th>
-  <th class="step-2">2<br>VS-arbeten</th>
-  <th class="step-3">3<br>Torktid</th>
-  <th class="step-4">4<br>Torktid</th>
-  <th class="step-5">5<br>Bygg 1</th>
-  <th class="step-6">6<br>Bygg 2</th>
-  <th class="step-7">7<br>Flytspackling</th>
-  <th class="step-8">8<br>Kakel</th>
-  <th class="step-9">9<br>Komplettering</th>
-  <th class="step-10">10<br>Överlämning</th>
+  <th class="step1">1<br>Rivning</th>
+  <th class="step2">2<br>VS-arbeten</th>
+  <th class="step3">3<br>Torktid</th>
+  <th class="step4">4<br>Torktid</th>
+  <th class="step5">5<br>Bygg 1</th>
+  <th class="step6">6<br>Bygg 2</th>
+  <th class="step7">7<br>Flytspackling</th>
+  <th class="step8">8<br>Kakel</th>
+  <th class="step9">9<br>Komplettering</th>
+  <th class="step10">10<br>Överlämning</th>
 </tr>
 </thead>
 
-<tbody id="tableBody"></tbody>
+<tbody>
+
+<!-- DAG 1 -->
+<tr>
+  <td class="day">Dag 1</td>
+
+  <td>
+    RIV - Sanering<br>
+    VVS - Avstängning vatten
+  </td>
+
+  <td>
+    BYGG - Formning<br>
+    VVS - Kassett
+  </td>
+
+  <td>
+    BYGG - Isolering<br>
+    BYGG - Gips
+  </td>
+
+  <td>
+    MÅL - Spackling
+  </td>
+
+  <td>BYGG - Rivning</td>
+  <td>BYGG - Rivning</td>
+  <td>MÅL - Spackling</td>
+  <td>KAKEL - Tätskikt</td>
+  <td>BYGG - Montering</td>
+  <td></td>
+</tr>
+
+<!-- DAG 2 -->
+<tr>
+  <td class="day">Dag 2</td>
+
+  <td>RIV - Sanering</td>
+  <td>VVS - Avlopp</td>
+  <td>BYGG - Isolering</td>
+  <td>MÅL - Spackling</td>
+  <td>BYGG - Rivning</td>
+  <td>BYGG - Rivning</td>
+  <td>MÅL - Spackling</td>
+  <td>KAKEL - Tätskikt</td>
+  <td>BYGG - Montering</td>
+  <td></td>
+</tr>
+
+</tbody>
 
 </table>
 </div>
 </div>
-
-<script>
-
-/* 🔥 DATA – EXAKT STRUKTUR SOM DIN EXCEL */
-const data = [
-{
-  day: "Dag 1",
-  rows: [
-    [
-      "RIV - Sanering\nVVS - Avstängning vatten",
-      "BYGG - Formning\nVVS - Kassett",
-      "BYGG - Isolering\nBYGG - Gips",
-      "MÅL - Spackling",
-      "BYGG - Rivning",
-      "BYGG - Rivning",
-      "MÅL - Spackling",
-      "KAKEL - Tätskikt",
-      "BYGG - Montering",
-      ""
-    ]
-  ]
-},
-{
-  day: "Dag 2",
-  rows: [
-    [
-      "RIV - Sanering",
-      "VVS - Avlopp",
-      "BYGG - Isolering",
-      "MÅL - Spackling",
-      "BYGG - Rivning",
-      "BYGG - Rivning",
-      "MÅL - Spackling",
-      "KAKEL - Tätskikt",
-      "BYGG - Montering",
-      ""
-    ]
-  ]
-}
-]
-
-/* 🔥 BYGG TABELL */
-const tbody = document.getElementById("tableBody")
-
-data.forEach(day => {
-
-  day.rows.forEach((row, i) => {
-
-    const tr = document.createElement("tr")
-
-    if(i === 0){
-      const tdDay = document.createElement("td")
-      tdDay.className = "day"
-      tdDay.rowSpan = day.rows.length
-      tdDay.innerText = day.day
-      tr.appendChild(tdDay)
-    }
-
-    row.forEach(cell => {
-      const td = document.createElement("td")
-
-      td.innerHTML = cell
-        .split("\n")
-        .map(item => `<div class="task">${item}</div>`)
-        .join("")
-
-      tr.appendChild(td)
-    })
-
-    tbody.appendChild(tr)
-  })
-
-})
-
-</script>
 
 <script>
 fetch("header.html")
