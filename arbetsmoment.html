@@ -9,83 +9,187 @@
 
 <style>
 body{
-  font-family: Arial;
   margin:0;
+  font-family: Arial, sans-serif;
   background:#f4f6f8;
 }
 
+/* Container */
 .container{
   padding:20px;
 }
 
-table{
-  width:100%;
-  border-collapse: collapse;
-  background:white;
+/* Rubrik */
+h1{
+  margin-bottom:20px;
 }
 
-th, td{
-  border:1px solid #ccc;
-  padding:10px;
-  text-align:left;
+/* Tabell */
+.table-wrapper{
+  overflow-x:auto;
+  background:white;
+  border-radius:10px;
+  box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:900px;
 }
 
 th{
   background:#143275;
   color:white;
+  padding:12px;
+  text-align:left;
+  font-size:14px;
+}
+
+td{
+  padding:10px;
+  border-bottom:1px solid #ddd;
+  font-size:14px;
+}
+
+tr:hover{
+  background:#f1f5fb;
+}
+
+/* Steg badge */
+.step{
+  font-weight:bold;
+  background:#e8eefc;
+  padding:4px 10px;
+  border-radius:6px;
+  display:inline-block;
 }
 </style>
 </head>
 
 <body>
 
+<!-- HEADER -->
 <div id="header-container"></div>
 
 <div class="container">
   <h1>Arbetsmoment per takt</h1>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Steg</th>
-        <th>Aktivitet</th>
-      </tr>
-    </thead>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Steg</th>
+          <th>Aktivitet</th>
+          <th>Beskrivning</th>
+          <th>Ansvar</th>
+          <th>Kommentar</th>
+        </tr>
+      </thead>
 
-    <tbody id="tableBody"></tbody>
-  </table>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
 </div>
 
 <script>
-// 🔴 LÄGG IN DIN DATA HÄR (från Excel)
-const steps = [
-  "Rivning + Sanering",
-  "VS-arbeten",
-  "Torktid",
-  "Torktid",
-  "Bygg",
-  "Bygg",
-  "Flytspackling + målning",
-  "Kakel och klinkers",
-  "Komplettering",
-  "Överlämning"
+
+/* 🔥 HÄR LÄGGER DU ALL INFO FRÅN DIN EXCEL */
+/* (jag har strukturerat upp den – fyll på mer info om du vill) */
+
+const data = [
+  {
+    steg: 1,
+    aktivitet: "Rivning + Sanering",
+    beskrivning: "Rivning av badrum och sanering",
+    ansvar: "Entreprenör",
+    kommentar: ""
+  },
+  {
+    steg: 2,
+    aktivitet: "VS-arbeten",
+    beskrivning: "Dragning av vatten och avlopp",
+    ansvar: "VS",
+    kommentar: ""
+  },
+  {
+    steg: 3,
+    aktivitet: "Torktid",
+    beskrivning: "Torktid efter rivning",
+    ansvar: "",
+    kommentar: ""
+  },
+  {
+    steg: 4,
+    aktivitet: "Torktid",
+    beskrivning: "Fortsatt torkning",
+    ansvar: "",
+    kommentar: ""
+  },
+  {
+    steg: 5,
+    aktivitet: "Bygg",
+    beskrivning: "Återuppbyggnad",
+    ansvar: "Snickare",
+    kommentar: ""
+  },
+  {
+    steg: 6,
+    aktivitet: "Bygg",
+    beskrivning: "Fortsatt byggnation",
+    ansvar: "Snickare",
+    kommentar: ""
+  },
+  {
+    steg: 7,
+    aktivitet: "Flytspackling + målning",
+    beskrivning: "Golv och målning",
+    ansvar: "",
+    kommentar: ""
+  },
+  {
+    steg: 8,
+    aktivitet: "Kakel och klinkers",
+    beskrivning: "Plattsättning",
+    ansvar: "",
+    kommentar: ""
+  },
+  {
+    steg: 9,
+    aktivitet: "Komplettering",
+    beskrivning: "Småfix och detaljer",
+    ansvar: "",
+    kommentar: ""
+  },
+  {
+    steg: 10,
+    aktivitet: "Överlämning",
+    beskrivning: "Slutbesiktning och överlämning",
+    ansvar: "",
+    kommentar: ""
+  }
 ]
 
-// bygg tabellen
+/* 🔥 BYGG TABELL */
 const tbody = document.getElementById("tableBody")
 
-steps.forEach((step, i) => {
+data.forEach(row => {
   const tr = document.createElement("tr")
 
   tr.innerHTML = `
-    <td>${i+1}</td>
-    <td>${step}</td>
+    <td><span class="step">${row.steg}</span></td>
+    <td>${row.aktivitet}</td>
+    <td>${row.beskrivning}</td>
+    <td>${row.ansvar}</td>
+    <td>${row.kommentar}</td>
   `
 
   tbody.appendChild(tr)
 })
+
 </script>
 
+<!-- HEADER LOAD -->
 <script>
 fetch("header.html")
 .then(res => res.text())
