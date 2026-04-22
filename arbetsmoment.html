@@ -29,10 +29,13 @@ th{text-align:center;color:#fff;font-weight:bold;}
 
 .day{background:#eee;font-weight:bold;width:80px;}
 
+.header-left{
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+
 .header .title{
-  position:fixed;
-  left:50%;
-  transform:translateX(-50%);
   font-weight:bold;
 }
 
@@ -74,15 +77,16 @@ body{
 <body>
 
 <header class="header">
-  <div class="header-inner">
 
+  <div class="header-left">
     <div class="logo">
-      <img src="skanska.png" alt="Skanska">
+      <img src="Skanska_logo.svg.png" alt="Skanska">
     </div>
 
     <div class="title">Stamrenovering Kaverös</div>
+  </div>
 
-    <div class="nav">
+  <div class="nav">
       <button onclick="location.href='index.html'">Framdrift</button>
       <button onclick="location.href='tidplan.html'">Tidplan</button>
       <button onclick="location.href='arbetsmoment.html'">Arbetsmoment per takt</button>
