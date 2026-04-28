@@ -8,24 +8,30 @@
 <link rel="stylesheet" href="style.css">
 
 <style>
-body{
+html, body{
   margin:0;
+  height:100%;
 }
 
+/* 🔥 Postern fyller exakt hela ytan */
 .poster{
-  margin-top:70px; /* samma som header */
+  position:absolute;
+  top:70px; /* samma som header */
+  left:0;
+  width:100%;
   height:calc(100vh - 70px);
+  overflow:hidden;
 }
 
+/* 🔥 Skala korrekt */
 .poster iframe{
-  width:120%;
-  height:120%;
+  width:140%;
+  height:140%;
   border:none;
-  transform:scale(1.19);
+
+  transform:scale(1.4);
   transform-origin: top left;
 }
-</style>
-</head>
 
 <body>
 
