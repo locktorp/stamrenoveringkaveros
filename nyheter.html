@@ -5,31 +5,57 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Senaste nytt</title>
 
-<link rel="stylesheet" href="style.css">
-
 <style>
 body{
   margin:0;
-  font-family:Arial;
-  background:#f4f6f8;
-  padding-top:70px;
+  font-family: Arial, sans-serif;
 }
 
-/* Wrapper för innehåll */
-.container{
-  padding:20px;
-}
-
-/* Poster */
-.poster{
+/* HEADER */
+.header{
+  display:flex;
+  align-items:center;
+  padding:10px 20px;
   background:white;
-  border-radius:12px;
-  box-shadow:0 5px 20px rgba(0,0,0,0.1);
-  overflow:hidden;
+  box-shadow:0 3px 8px rgba(0,0,0,0.25);
+
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:1000;
 }
 
+.logo{
+  height:35px;
+  margin-right:15px;
+}
+
+.title{
+  font-weight:bold;
+  margin-right:20px;
+}
+
+.nav{
+  display:flex;
+  gap:10px;
+}
+
+.nav button{
+  padding:6px 12px;
+  border:none;
+  background:#e0e0e0;
+  cursor:pointer;
+  border-radius:6px;
+}
+
+/* 🔥 FULLSCREEN POSTER */
 .poster{
-  height:calc(100vh - 90px); /* 🔥 hela skärmen minus header */
+  position:fixed;
+  top:70px; /* höjd på header */
+  left:0;
+  width:100vw;
+  height:calc(100vh - 70px);
 }
 
 .poster iframe{
@@ -42,36 +68,26 @@ body{
 
 <body>
 
-<!-- 🔥 DIN HEADER -->
+<!-- HEADER -->
 <div class="header">
 
-<button class="menu-toggle">☰</button>
+  <img src="Skanska_logo.svg.png" class="logo">
 
-<img src="Skanska_logo.svg.png" class="logo">
+  <div class="title">Stamrenovering Kaverös</div>
 
-<div class="title">Stamrenovering Kaverös</div>
-  
-<div class="nav" id="navMenu">
-<button onclick="window.location.href='index.html'">Framdrift</button>
-<button onclick="window.location.href='dashboard.html'">Dashboard</button>
-<button onclick="window.location.href='tidplan.html'">Tidplan</button>
-<button onclick="location.href='arbetsmoment.html'">Arbetsmoment/Takt</button>  
-<button onclick="window.location.href='nyheter.html'">Senaste nytt</button>
-<button onclick="window.location.href='overlamning.html'">Överlämningsplan</button>  
-<button onclick="window.location.href='stamplaner.html'">Arbetsplatsorientering</button>  
-<button onclick="window.location.href='ritningar.html'">Ritningar</button>
-<button onclick="window.location.href='arbetsplatsinfo.html'">Arbetsplatsinfo</button>
-</div>
-
-</div>
-
-<!-- 🔥 INNEHÅLL -->
-<div class="container">
-
-  <div class="poster">
-    <iframe src="https://d1csarkz8obe9u.cloudfront.net/index.php/posterbuilder/view/be28029b2ae72a2bbeefe73415a9e196/1"></iframe>
+  <div class="nav">
+    <button onclick="location.href='index.html'">Framdrift</button>
+    <button onclick="location.href='dashboard.html'">Dashboard</button>
+    <button onclick="location.href='tidplan.html'">Tidplan</button>
+    <button onclick="location.href='arbetsmoment.html'">Arbetsmoment/Takt</button>
+    <button onclick="location.href='nyheter.html'">Senaste nytt</button>
   </div>
 
+</div>
+
+<!-- POSTER -->
+<div class="poster">
+  <iframe src="https://d1csarkz8obe9u.cloudfront.net/index.php/posterbuilder/view/be28029b2ae72a2bbeefe73415a9e196/1"></iframe>
 </div>
 
 </body>
