@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Senaste nytt</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#f4f6f8;
+  padding-top:70px;
+}
+
+.container{
+  padding:20px;
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:20px;
+}
+
+/* MODULER */
+.box{
+  background:white;
+  border-radius:10px;
+  padding:20px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+.box h2{
+  margin-top:0;
+}
+
+/* FÄRGER */
+.important{border-left:6px solid red;}
+.current{border-left:6px solid #4caf50;}
+.next{border-left:6px solid #2196f3;}
+</style>
+</head>
+
+<body>
+
+<!-- 🔥 DIN HEADER -->
+<div class="header">
+
+<button class="menu-toggle">☰</button>
+
+<img src="Skanska_logo.svg.png" class="logo">
+
+<div class="title">Stamrenovering Kaverös</div>
+  
+<div class="nav" id="navMenu">
+<button onclick="window.location.href='index.html'">Framdrift</button>
+<button onclick="window.location.href='dashboard.html'">Dashboard</button>
+<button onclick="window.location.href='tidplan.html'">Tidplan</button>
+<button onclick="location.href='arbetsmoment.html'">Arbetsmoment/Takt</button>  
+<button onclick="window.location.href='overlamning.html'">Överlämningsplan</button>  
+<button onclick="window.location.href='stamplaner.html'">Arbetsplatsorientering</button>  
+<button onclick="window.location.href='ritningar.html'">Ritningar</button>
+<button onclick="window.location.href='arbetsplatsinfo.html'">Arbetsplatsinfo</button>
+</div>
+
+</div>
+
+<!-- 🔥 INNEHÅLL -->
+<div class="container">
+
+  <div class="box important">
+    <h2>Viktig information</h2>
+    <p>Här skriver du viktig info...</p>
+  </div>
+
+  <div class="box current">
+    <h2>Aktuell vecka</h2>
+    <p>Vecka 12: Arbete i stam 3–5</p>
+  </div>
+
+  <div class="box next">
+    <h2>Veckan efter</h2>
+    <p>Vecka 13: Start stam 6–8</p>
+  </div>
+
+</div>
+
+</body>
+</html>
