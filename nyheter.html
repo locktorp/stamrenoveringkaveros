@@ -5,54 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Senaste nytt</title>
 
+<link rel="stylesheet" href="style.css">
+
 <style>
 body{
   margin:0;
-  font-family: Arial, sans-serif;
 }
 
-/* HEADER */
-.header{
-  display:flex;
-  align-items:center;
-  padding:10px 20px;
-  background:white;
-  box-shadow:0 3px 8px rgba(0,0,0,0.25);
-
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  z-index:1000;
-}
-
-.logo{
-  height:35px;
-  margin-right:15px;
-}
-
-.title{
-  font-weight:bold;
-  margin-right:20px;
-}
-
-.nav{
-  display:flex;
-  gap:10px;
-}
-
-.nav button{
-  padding:6px 12px;
-  border:none;
-  background:#e0e0e0;
-  cursor:pointer;
-  border-radius:6px;
-}
-
-/* 🔥 FULLSCREEN POSTER */
 .poster{
   position:fixed;
-  top:70px; /* höjd på header */
+  top:70px;
   left:0;
   width:100vw;
   height:calc(100vh - 70px);
@@ -68,19 +30,25 @@ body{
 
 <body>
 
-<!-- HEADER -->
+<!-- 🔥 DIN RIKTIGA HEADER -->
 <div class="header">
+
+  <button class="menu-toggle">☰</button>
 
   <img src="Skanska_logo.svg.png" class="logo">
 
   <div class="title">Stamrenovering Kaverös</div>
-
-  <div class="nav">
-    <button onclick="location.href='index.html'">Framdrift</button>
-    <button onclick="location.href='dashboard.html'">Dashboard</button>
-    <button onclick="location.href='tidplan.html'">Tidplan</button>
-    <button onclick="location.href='arbetsmoment.html'">Arbetsmoment/Takt</button>
-    <button onclick="location.href='nyheter.html'">Senaste nytt</button>
+  
+  <div class="nav" id="navMenu">
+    <button onclick="window.location.href='index.html'">Framdrift</button>
+    <button onclick="window.location.href='dashboard.html'">Dashboard</button>
+    <button onclick="window.location.href='tidplan.html'">Tidplan</button>
+    <button onclick="location.href='arbetsmoment.html'">Arbetsmoment/Takt</button>  
+    <button onclick="window.location.href='nyheter.html'">Senaste nytt</button>
+    <button onclick="window.location.href='overlamning.html'">Överlämningsplan</button>  
+    <button onclick="window.location.href='stamplaner.html'">Arbetsplatsorientering</button>  
+    <button onclick="window.location.href='ritningar.html'">Ritningar</button>
+    <button onclick="window.location.href='arbetsplatsinfo.html'">Arbetsplatsinfo</button>
   </div>
 
 </div>
