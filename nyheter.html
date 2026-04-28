@@ -13,29 +13,31 @@ html, body{
   height:100%;
 }
 
-/* 🔥 Postern fyller exakt hela ytan */
+/* 🔥 FULLSCREEN POSTER */
 .poster{
   position:absolute;
-  top:70px; /* samma som header */
+  top:70px; /* matchar header */
   left:0;
   width:100%;
   height:calc(100vh - 70px);
   overflow:hidden;
 }
 
-/* 🔥 Skala korrekt */
+/* 🔥 SYNKAD ZOOM (DETTA ÄR NYCKELN) */
 .poster iframe{
   width:140%;
   height:140%;
   border:none;
 
-  transform:scale(1.10);
+  transform:scale(1.4);
   transform-origin: top left;
 }
+</style>
+</head>
 
 <body>
 
-<!-- 🔥 DIN RIKTIGA HEADER -->
+<!-- 🔥 HEADER (EXAKT SOM DIN) -->
 <div class="header">
 
   <button class="menu-toggle">☰</button>
@@ -58,7 +60,7 @@ html, body{
 
 </div>
 
-<!-- POSTER -->
+<!-- 🔥 POSTER -->
 <div class="poster">
   <iframe src="https://d1csarkz8obe9u.cloudfront.net/index.php/posterbuilder/view/be28029b2ae72a2bbeefe73415a9e196/1"></iframe>
 </div>
