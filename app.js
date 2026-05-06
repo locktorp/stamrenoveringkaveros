@@ -186,8 +186,17 @@ delayedBox.innerHTML = `
   <div id="forsenade-${houseId}"></div>
 `;
 
-block.appendChild(wrap);
-block.appendChild(delayedBox); // 👈 NY
+const layout = document.createElement("div");
+layout.className = "house-layout";
+
+const left = document.createElement("div");
+left.className = "left-side";
+left.appendChild(wrap);
+
+layout.appendChild(left);
+layout.appendChild(delayedBox);
+
+block.appendChild(layout);
 root.appendChild(block);
 
 })
