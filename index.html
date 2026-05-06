@@ -152,6 +152,56 @@ document.addEventListener("click", function(e) {
   }
 });
 </script>
+
+<script type="module">
+// 🔥 Firebase import (använd din config här om du redan har en)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+// 🔥 DIN CONFIG (du har redan denna i index – kopiera därifrån)
+const firebaseConfig = {
+  databaseURL: "https://stamrenovering-kaveros-default-rtdb.europe-west1.firebasedatabase.app/"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// 🔥 HTML där listorna ska visas
+const box1 = document.getElementById("forsenade-1");
+const box3 = document.getElementById("forsenade-3");
+const box4 = document.getElementById("forsenade-4");
+const box6 = document.getElementById("forsenade-6");
+
+// 🔥 Hämta data
+onValue(ref(db, "apartments"), (snapshot) => {
+  const data = snapshot.val();
+
+  // Rensa
+  box1.innerHTML = "";
+  box3.innerHTML = "";
+  box4.innerHTML = "";
+  box6.innerHTML = "";
+
+  Object.entries(data).forEach(([aptNr, apt]) => {
+
+    const a = apt.activities;
+
+    // 🔴 Vad räknas som "försenad"
+    if (a.kitchen === false || a.towel === false || a.evak === false) {
+
+      const text = document.createElement("div");
+      text.innerText = `LGH ${aptNr}`;
+
+      // Lägg i rätt hus
+      if (apt.house === "Dirigentgatan 1") box1.appendChild(text);
+      if (apt.house === "Dirigentgatan 3") box3.appendChild(text);
+      if (apt.house === "Dirigentgatan 4") box4.appendChild(text);
+      if (apt.house === "Dirigentgatan 6") box6.appendChild(text);
+    }
+
+  });
+});
+</script>
   
 </body>
 </html>
