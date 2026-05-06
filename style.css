@@ -321,3 +321,30 @@ gap:8px;
   background: white;
   z-index: -1;
 }
+
+.house-layout{
+  display:flex;
+  gap:30px;
+  align-items:flex-start;
+}
+
+.left-side{
+  flex:1;
+}
+
+.forsenade-box{
+  width:320px;
+  background:white;
+  border-radius:12px;
+  padding:15px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.forsenade-box h3{
+  margin-top:0;
+}
+
+.forsenade-box div{
+  color:red;
+  margin-bottom:5px;
+}
