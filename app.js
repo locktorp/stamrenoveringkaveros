@@ -126,11 +126,19 @@ const root=document.getElementById("content")
 root.innerHTML=""
 
 Object.entries(buildings).forEach(([name,stams])=>{
-  
+
 const block=document.createElement("div")
 block.className="house-block"
 
 block.innerHTML = "<h2 id='"+name+"'>"+name+"</h2>"
+
+// 🔥 NY WRAPPER
+const layout=document.createElement("div")
+layout.className="house-layout"
+
+// 🔥 VÄNSTER DEL
+const left=document.createElement("div")
+left.className="left-side"
 
 const wrap=document.createElement("div")
 wrap.className="stams"
@@ -174,30 +182,27 @@ wrap.appendChild(col)
 
 })
 
-// 🔴 Försenade-box
-const delayedBox = document.createElement("div");
-delayedBox.className = "forsenade-box";
+// 🔥 Lägg stammar i vänsterdel
+left.appendChild(wrap)
 
-// unik id per hus
-const houseId = name.split(" ").pop(); // → 1,3,4,6
+// 🔥 Försenade-box
+const delayedBox = document.createElement("div")
+delayedBox.className = "forsenade-box"
+
+const houseId = name.split(" ").pop()
 
 delayedBox.innerHTML = `
-  <h3>Försenade aktiviteter</h3>
-  <div id="forsenade-${houseId}"></div>
-`;
+<h3>Försenade aktiviteter</h3>
+<div id="forsenade-${houseId}"></div>
+`
 
-const layout = document.createElement("div");
-layout.className = "house-layout";
+// 🔥 Lägg vänster + höger i layout
+layout.appendChild(left)
+layout.appendChild(delayedBox)
 
-const left = document.createElement("div");
-left.className = "left-side";
-left.appendChild(wrap);
+block.appendChild(layout)
 
-layout.appendChild(left);
-layout.appendChild(delayedBox);
-
-block.appendChild(layout);
-root.appendChild(block);
+root.appendChild(block)
 
 })
 
