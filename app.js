@@ -30,6 +30,8 @@ renderDashboard()
 }
 }else{
 renderPlan()
+
+setTimeout(renderDelayedActivities, 100);    
 }
 
 })
@@ -172,8 +174,21 @@ wrap.appendChild(col)
 
 })
 
-block.appendChild(wrap)
-root.appendChild(block)
+// 🔴 Försenade-box
+const delayedBox = document.createElement("div");
+delayedBox.className = "forsenade-box";
+
+// unik id per hus
+const houseId = name.split(" ").pop(); // → 1,3,4,6
+
+delayedBox.innerHTML = `
+  <h3>Försenade aktiviteter</h3>
+  <div id="forsenade-${houseId}"></div>
+`;
+
+block.appendChild(wrap);
+block.appendChild(delayedBox); // 👈 NY
+root.appendChild(block);
 
 })
 
@@ -456,4 +471,43 @@ if(page.endsWith("index.html") || page === "/" || page === ""){
 renderPlan()
 }
 
+}
+function renderDelayedActivities(){
+
+const box1 = document.getElementById("forsenade-1");
+const box3 = document.getElementById("forsenade-3");
+const box4 = document.getElementById("forsenade-4");
+const box6 = document.getElementById("forsenade-6");
+
+if(!aptData) return;
+
+[box1,box3,box4,box6].forEach(b=>{
+  if(b) b.innerHTML="";
+});
+
+Object.entries(aptData).forEach(([aptNr, apt]) => {
+
+  if(!apt.activities) return;
+
+  const delayed = Object.entries(apt.activities)
+    .filter(([_,status]) => status === "försenad");
+
+  if(delayed.length === 0) return;
+
+  const div = document.createElement("div");
+
+  const activityNames = delayed.map(([key])=>{
+    return key.split("|")[1];
+  }).join(", ");
+
+  div.innerText = `LGH ${aptNr} – ${activityNames}`;
+
+  const house = apt.house;
+
+  if(house === "Dirigentgatan 1" && box1) box1.appendChild(div);
+  if(house === "Dirigentgatan 3" && box3) box3.appendChild(div);
+  if(house === "Dirigentgatan 4" && box4) box4.appendChild(div);
+  if(house === "Dirigentgatan 6" && box6) box6.appendChild(div);
+
+});
 }
