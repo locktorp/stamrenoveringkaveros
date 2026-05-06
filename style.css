@@ -324,12 +324,13 @@ gap:8px;
 
 .house-layout{
   display:flex;
-  gap:30px;
+  justify-content:space-between;
   align-items:flex-start;
 }
 
 .left-side{
   flex:1;
+  overflow-x:auto;
 }
 
 .forsenade-box{
@@ -348,4 +349,3 @@ gap:8px;
   color:red;
   margin-bottom:5px;
 }
-
