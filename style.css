@@ -348,3 +348,10 @@ gap:8px;
   color:red;
   margin-bottom:5px;
 }
+#forsenade-1,
+#forsenade-3,
+#forsenade-4,
+#forsenade-6{
+  color:red;
+  font-weight:bold;
+}
